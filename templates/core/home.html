@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/home.css' %}">{% endblock %}
+
+{% block content %}
+{% include 'partials/home/hero.html' %}
+{% include 'partials/home/pride_strip.html' %}
+{% include 'partials/home/legacy_stats.html' %}
+{% include 'partials/home/rankings.html' %}
+{% include 'partials/home/news_notice.html' %}
+{% include 'partials/home/placements.html' %}
+{% include 'partials/home/placement_overview.html' %}
+{% include 'partials/home/global_accordion.html' %}
+{% include 'partials/home/global_experience.html' %}
+{% include 'partials/home/why_choose.html' %}
+{% include 'partials/home/research.html' %}
+{% include 'partials/home/spotlight.html' %}
+{% include 'partials/home/news_events.html' %}
+{% endblock %}

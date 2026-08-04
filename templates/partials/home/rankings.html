@@ -1,0 +1,80 @@
+<section class="section section-beige rankings-section">
+  <div class="container">
+    <div class="section-head rankings-heading-wrap" data-aos="fade-up">
+      <h2 class="rankings-heading"><span class="rankings-heading-light">Proudly Distinguished</span> by Our Prestigious Rankings</h2>
+    </div>
+
+    <div class="rank-table" data-aos="fade-up">
+      {% for group in ranking_groups %}
+      <div class="rank-row">
+        <div class="rank-row-header">
+          <div class="rank-logo">
+            <div class="rank-logo-top">
+              <span class="rank-logo-badge">{{ group.logo_text }}</span>
+              <span class="rank-logo-year">{{ group.logo_year }}</span>
+            </div>
+            <span class="rank-logo-sub">{{ group.logo_sub }}</span>
+          </div>
+
+          <div class="rank-stats-grid">
+            {% for item in group.primary_row %}
+            <div class="rank-stat">
+              <span class="rank-stat-prefix">{% if item.detail %}Ranked Among{% else %}Ranked{% endif %}</span>
+              <span class="rank-stat-value">{{ item.rank }}</span>
+              <span class="rank-stat-desc">{{ item.desc }}</span>
+              {% if item.detail %}<span class="rank-stat-detail">({{ item.detail }})</span>{% endif %}
+            </div>
+            {% endfor %}
+          </div>
+
+          {% if group.expandable %}
+          <button class="rank-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#rankGroup{{ forloop.counter }}" aria-expanded="{% if group.expanded %}true{% else %}false{% endif %}" aria-label="Toggle more rankings">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          {% endif %}
+        </div>
+
+        {% if group.expandable %}
+        <div class="collapse rank-extra {% if group.expanded %}show{% endif %}" id="rankGroup{{ forloop.counter }}">
+          {% for row in group.extra_rows %}
+          <div class="rank-stats-grid">
+            {% for item in row %}
+            <div class="rank-stat">
+              <span class="rank-stat-prefix">{% if item.detail %}Ranked Among{% else %}Ranked{% endif %}</span>
+              <span class="rank-stat-value">{{ item.rank }}</span>
+              <span class="rank-stat-desc">{{ item.desc }}</span>
+              {% if item.detail %}<span class="rank-stat-detail">({{ item.detail }})</span>{% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="section-head rankings-heading-wrap accred-heading-wrap" data-aos="fade-up">
+      <h2 class="rankings-heading"><span class="rankings-heading-light">Our</span> Accreditations</h2>
+    </div>
+
+    <div class="accred-table" data-aos="fade-up">
+      <div class="accred-row">
+        {% for accred in accreditation_rows %}
+        <div class="accred-col">
+          <div class="accred-logo">
+            <span class="accred-logo-badge">{{ accred.logo_text }}</span>
+            <span class="accred-logo-sub">{{ accred.logo_sub }}</span>
+          </div>
+          <div class="accred-body">
+            <p class="accred-desc">{{ accred.desc }}</p>
+            <p class="accred-programs">
+              {% for program in accred.programs %}{% if not forloop.first %}, {% endif %}<a href="{% url 'placeholder_page' program|slugify %}">{{ program }}</a>{% endfor %}
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

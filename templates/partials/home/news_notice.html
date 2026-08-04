@@ -1,0 +1,42 @@
+{% load static %}
+<section class="section news-notice-section">
+  <div class="container">
+    <div class="news-notice-grid">
+      <div class="nn-col nn-news-col" data-aos="fade-up">
+        <h2 class="nn-heading">News <span>&amp; Interests</span></h2>
+        <div class="nn-heading-bar"><span></span><span></span></div>
+
+        <div class="nn-feature">
+          <div class="nn-feature-media">
+            <img src="{% static 'img/7.png' %}" alt="News and interests at Swami Vivekananda University">
+          </div>
+          <div class="nn-feature-body">
+            <span class="nn-feature-topic">{{ news_interest.topic }}</span>
+            <p class="nn-feature-text">{{ news_interest.body }}</p>
+            <a href="{% url 'placeholder_page' 'news-and-interests' %}" class="nn-readmore">Read More <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="nn-col nn-notice-col" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="nn-heading">Notice</h2>
+        <div class="nn-heading-bar"><span></span></div>
+
+        <div class="notice-list">
+          {% for item in notice_items %}
+          <div class="notice-item">
+            <div class="notice-date">
+              <span class="notice-date-month">{{ item.month }}</span>
+              <span class="notice-date-day">{{ item.day }}</span>
+            </div>
+            <div class="notice-body">
+              <span class="notice-title">{{ item.title }}</span>
+              <a href="{% url 'placeholder_page' item.title|slugify %}" class="nn-readmore">Read Details <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,92 @@
+<section class="section why-choose-section">
+  <div class="container">
+    <div class="wc-heading-wrap" data-aos="fade-up">
+      <h2 class="wc-heading">
+        <span class="wc-heading-thin">Why Should You Choose</span>
+        <span class="wc-heading-bold">Swami Vivekananda University?</span>
+      </h2>
+    </div>
+
+    <div class="wc-accordion" id="whyChooseAccordion" data-aos="fade-up">
+      {% for item in why_choose_cu %}
+      <div class="wc-row">
+        <span class="wc-num">{{ forloop.counter|stringformat:"02d" }}</span>
+
+        <button class="wc-title-btn collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#wcCollapse{{ forloop.counter }}"
+                aria-expanded="false" aria-controls="wcCollapse{{ forloop.counter }}">
+          <span class="wc-title">{{ item.title }}</span>
+          <span class="wc-underline"></span>
+        </button>
+
+        <div id="wcCollapse{{ forloop.counter }}" class="wc-extra collapse collapse-horizontal"
+             data-bs-parent="#whyChooseAccordion">
+          <div class="wc-extra-inner">
+            <p class="wc-body">{{ item.body }}</p>
+            <div class="wc-media">
+              <img src="{{ item.image1 }}" alt="{{ item.title }} at Swami Vivekananda University">
+              <img src="{{ item.image2 }}" alt="{{ item.title }} at Swami Vivekananda University">
+            </div>
+          </div>
+        </div>
+
+        <button class="wc-arrow" type="button"
+                data-bs-toggle="collapse" data-bs-target="#wcCollapse{{ forloop.counter }}"
+                aria-expanded="false" aria-controls="wcCollapse{{ forloop.counter }}" aria-label="Toggle {{ item.title }}">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="alumni-strip">
+    <div class="container alumni-grid">
+      <div class="alumni-left" data-aos="fade-right">
+        <span class="section-eyebrow alumni-eyebrow">Students Speak</span>
+        <h3 class="alumni-heading">Discover the inspiring stories <strong>and gain valuable insights straight from our accomplished graduates</strong></h3>
+
+        <div class="alumni-thumbs-row">
+          <button class="alumni-nav alumni-prev" type="button" aria-label="Previous testimonial"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="alumni-thumbs">
+            {% for t in testimonials %}
+            <button class="alumni-thumb {% if forloop.first %}is-active{% endif %}" type="button" data-alumni-thumb="{{ forloop.counter0 }}">
+              <img src="{{ t.avatar }}" alt="{{ t.name_first }} {{ t.name_last }}">
+              <span>{{ t.name_first }} {{ t.name_last|slice:":1" }}.</span>
+            </button>
+            {% endfor %}
+          </div>
+          <button class="alumni-nav alumni-next" type="button" aria-label="Next testimonial"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <a href="{% url 'placeholder_page' 'alumni-reviews' %}" class="btn alumni-reviews-btn">Read All Reviews <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="alumni-right" data-aos="fade-left">
+        <div class="swiper alumni-swiper">
+          <div class="swiper-wrapper">
+            {% for t in testimonials %}
+            <div class="swiper-slide">
+              <div class="alumni-card">
+                <div class="alumni-quote-panel">
+                  <span class="alumni-quote-mark">&ldquo;</span>
+                  <h4 class="alumni-quote-heading">{{ t.heading|safe }}</h4>
+                  <p class="alumni-quote-body">&ldquo;{{ t.body }}&rdquo;</p>
+                </div>
+                <div class="alumni-photo-panel" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.75), rgba(0,0,0,0.05) 45%), url('{{ t.photo }}');">
+                  <div class="alumni-photo-info">
+                    <h5 class="alumni-photo-name"><span>{{ t.name_first }}</span> {{ t.name_last }}</h5>
+                    <span class="alumni-photo-underline"></span>
+                    <span class="alumni-photo-role">{{ t.role }}</span>
+                    <span class="alumni-photo-dept">({{ t.dept }})</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

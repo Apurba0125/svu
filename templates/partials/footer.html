@@ -1,0 +1,44 @@
+{% load static core_extras %}
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand offcanvas-brand mb-2">
+            <img src="{% static 'img/logo.jpeg' %}" alt="Swami Vivekananda University logo" class="brand-badge">
+            <span class="brand-name">SWAMI VIVEKANANDA UNIVERSITY</span>
+          </span>
+          <span class="brand-tagline d-block">Excellence. Innovation. Entrepreneurship</span>
+          <p>Barrackpore - Barasat Road, Bara Kanthalia, West Bengal, India. A NAAC accredited, multi-disciplinary university ranked among India's most promising institutions.</p>
+          <div class="footer-social">
+            {% for s in social_links %}
+            <a href="#" aria-label="{{ s.label }}"><i class="fa-brands fa-{{ s.icon }} icon"></i></a>
+            {% endfor %}
+          </div>
+        </div>
+
+        {% for col in footer_columns %}
+        <div class="footer-col">
+          <div class="footer-col-title">{{ col.title }}</div>
+          <ul>
+            {% for link in col.links %}
+            <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <span>&copy; {% now "Y" %} Swami Vivekananda University Clone. Built for educational purposes only.</span>
+      <div class="footer-bottom-links">
+        <a href="{% url 'placeholder_page' 'privacy-policy' %}">Privacy Policy</a>
+        <a href="{% url 'placeholder_page' 'terms-of-use' %}">Terms of Use</a>
+        <a href="{% url 'placeholder_page' 'sitemap' %}">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>

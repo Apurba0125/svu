@@ -1,0 +1,17 @@
+{% load static %}
+<section class="section geo-section" data-aos="fade-up">
+  <div class="container">
+    <h2 class="geo-heading"><span class="geo-heading-light">Immerse yourself</span> in a Global Educational Experience with peers from 68 countries</h2>
+
+    <div class="geo-accordion">
+      {% for panel in global_accordion_panels %}
+      <div class="geo-panel {% if panel.active %}is-active{% endif %}" data-geo-panel style="--geo-bg: url('{{ panel.image }}');">
+        <span class="geo-panel-overlay"></span>
+        <button class="geo-panel-toggle" type="button" aria-label="Toggle {{ panel.label }}"><i class="fa-solid fa-plus"></i></button>
+        <span class="geo-panel-label-vertical">{{ panel.label }}</span>
+        <span class="geo-panel-label-title">{{ panel.label }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,94 @@
+<section class="section section-beige news-section">
+  <div class="container">
+    <div class="section-head" data-aos="fade-up">
+      <span class="section-eyebrow">Stay Updated</span>
+      <h2 class="section-title">News <span>and Events</span></h2>
+    </div>
+
+    <div class="news-layout" data-aos="fade-up">
+      <div class="news-list-col">
+        <div class="news-list" data-news-autoscroll>
+          <div class="news-list-track">
+            {% for item in news_list_items %}
+            <a href="{% url 'placeholder_page' item.title|slugify %}" class="news-list-item">
+              <img src="{{ item.image }}" alt="{{ item.title }}">
+              <div class="news-list-body">
+                <span class="news-list-meta">{{ item.date }} | {{ item.category|upper }}</span>
+                <span class="news-list-title">{{ item.title }}</span>
+                <span class="news-list-source">{{ item.source }}</span>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+          <div class="news-list-track" aria-hidden="true">
+            {% for item in news_list_items %}
+            <a href="{% url 'placeholder_page' item.title|slugify %}" class="news-list-item" tabindex="-1">
+              <img src="{{ item.image }}" alt="" aria-hidden="true">
+              <div class="news-list-body">
+                <span class="news-list-meta">{{ item.date }} | {{ item.category|upper }}</span>
+                <span class="news-list-title">{{ item.title }}</span>
+                <span class="news-list-source">{{ item.source }}</span>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="news-feature-col">
+        <div class="news-feature-media">
+          <button class="spotlight-arrow news-feature-prev" type="button" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="swiper news-feature-swiper">
+            <div class="swiper-wrapper">
+              {% for slide in news_featured_slides %}
+              <div class="swiper-slide"
+                   data-date="{{ slide.date }} | {{ slide.category|upper }}"
+                   data-headline="{{ slide.headline }}"
+                   data-headline-url="{% url 'placeholder_page' slide.headline|slugify %}"
+                   data-cta-label="{{ slide.cta_label }}"
+                   data-cta-url="{% url 'placeholder_page' slide.cta_label|slugify %}">
+                <img src="{{ slide.image }}" alt="{{ slide.headline }}">
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <button class="spotlight-arrow news-feature-next" type="button" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+
+          <a href="{% url 'placeholder_page' news_featured_slides.0.cta_label|slugify %}" class="news-feature-cta" data-news-cta>{{ news_featured_slides.0.cta_label }} <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="news-feature-text">
+          <span class="news-feature-meta" data-news-meta>{{ news_featured_slides.0.date }} | {{ news_featured_slides.0.category|upper }}</span>
+          <a href="{% url 'placeholder_page' news_featured_slides.0.headline|slugify %}" class="news-feature-headline" data-news-headline>{{ news_featured_slides.0.headline }}</a>
+        </div>
+      </div>
+
+      <div class="news-side-col">
+        {% for card in news_side_cards %}
+        <a href="{% url 'placeholder_page' card.headline|slugify %}" class="news-side-card">
+          <div class="news-side-media" style="background-image: url('{{ card.image }}');">
+            {% if card.quote %}
+            <div class="news-side-quote">
+              <span class="news-side-quote-mark">&ldquo;</span>
+              <p>{{ card.quote }}</p>
+              <span class="news-side-quote-name">{{ card.quote_name }}</span>
+            </div>
+            {% endif %}
+          </div>
+          <span class="news-side-meta">{{ card.date }} | {{ card.category|upper }}</span>
+          <span class="news-side-headline">{{ card.headline }}</span>
+          <span class="news-side-source">{{ card.source }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="virtual-tour-section" style="background-image:linear-gradient(90deg, rgba(0,0,0,.8), rgba(0,0,0,.4)), url('https://placehold.co/1920x480/1a1a1a/1a1a1a');">
+  <div class="container virtual-tour-inner" data-aos="fade-up">
+    <span class="section-eyebrow">Explore From Anywhere</span>
+    <h2 class="section-title text-start text-white">Step Inside Swami Vivekananda University &mdash; <span>Virtually!</span></h2>
+    <a href="{% url 'placeholder_page' 'virtual-tour' %}" class="btn btn-red mt-3"><i class="fa-solid fa-street-view me-2"></i>Take the Virtual Tour</a>
+  </div>
+</section>

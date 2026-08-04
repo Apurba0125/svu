@@ -1,0 +1,56 @@
+{% load static %}
+<section class="section placements-section">
+  <div class="container">
+    <div class="drive-top" data-aos="fade-up">
+      <div class="drive-heading-col">
+        <h2 class="drive-heading">
+          <span class="drive-heading-line"><strong></strong> Campus</span>
+          <span class="drive-heading-line">
+            <strong>Placement</strong>
+            <img class="drive-heading-img" src="{% static 'img/jcpd-pill-bg.webp' %}" alt="Placement drive students">
+            <strong>Drive</strong>
+          </span>
+        </h2>
+      </div>
+      <div class="drive-info-col">
+        <p class="drive-info-text">Step into High-Impact Career Opportunities with Top Global Recruiters and Industry Pioneers</p>
+        <span class="drive-divider"></span>
+        <a href="{% url 'placeholder_page' 'placement-registration' %}" class="btn btn-red drive-register-btn">Register Now <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="drive-panel" data-aos="fade-up">
+      <button class="drive-arrow drive-prev" type="button" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+
+      <div class="swiper drive-swiper">
+        <div class="swiper-wrapper">
+          {% for drive in placement_drives %}
+          <div class="swiper-slide">
+            <div class="drive-card">
+              <span class="drive-logo-box"><span class="drive-logo" style="color: {{ drive.color }};">{{ drive.name }}</span></span>
+              <p class="drive-desc">{{ drive.desc }}</p>
+              {% if drive.note %}<span class="drive-note">{{ drive.note }}</span>{% endif %}
+              <a href="{% url 'placeholder_page' drive.name|slugify %}" class="drive-results-btn">Find Results</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button class="drive-arrow drive-next" type="button" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <div class="companies-strip" data-aos="fade-up">
+    <p class="companies-strip-title">The World&rsquo;s Leading Companies Hire Our Talent</p>
+    <div class="swiper companies-swiper">
+      <div class="swiper-wrapper">
+        {% for company in hiring_companies %}
+        <div class="swiper-slide company-logo-slide">
+          <span class="company-logo" style="color: {{ company.color }};">{{ company.name }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

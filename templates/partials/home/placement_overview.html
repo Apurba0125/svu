@@ -1,0 +1,65 @@
+<section class="section placement-overview-section">
+  <div class="container">
+    <div class="pso-grid">
+      <div class="pso-slider-col" data-aos="fade-up">
+        <div class="swiper pso-swiper">
+          <div class="swiper-wrapper">
+            {% for student in placed_students %}
+            <div class="swiper-slide">
+              <div class="pso-card">
+                <img src="{{ student.image }}" alt="{{ student.first }} {{ student.last }} placement photo">
+                <div class="pso-card-overlay">
+                  <div class="pso-card-top">
+                    <span class="pso-card-company">{{ student.company }}</span>
+                    <span class="pso-card-divider"></span>
+                  </div>
+                  <div class="pso-card-bottom">
+                    <span class="pso-card-name">{{ student.first }}<br>{{ student.last }}</span>
+                    <span class="pso-card-placed">&mdash; Placed in {{ student.company }}</span>
+                    <span class="pso-card-package-label">Salary Package</span>
+                    <span class="pso-card-package">&#8377;{{ student.package }}<small>LPA</small></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="pso-arrows">
+          <button class="pso-arrow pso-prev" type="button" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="pso-arrow pso-next" type="button" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+      <div class="pso-content-col">
+        <span class="pso-eyebrow" data-aos="fade-up">Swami Vivekananda University, West Bengal Placements Overview</span>
+        <h2 class="pso-heading" data-aos="fade-up" data-aos-delay="80">
+          <span class="pso-heading-light">The World&rsquo;s</span> Leading Companies Hire Our Talent
+        </h2>
+
+        <div class="pso-cta-row" data-aos="fade-up" data-aos-delay="140">
+          <a href="{% url 'placeholder_page' 'apply-now' %}" class="btn btn-red pso-btn">Apply Now <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="{% url 'placeholder_page' 'placements' %}" class="btn btn-outline-dark pso-btn">View Placements <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="pso-stats-row">
+          {% for stat in placement_overview_stats %}
+          <div class="pso-stat pso-stat-{{ stat.tone }}" data-aos="fade-left" data-aos-delay="{{ forloop.counter0|add:1|stringformat:'d' }}00">
+            <span class="pso-stat-value">{{ stat.value }}{% if stat.suffix %}<small>{{ stat.suffix }}</small>{% endif %}</span>
+            <span class="pso-stat-label">{{ stat.label }}</span>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="pso-package-row">
+          {% for tier in package_tiers %}
+          <div class="pso-package" data-aos="fade-left" data-aos-delay="{{ forloop.counter0|add:1|stringformat:'d' }}00">
+            <span class="pso-package-value">{{ tier.value }}<small>LPA</small></span>
+            <span class="pso-package-label">Package Offered by <strong>{{ tier.companies }}</strong> Companies</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

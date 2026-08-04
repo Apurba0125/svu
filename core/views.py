@@ -1,0 +1,450 @@
+from django.shortcuts import render
+from django.templatetags.static import static
+
+
+LEGACY_STATS = [
+    {"value": "154+", "label": "Industry Collaborations"},
+    {"value": "980+", "label": "International MoUs"},
+    {"value": "1350+", "label": "Patents Filed"},
+    {"value": "300+", "label": "Programs Offered"},
+    {"value": "100000+", "label": "Alumni Network"},
+]
+
+RANKING_GROUPS = [
+    {
+        "logo_text": "QS",
+        "logo_year": "2027",
+        "logo_sub": "World University Rankings",
+        "expandable": False,
+        "expanded": False,
+        "primary_row": [
+            {"rank": "1%", "desc": "Top Universities in India by QS World University Rankings 2027", "detail": "Among Top 10 Universities"},
+            {"rank": "2%", "desc": "Top Universities Globally by QS World University Rankings 2027", "detail": "Global Rank #526"},
+        ],
+        "extra_rows": [],
+    },
+    {
+        "logo_text": "QS",
+        "logo_year": "2026",
+        "logo_sub": "World University Rankings by Subject",
+        "expandable": True,
+        "expanded": False,
+        "primary_row": [
+            {"rank": "#251-300", "desc": "Among the World's Top 1% Universities by QS World University Rankings by Subject 2026", "detail": "Mechanical, Aeronautical & Manufacturing"},
+            {"rank": "#251-300", "desc": "Among the World's Top 1% Universities by QS World University Rankings by Subject 2026", "detail": "Electrical and Electronics Engineering"},
+        ],
+        "extra_rows": [
+            [
+                {"rank": "#301-350", "desc": "Among the World's Top 1% Universities by QS World University Rankings by Subject 2026", "detail": "Computer Science & Information Systems"},
+                {"rank": "#351-400", "desc": "Among the World's Top 1% Universities by QS World University Rankings by Subject 2026", "detail": "Civil & Structural Engineering"},
+            ],
+            [
+                {"rank": "#401-450", "desc": "Among the World's Top 1% Universities by QS World University Rankings by Subject 2026", "detail": "Business & Management Studies"},
+            ],
+        ],
+    },
+    {
+        "logo_text": "NIRF",
+        "logo_year": "2025",
+        "logo_sub": "National Institutional Ranking Framework",
+        "expandable": True,
+        "expanded": False,
+        "primary_row": [
+            {"rank": "19th", "desc": "Among The Best Universities in India by NIRF Rankings 2025"},
+            {"rank": "31st", "desc": "Among The Best Institutions For Engineering In India by NIRF Rankings 2025"},
+        ],
+        "extra_rows": [
+            [
+                {"rank": "32nd", "desc": "Among The Best Institutions For Management Studies In India by NIRF Rankings 2025"},
+                {"rank": "15th", "desc": "Among The Best Institutions For Pharmacy In India by NIRF Rankings 2025"},
+            ],
+            [
+                {"rank": "14th", "desc": "Among The Best Institutions For Architecture & Planning In India by NIRF Rankings 2025"},
+            ],
+        ],
+    },
+]
+
+ACCREDITATION_ROWS = [
+    {
+        "logo_text": "ABET",
+        "logo_sub": "Engineering Accreditation Commission",
+        "desc": "ABET Accreditation For Globally Recognized Engineering Programs",
+        "programs": ["B.E. Chemical Engineering", "B.E. Computer Science and Engineering", "B.E. Electronics and Communication Engineering"],
+    },
+    {
+        "logo_text": "ABET",
+        "logo_sub": "Computing & Engineering Accreditation Commission",
+        "desc": "ABET Accreditation For Globally Recognized Engineering Programs",
+        "programs": ["B.E. Computer Science and Engineering"],
+    },
+]
+
+NEWS_INTEREST = {
+    "image": "https://placehold.co/560x420/eeeeee/999999?text=Campus+Life",
+    "topic": "Topic For News",
+    "body": "Welcome to Swami Vivekananda University. We are an institution in West Bengal dedicated to the pursuit of knowledge and excellence and providing quality education to our students. Since our inception, we have been striving to provide our students with an exceptional learning experience.",
+}
+
+NOTICE_ITEMS = [
+    {"month": "Aug'25", "day": "14", "title": "Independence Day Celebration"},
+    {"month": "Aug'25", "day": "13", "title": "Special Supplementary Examination"},
+    {"month": "Aug'25", "day": "12", "title": "Eligible Candidates to Appear in RET"},
+]
+
+PLACEMENT_DRIVES = [
+    {
+        "name": "Schneider Electric",
+        "color": "#3dae2b",
+        "desc": "Schneider Electric India Pvt. Ltd. for B.Tech / M.Tech (Mechanical / Power Systems / EE / EEE) students of 2026 passing out batch.",
+        "note": "Shortlisted Students",
+    },
+    {
+        "name": "Sify",
+        "color": "#8dc63f",
+        "desc": "Sify Technologies Limited for B.E / B.Tech (EEE, Mechanical) of 2026 passing out batch.",
+        "note": "",
+    },
+    {
+        "name": "JBM Group",
+        "color": "#173f8a",
+        "desc": "JBM Group for B.E / B.Tech (Mechanical, Electrical) students of 2026 passing out batch.",
+        "note": "",
+    },
+    {
+        "name": "Amazon",
+        "color": "#141414",
+        "desc": "Amazon India for B.E / B.Tech (Computer Science, Electronics) students of 2026 passing out batch.",
+        "note": "Shortlisted Students",
+    },
+    {
+        "name": "TCS",
+        "color": "#0070c0",
+        "desc": "Tata Consultancy Services for B.E / B.Tech (All Branches) students of 2026 passing out batch.",
+        "note": "",
+    },
+]
+
+PLACED_STUDENTS = [
+    {
+        "first": "Jaspreet", "last": "Singh", "company": "Atlassian",
+        "package": "59.9", "image": "https://placehold.co/460x620/1a2233/1a2233",
+    },
+    {
+        "first": "Vandana", "last": "Chauhan", "company": "Paloalto",
+        "package": "54.75", "image": "https://placehold.co/460x620/2a3324/2a3324",
+    },
+    {
+        "first": "Rohan", "last": "Mehta", "company": "Oracle",
+        "package": "48.2", "image": "https://placehold.co/460x620/241a1a/241a1a",
+    },
+    {
+        "first": "Ananya", "last": "Roy", "company": "Microsoft",
+        "package": "42.6", "image": "https://placehold.co/460x620/1a2422/1a2422",
+    },
+]
+
+PLACEMENT_OVERVIEW_STATS = [
+    {"value": "10000+", "label": "Placement Offers", "tone": "beige"},
+    {"value": "1300+", "label": "Companies Visited for Recruitment", "tone": "grey"},
+    {"value": "59.9", "suffix": "LPA", "label": "Highest National Package Offered", "tone": "black"},
+    {"value": "1.7", "suffix": "CR", "label": "Highest International Package Offered", "tone": "grey"},
+]
+
+PACKAGE_TIERS = [
+    {"value": "20", "companies": "40+"},
+    {"value": "15", "companies": "50+"},
+    {"value": "10", "companies": "100+"},
+    {"value": "7", "companies": "350+"},
+    {"value": "5", "companies": "650+"},
+]
+
+HIRING_COMPANIES = [
+    {"name": "RBS", "color": "#002d72"},
+    {"name": "Bank of America", "color": "#e31837"},
+    {"name": "ICICI Securities", "color": "#f37021"},
+    {"name": "Muthoot Finance", "color": "#ed1c24"},
+    {"name": "Godrej", "color": "#00a651"},
+    {"name": "Motorola", "color": "#5b2c91"},
+    {"name": "TATA AIA", "color": "#1e4b9c"},
+    {"name": "Radisson", "color": "#141414"},
+    {"name": "Infosys", "color": "#007cc3"},
+    {"name": "TCS", "color": "#00539f"},
+    {"name": "Amazon", "color": "#141414"},
+    {"name": "Microsoft", "color": "#5e5e5e"},
+]
+
+GLOBAL_EXPERIENCE_ITEMS = [
+    "My Campus Life",
+    "Dual Degree Programs",
+    "Language Certificate",
+    "International Faculty",
+    "Career Pathways",
+]
+
+GLOBAL_ACCORDION_PANELS = [
+    {"label": "Central Campus", "image": static("img/campaus.png")},
+    {"label": "Global Collaborations", "image": static("img/campaus.png")},
+    {"label": "Degree Opportunities", "image": static("img/campaus.png")},
+    {"label": "Language and Culture", "image": static("img/campaus.png"), "active": True},
+    {"label": "International Research Projects", "image": static("img/campaus.png")},
+    {"label": "International Faculty", "image": static("img/campaus.png")},
+    {"label": "Career Pathways", "image": static("img/campaus.png")},
+]
+
+WHY_CHOOSE_CU = [
+    {
+        "title": "High-Impact Networking Connections",
+        "body": "Connect with an extensive network of top CEOs, Nobel Laureates, eminent entrepreneurs, top scientists, industry innovators, and global academicians for collaboration, mentorship, and career advancement opportunities.",
+        "image1": static("img/high-impact1.webp"),
+        "image2": static("img/high-impact2.webp"),
+    },
+    {
+        "title": "Tech-driven collaborative and fluid learning environments",
+        "body": "Smart classrooms, AI-enabled labs and a culture built around applied, hands-on learning.",
+        "image1": static("img/tech1.webp"),
+        "image2": static("img/tech2.webp"),
+    },
+    {
+        "title": "360-degree support in building a personal brand",
+        "body": "Personal branding cells, LinkedIn workshops and mentorship to help every student stand out.",
+        "image1": static("img/360-1.webp"),
+        "image2": static("img/360-2.webp"),
+    },
+    {
+        "title": "Multi-Disciplinary University",
+        "body": "Freedom to combine majors and minors across 45+ disciplines under one roof.",
+        "image1": static("img/multi-disciplinary1.webp"),
+        "image2": static("img/multi-disciplinary2.webp"),
+    },
+    {
+        "title": "Global Vision",
+        "body": "Partnerships with universities across 68+ countries for exchange and dual-degree programs.",
+        "image1": static("img/global-1.webp"),
+        "image2": static("img/global-2.webp"),
+    },
+    {
+        "title": "Intercontinental research frontiers & innovation ecosystem",
+        "body": "Centres of Excellence driving research collaborations across continents.",
+        "image1": static("img/interconinental-1.webp"),
+        "image2": static("img/interconinental-2.webp"),
+    },
+    {
+        "title": "Career Advancement",
+        "body": "Dedicated placement cells, industry mentors and career-readiness programs.",
+        "image1": static("img/career-1.webp"),
+        "image2": static("img/career-2.webp"),
+    },
+    {
+        "title": "Global Alumni Network",
+        "body": "100,000+ alumni working across industries and geographies worldwide.",
+        "image1": static("img/global-alumni-1.webp"),
+        "image2": static("img/global-alumni-2.webp"),
+    },
+]
+
+TESTIMONIALS = [
+    {
+        "name_first": "Shardul", "name_last": "Jaiswal",
+        "role": "Flying Officer", "dept": "Computer Science & Engineering - Alumni",
+        "heading": 'From <strong>Engineering</strong> Labs to the <span class="alumni-hl">Skies of Duty</span>',
+        "body": "Every takeoff begins with a strong runway and mine was built at Swami Vivekananda University. Proud to now serve as a Flying Officer in the Indian Air Force.",
+        "avatar": "https://placehold.co/120x120/1a2733/1a2733",
+        "photo": "https://placehold.co/900x700/2a3540/2a3540",
+    },
+    {
+        "name_first": "Anand", "name_last": "Bhatia",
+        "role": "Product Manager", "dept": "MBA - Alumni",
+        "heading": 'From <strong>Classrooms</strong> to <span class="alumni-hl">Boardrooms</span>',
+        "body": "The case studies and mentorship I received shaped how I lead product teams today. Swami Vivekananda University gave me the confidence to think like a founder.",
+        "avatar": "https://placehold.co/120x120/24211a/24211a",
+        "photo": "https://placehold.co/900x700/33291f/33291f",
+    },
+    {
+        "name_first": "Arshdeep", "name_last": "Singh",
+        "role": "Software Engineer", "dept": "Information Technology - Alumni",
+        "heading": 'From <strong>Labs</strong> to <span class="alumni-hl">Live Products</span>',
+        "body": "Hands-on projects and hackathons on campus prepared me for the real world faster than I imagined. I now ship features used by millions.",
+        "avatar": "https://placehold.co/120x120/1a2a24/1a2a24",
+        "photo": "https://placehold.co/900x700/1f332b/1f332b",
+    },
+    {
+        "name_first": "Vandana", "name_last": "Chauhan",
+        "role": "Business Analyst", "dept": "International Placement - Alumni",
+        "heading": 'From <strong>Campus</strong> to <span class="alumni-hl">Global Careers</span>',
+        "body": "The global exposure and placement support at Swami Vivekananda University opened doors I never thought possible straight out of college.",
+        "avatar": "https://placehold.co/120x120/241a24/241a24",
+        "photo": "https://placehold.co/900x700/332133/332133",
+    },
+]
+
+RESEARCH_STATS = [
+    {"value": "24000+", "label": "Research Papers Published"},
+    {"value": "5900+", "label": "Scopus Indexed Papers"},
+    {"value": "200+", "label": "Patents Granted"},
+    {"value": "250+", "label": "Funded Research Projects"},
+    {"value": "15+", "label": "Centres of Excellence"},
+]
+
+RESEARCH_MEDIA = [
+    {"tag": "Moot Court", "image": "https://placehold.co/640x420/eeeeee/999999?text=Moot+Court"},
+    {"tag": "SVU Centre of Excellence", "image": "https://placehold.co/640x420/eeeeee/999999?text=SVU+Centre+of+Excellence"},
+    {"tag": "Research Symposium", "image": "https://placehold.co/640x420/eeeeee/999999?text=Research+Symposium"},
+    {"tag": "Innovation Lab", "image": "https://placehold.co/640x420/eeeeee/999999?text=Innovation+Lab"},
+]
+
+SPOTLIGHT_SLIDES = [
+    {
+        "type": "news",
+        "image": "https://placehold.co/900x620/1a1a1a/1a1a1a",
+        "title": "Swami Vivekananda University Felicitates 500+ Merit Scholars; Offers Scholarships up to 100% at SVU Scholars' Summit 2026",
+        "body": "In a major push toward making world-class education accessible and reducing student dropouts, Swami Vivekananda University inaugurated …",
+        "cta_label": "Scholarships",
+        "cta_slug": "scholarships",
+        "tags": ["Scholarships", "Admissions"],
+    },
+    {
+        "type": "video",
+        "image": "https://placehold.co/900x620/141414/141414",
+        "eyebrow": "Built for",
+        "title": "Ambitious Bharat",
+        "url_text": "www.svu.ac.in",
+        "phone_text": "Toll Free: 1800 1212 88800",
+    },
+    {
+        "type": "news",
+        "image": "https://placehold.co/900x620/1a1a1a/1a1a1a",
+        "title": "SVU Signs Landmark MoU for Global Student Exchange with 12 Partner Universities",
+        "body": "Students across engineering, management and design programs will now be eligible for semester-abroad and dual-degree pathways …",
+        "cta_label": "International",
+        "cta_slug": "international",
+        "tags": ["International", "MoU"],
+    },
+    {
+        "type": "video",
+        "image": "https://placehold.co/900x620/141414/141414",
+        "eyebrow": "Shaping",
+        "title": "Tomorrow's Leaders",
+        "url_text": "www.svu.ac.in",
+        "phone_text": "Toll Free: 1800 1212 88800",
+    },
+    {
+        "type": "news",
+        "image": "https://placehold.co/900x620/1a1a1a/1a1a1a",
+        "title": "SVU Athletes Bring Home Gold and Silver at the 2026 Commonwealth Games",
+        "body": "The university’s sports scholarship program continues to produce national and international medal-winning athletes …",
+        "cta_label": "Sports & Adventure",
+        "cta_slug": "sports-adventure",
+        "tags": ["Campus Life", "Sports"],
+    },
+]
+
+AERIAL_SLIDES = [
+    {"image": "https://placehold.co/1920x640/2a2a2a/2a2a2a", "caption": "Sprawling Campus Infrastructure"},
+    {"image": "https://placehold.co/1920x640/1f2a2a/1f2a2a", "caption": "State-of-the-Art Learning Spaces"},
+    {"image": "https://placehold.co/1920x640/262220/262220", "caption": "Vibrant Student Life"},
+]
+
+NEWS_LIST_ITEMS = [
+    {
+        "date": "Jan 20", "category": "Accolades",
+        "title": "Swami Vivekananda University bags 'AI-First Organisation' award at the Republic AI Summit & Awards 2026",
+        "source": "Swami Vivekananda University",
+        "image": "https://placehold.co/160x140/dddddd/888888?text=SVU",
+    },
+    {
+        "date": "Jan 11", "category": "Extracurricular",
+        "title": "Swami Vivekananda University Becomes Five Time AIU Inter University North Zone Youth Overall Champion",
+        "source": "Swami Vivekananda University",
+        "image": "https://placehold.co/160x140/dddddd/888888?text=SVU",
+    },
+    {
+        "date": "Dec 06", "category": "KIUG 2025 Crown",
+        "title": "Swami Vivekananda University Retains KIUG 2025 Crown With 67 Medals — Including 42 Gold, 14 Silver & 11 Bronze!",
+        "source": "Swami Vivekananda University",
+        "image": "https://placehold.co/160x140/dddddd/888888?text=SVU",
+    },
+    {
+        "date": "Apr 11", "category": "Competition",
+        "title": "SVU Campus Ambassadors Secure 1st Runner-Up at LinkedIn Dragon's Den",
+        "source": "Swami Vivekananda University",
+        "image": "https://placehold.co/160x140/dddddd/888888?text=SVU",
+    },
+    {
+        "date": "Mar 02", "category": "Research",
+        "title": "SVU Researchers Publish Breakthrough Study in Nature Communications",
+        "source": "Swami Vivekananda University",
+        "image": "https://placehold.co/160x140/dddddd/888888?text=SVU",
+    },
+]
+
+NEWS_FEATURED_SLIDES = [
+    {
+        "image": "https://placehold.co/1100x620/8b2fa8/8b2fa8",
+        "date": "Jan 23", "category": "AI Fest",
+        "headline": "Swami Vivekananda University Launches West Bengal's First 'AI Fest 2026' to Empower Young Innovators and Transform Ideas into Tech-Driven Solutions for a Digital Bharat",
+        "cta_label": "AI Fest 2026",
+    },
+    {
+        "image": "https://placehold.co/1100x620/1f3a8b/1f3a8b",
+        "date": "Feb 14", "category": "Convocation",
+        "headline": "Swami Vivekananda University Celebrates Its Largest Convocation Ceremony with 5,000+ Graduating Students",
+        "cta_label": "Convocation 2026",
+    },
+    {
+        "image": "https://placehold.co/1100x620/1f8b5a/1f8b5a",
+        "date": "Mar 10", "category": "Innovation",
+        "headline": "SVU Innovation Tank Backs 40 Student Startups with Seed Funding and Mentorship",
+        "cta_label": "Innovation Tank",
+    },
+]
+
+NEWS_SIDE_CARDS = [
+    {
+        "image": "https://placehold.co/540x360/5a5a72/5a5a72",
+        "date": "June 08", "category": "Influencer Visit",
+        "headline": "India's Top Influencer - Flying Beast | Gaurav Taneja Speaks about Swami Vivekananda University",
+        "source": "Campus Life",
+        "quote": "Excellent Infrastructure at SVU prepares you for life",
+        "quote_name": "Gaurav Taneja",
+    },
+    {
+        "image": "https://placehold.co/540x360/8b3a2f/8b3a2f",
+        "date": "May 13", "category": "SVU Visit",
+        "headline": "The Editor-in-Chief of Curly Tales, Kamiya Jani, visited Swami Vivekananda University",
+        "source": "Campus Life",
+        "quote": "", "quote_name": "",
+    },
+]
+
+
+def home(request):
+    context = {
+        "legacy_stats": LEGACY_STATS,
+        "ranking_groups": RANKING_GROUPS,
+        "accreditation_rows": ACCREDITATION_ROWS,
+        "news_interest": NEWS_INTEREST,
+        "notice_items": NOTICE_ITEMS,
+        "placement_drives": PLACEMENT_DRIVES,
+        "placed_students": PLACED_STUDENTS,
+        "placement_overview_stats": PLACEMENT_OVERVIEW_STATS,
+        "package_tiers": PACKAGE_TIERS,
+        "global_accordion_panels": GLOBAL_ACCORDION_PANELS,
+        "testimonials": TESTIMONIALS,
+        "aerial_slides": AERIAL_SLIDES,
+        "hiring_companies": HIRING_COMPANIES,
+        "global_experience_items": GLOBAL_EXPERIENCE_ITEMS,
+        "why_choose_cu": WHY_CHOOSE_CU,
+        "research_stats": RESEARCH_STATS,
+        "research_media": RESEARCH_MEDIA,
+        "spotlight_slides": SPOTLIGHT_SLIDES,
+        "news_list_items": NEWS_LIST_ITEMS,
+        "news_featured_slides": NEWS_FEATURED_SLIDES,
+        "news_side_cards": NEWS_SIDE_CARDS,
+    }
+    return render(request, "core/home.html", context)
+
+
+def placeholder_page(request, slug):
+    title = slug.replace("-", " ").title()
+    return render(request, "core/placeholder.html", {"title": title})

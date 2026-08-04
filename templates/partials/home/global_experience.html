@@ -1,0 +1,50 @@
+{% load static %}
+<section class="section global-section">
+  <div class="container">
+    <div class="global-grid">
+      <div class="global-media" data-aos="fade-right">
+        <img src="https://placehold.co/640x480/eeeeee/999999?text=Global+Campus+Experience" alt="Students from around the world at Swami Vivekananda University">
+        <button class="global-play-btn" type="button" aria-label="Play video"><i class="fa-solid fa-play"></i></button>
+      </div>
+      <div class="global-content" data-aos="fade-left">
+        <span class="section-eyebrow">Global Educational Experience</span>
+        <h2 class="section-title text-start">Immerse Yourself with Peers from <span>68 Countries</span></h2>
+        <ul class="global-list">
+          {% for item in global_experience_items %}
+          <li><i class="fa-solid fa-circle-check"></i> {{ item }}</li>
+          {% endfor %}
+        </ul>
+        <a href="{% url 'placeholder_page' 'international' %}" class="btn btn-red">My Global Campus</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section banner-cta-section">
+  <div class="container">
+    <div class="banner-cta" data-aos="fade-up" style="background-image: linear-gradient(90deg, rgba(15,15,15,0.97) 0%, rgba(15,15,15,0.9) 30%, rgba(15,15,15,0.3) 58%, rgba(15,15,15,0.6) 100%), url('{% static 'img/3.png' %}');">
+      <span class="banner-cta-glow"></span>
+      <h2 class="banner-cta-heading">
+        <span class="banner-cta-line1" data-aos="fade-right" data-aos-duration="900">Education That Empowers</span>
+        <span class="banner-cta-line2" data-aos="fade-left" data-aos-duration="900" data-aos-delay="150">Opportunities That Transform</span>
+      </h2>
+      <a href="{% url 'placeholder_page' 'apply-now' %}" class="btn btn-red banner-cta-btn">Apply Now <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<section class="aerial-slider-section" data-aos="fade-up">
+  <div class="swiper aerial-swiper">
+    <div class="swiper-wrapper">
+      {% for slide in aerial_slides %}
+      <div class="swiper-slide">
+        <div class="aerial-slide" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.6), rgba(0,0,0,0.1)), url('{{ slide.image }}');">
+          <span class="aerial-slide-num">{{ forloop.counter|stringformat:"02d" }}</span>
+          <span class="aerial-slide-caption">{{ slide.caption }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="aerial-pagination"></div>
+  </div>
+</section>

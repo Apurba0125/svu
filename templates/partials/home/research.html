@@ -1,0 +1,35 @@
+<section class="section research-section">
+  <div class="container">
+    <div class="section-head legacy-heading-wrap" data-aos="fade-up">
+      <h2 class="legacy-heading">Pioneering <em>Research</em> that Transforms Tomorrow</h2>
+    </div>
+
+    <div class="legacy-stats-row" data-aos="fade-up">
+      {% for stat in research_stats %}
+      <div class="legacy-stat">
+        <div class="stat-value" data-count>{{ stat.value }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="legacy-media-carousel" data-aos="fade-up">
+      <button class="spotlight-arrow research-media-prev" type="button" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+
+      <div class="swiper research-media-swiper">
+        <div class="swiper-wrapper">
+          {% for media in research_media %}
+          <div class="swiper-slide">
+            <div class="legacy-media-slide">
+              <img src="{{ media.image }}" alt="{{ media.tag }} at Swami Vivekananda University">
+              <span class="legacy-media-tag">{{ media.tag }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button class="spotlight-arrow research-media-next" type="button" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </div>
+</section>

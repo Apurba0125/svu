@@ -1,0 +1,35 @@
+<div class="modal fade" id="enquiryModal" tabindex="-1" aria-labelledby="enquiryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content enquiry-modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="enquiryModalLabel">Admission Enquiry Form</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Full Name" required>
+          </div>
+          <div class="mb-3">
+            <input type="tel" class="form-control" placeholder="Mobile Number" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" class="form-control" placeholder="Email Address" required>
+          </div>
+          <div class="mb-3">
+            <select class="form-select" required>
+              <option value="" selected disabled>Select Program of Interest</option>
+              <option>Engineering</option>
+              <option>Management (BBA/MBA)</option>
+              <option>Computing (BCA/MCA)</option>
+              <option>Commerce</option>
+              <option>Law</option>
+              <option>Design</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-red w-100">Submit Enquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

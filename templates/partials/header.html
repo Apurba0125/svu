@@ -1,0 +1,342 @@
+{% load static core_extras %}
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-ticker">
+      <button class="ticker-arrow ticker-prev" aria-label="Previous announcement"><i class="fa-solid fa-chevron-left"></i></button>
+      <div class="swiper ticker-swiper">
+        <div class="swiper-wrapper">
+          {% for message in topbar_announcements %}
+          <div class="swiper-slide ticker-slide">
+            <a href="#">{{ message|safe }}</a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <a href="#" class="ticker-cta">REGISTER NOW</a>
+      <button class="ticker-arrow ticker-next" aria-label="Next announcement"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div class="topbar-actions">
+      <a href="#" class="topbar-link"><i class="fa-brands fa-whatsapp icon"></i><span>Whatsapp</span></a>
+      <a href="tel:1800121288800" class="topbar-link"><i class="fa-solid fa-phone icon"></i><span>Call Us</span></a>
+      <a href="#" class="topbar-link topbar-link-360"><i class="fa-solid fa-globe icon"></i><span>360&deg;</span></a>
+      <div class="topbar-social">
+        {% for s in social_links %}
+        <a href="#" aria-label="{{ s.label }}"><i class="fa-brands fa-{{ s.icon }} icon"></i></a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-main">
+    <div class="container">
+      <a href="{% url 'home' %}" class="brand">
+        <img src="{% static 'img/logo.jpeg' %}" alt="Swami Vivekananda University logo" class="brand-badge">
+        <span class="brand-text">
+          <span class="brand-name">SWAMI VIVEKANANDA UNIVERSITY</span>
+          <span class="brand-tagline">Excellence. Innovation. Entrepreneurship</span>
+        </span>
+      </a>
+
+      <nav class="header-top-links">
+        {% for link in top_nav_links %}
+        <a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a>
+        {% endfor %}
+      </nav>
+
+      <div class="header-actions">
+        <a href="tel:1800121288800" class="helpline">
+          <span class="helpline-icon"><i class="fa-solid fa-phone-volume icon"></i></span>
+          <span class="helpline-text">
+            <span class="helpline-label d-block">Admission Helpline</span>
+            <span class="helpline-number">7044086270</span>
+          </span>
+        </a>
+        <button class="hamburger-btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav" aria-label="Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <button class="search-btn" type="button" aria-label="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="primary-nav d-none d-lg-block">
+    <div class="container">
+      <ul class="nav-list">
+        {% for item in main_nav %}
+        <li class="nav-item">
+          <a href="{% url 'placeholder_page' item.slug %}" class="nav-link">
+            {{ item.label }} <i class="fa-solid fa-chevron-down chev"></i>
+          </a>
+
+          {% if item.mega == 'about' %}
+          <div class="mega-panel mega-about">
+            <div class="mega-col">
+              <div class="mega-col-title">WHO WE ARE</div>
+              <ul>
+                {% for link in about_menu.who_we_are %}
+                <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-title">RELATED LINKS</div>
+              <ul>
+                {% for link in about_menu.related_links %}
+                <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="mega-promo">
+              <div class="mega-promo-title">Swami Vivekananda University <span>Best Educational Institution</span></div>
+              <div class="mega-tiles">
+                <div class="mega-tile">Human Dignity</div>
+                <div class="mega-tile">Empathy</div>
+                <div class="mega-tile">Humility</div>
+                <div class="mega-tile">Giving</div>
+              </div>
+              <a href="{% url 'placeholder_page' 'apply-now' %}" class="btn btn-outline w-100">Apply Now</a>
+            </div>
+          </div>
+
+          {% elif item.mega == 'programs' %}
+          <div class="mega-panel mega-programs mega-programs-wrap">
+            <div class="programs-main">
+              <div class="programs-sidebar">
+                <div class="programs-sidebar-tab"><i class="fa-solid fa-caret-down"></i> REGULAR</div>
+              </div>
+              <div class="programs-body">
+                {% for col in program_columns %}
+                <div class="programs-col">
+                  <ul>
+                    {% for p in col %}
+                    <li><a href="{% url 'placeholder_page' p|slugify %}">{{ p }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="programs-promo">
+                <div class="programs-promo-eyebrow">University with</div>
+                <div class="programs-promo-title">Best Placements</div>
+                <div class="promo-stat">
+                  <div class="promo-stat-value">10000+</div>
+                  <div class="promo-stat-label">PLACEMENTS OFFERED IN BATCH 2024-25</div>
+                </div>
+                <div class="promo-stat">
+                  <div class="promo-stat-value">1.7 CR</div>
+                  <div class="promo-stat-label">HIGHEST INTERNATIONAL PACKAGE</div>
+                </div>
+                <div class="promo-stat">
+                  <div class="promo-stat-value">59.9 LPA</div>
+                  <div class="promo-stat-label">HIGHEST NATIONAL PACKAGE</div>
+                </div>
+              </div>
+            </div>
+            <div class="programs-footer-row">
+              <a href="{% url 'placeholder_page' 'doctorate-programs' %}">DOCTORATE PROGRAMS</a>
+              <a href="{% url 'placeholder_page' 'study-abroad-programs' %}">STUDY ABROAD PROGRAMS</a>
+            </div>
+          </div>
+
+          {% elif item.mega == 'academics' %}
+          <div class="mega-panel mega-academics">
+            <div class="academics-links">
+              <ul>
+                {% for link in academics_menu.links %}
+                <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="academics-promo">
+              <div class="academics-promo-banner" style="background-image:linear-gradient(0deg, rgba(0,0,0,.75), rgba(0,0,0,.25)), url('https://placehold.co/360x220/1a1a1a/1a1a1a');">
+                <h3>{{ academics_menu.promo_title }} <span>{{ academics_menu.promo_highlight }}</span> {{ academics_menu.promo_suffix }}</h3>
+              </div>
+              <div class="icon-tile-grid icon-tile-banner">
+                {% for tile in academics_menu.tiles %}
+                <div class="icon-tile"><i class="fa-solid {{ tile.icon }}"></i><span>{{ tile.label }}</span></div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          {% elif item.mega == 'admissions' %}
+          <div class="mega-panel mega-admissions">
+            <div class="admissions-cols">
+              {% for col in admissions_menu.columns %}
+              <div class="admissions-col">
+                {% if col.title %}<div class="admissions-col-title">{{ col.title }}</div>{% endif %}
+                <ul>
+                  {% for link in col.links %}
+                  <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="admissions-banner icon-tile-banner">
+              <div class="icon-tile-banner-title">{{ admissions_menu.banner_title }}</div>
+              <div class="icon-tile-row">
+                {% for tile in admissions_menu.tiles %}
+                <div class="icon-tile"><i class="fa-solid {{ tile.icon }}"></i><span>{{ tile.label }}</span></div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+
+          {% elif item.mega == 'campus-life' %}
+          <div class="mega-panel mega-campus-life">
+            <div class="campus-banner icon-tile-banner">
+              <div class="icon-tile-banner-title">{{ campus_life_menu.banner_title }}</div>
+              <div class="icon-tile-row">
+                {% for tile in campus_life_menu.tiles %}
+                <div class="icon-tile"><i class="fa-solid {{ tile.icon }}"></i><span>{{ tile.label }}</span></div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="campus-cols">
+              {% for col in campus_life_menu.columns %}
+              <div class="campus-col">
+                <ul>
+                  {% for link in col %}
+                  <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          {% elif item.mega == 'research' %}
+          <div class="mega-panel mega-research">
+            <div class="research-media" style="background-image:linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,.3)), url('https://placehold.co/320x360/1a1a1a/1a1a1a');">
+              <h3>{{ research_menu.heading }} <span>{{ research_menu.heading_highlight }}</span> {{ research_menu.heading_suffix }}</h3>
+              <div class="research-stats-grid">
+                {% for stat in research_menu.stats %}
+                <div class="research-stat-tile">
+                  <div class="research-stat-value">{{ stat.value }}</div>
+                  <div class="research-stat-label">{{ stat.label }}</div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="research-sections">
+              {% for section in research_menu.sections %}
+              <div class="research-section">
+                <div class="research-section-title">{{ section.title }}</div>
+                <ul>
+                  {% for link in section.links %}
+                  <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          {% else %}
+          <div class="mega-panel mega-simple">
+            <ul>
+              {% for link in simple_menus|get_item:item.slug %}
+              <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile offcanvas nav -->
+<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="mobileNav">
+  <div class="offcanvas-header">
+    <span class="brand offcanvas-brand">
+      <img src="{% static 'img/logo.jpeg' %}" alt="Swami Vivekananda University logo" class="brand-badge">
+      <span class="brand-name">SWAMI VIVEKANANDA UNIVERSITY</span>
+    </span>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="mobile-nav-accordion">
+      {% for item in main_nav %}
+      <div class="mobile-nav-item">
+        <button class="mobile-nav-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#mnav{{ forloop.counter }}" aria-expanded="false" aria-controls="mnav{{ forloop.counter }}">
+          {{ item.label }} <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="collapse mobile-nav-collapse" id="mnav{{ forloop.counter }}">
+          <ul class="list-unstyled mobile-nav-sublist">
+
+            {% if item.mega == 'about' %}
+            <li class="mobile-nav-subhead">Who We Are</li>
+            {% for link in about_menu.who_we_are %}
+            <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+            {% endfor %}
+            <li class="mobile-nav-subhead">Related Links</li>
+            {% for link in about_menu.related_links %}
+            <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+            {% endfor %}
+
+            {% elif item.mega == 'programs' %}
+            {% for col in program_columns %}
+            {% for p in col %}
+            <li><a href="{% url 'placeholder_page' p|slugify %}">{{ p }}</a></li>
+            {% endfor %}
+            {% endfor %}
+            <li class="mobile-nav-subhead">More</li>
+            <li><a href="{% url 'placeholder_page' 'doctorate-programs' %}">Doctorate Programs</a></li>
+            <li><a href="{% url 'placeholder_page' 'study-abroad-programs' %}">Study Abroad Programs</a></li>
+
+            {% elif item.mega == 'academics' %}
+            {% for link in academics_menu.links %}
+            <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+            {% endfor %}
+
+            {% elif item.mega == 'admissions' %}
+            {% for col in admissions_menu.columns %}
+            {% if col.title %}<li class="mobile-nav-subhead">{{ col.title }}</li>{% endif %}
+            {% for link in col.links %}
+            <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+            {% endfor %}
+            {% endfor %}
+
+            {% elif item.mega == 'campus-life' %}
+            {% for col in campus_life_menu.columns %}
+            {% for link in col %}
+            <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+            {% endfor %}
+            {% endfor %}
+
+            {% elif item.mega == 'research' %}
+            {% for section in research_menu.sections %}
+            <li class="mobile-nav-subhead">{{ section.title }}</li>
+            {% for link in section.links %}
+            <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+            {% endfor %}
+            {% endfor %}
+
+            {% else %}
+            {% for link in simple_menus|get_item:item.slug %}
+            <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+            {% endfor %}
+            {% endif %}
+
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="mobile-nav-subhead mobile-nav-more-label">More</div>
+    <ul class="list-unstyled mobile-nav-more-list">
+      {% for link in top_nav_links %}
+      <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

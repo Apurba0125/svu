@@ -1,0 +1,191 @@
+{% load static %}
+<section class="section legacy-section">
+  <div class="container">
+    <div class="section-head legacy-heading-wrap" data-aos="fade-up">
+      <h2 class="legacy-heading">An <em>Illustrious</em> Legacy we continue to Shape</h2>
+    </div>
+
+    <div class="legacy-stats-row" data-aos="fade-up">
+      {% for stat in legacy_stats %}
+      <div class="legacy-stat">
+        <div class="stat-value" data-count>{{ stat.value }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="legacy-media-carousel" data-aos="fade-up">
+      <p class="legacy-media-label">Our Course</p>
+      <button class="spotlight-arrow legacy-media-prev" type="button" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+
+      <div class="swiper legacy-media-swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-computer-science-engineering' %}" class="legacy-media-slide">
+              <img src="{% static 'img/comp1.png' %}" alt="cse">
+              <span class="legacy-media-tag">Department of Computer Science & Engineering</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-civil-engineering' %}" class="legacy-media-slide">
+              <img src="{% static 'img/civil-engg.png' %}" alt="civil">
+              <span class="legacy-media-tag">Department of Civil Engineering</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-electrical-engineering' %}" class="legacy-media-slide">
+              <img src="{% static 'img/elecrtriacl1.jpg' %}" alt="Electrical">
+              <span class="legacy-media-tag">Department Of Electrical Engineering </span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-electronics-communication-engineering' %}" class="legacy-media-slide">
+              <img src="{% static 'img/electronic-eng.png' %}" alt="Electronics">
+              <span class="legacy-media-tag">Department of Electronics & Communication Engineering</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-mechanical-engineering' %}" class="legacy-media-slide">
+              <img src="{% static 'img/mechanical1.jpg' %}" alt="Mechanical">
+              <span class="legacy-media-tag">Department Of Mechanical Engineering</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-language-literature-cultural-studies' %}" class="legacy-media-slide">
+              <img src="{% static 'img/english.jpg' %}" alt="English">
+              <span class="legacy-media-tag">Department of Language, Literature and Cultural Studies</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-mass-communication' %}" class="legacy-media-slide">
+              <img src="{% static 'img/mass.jpg' %}" alt="jmc">
+              <span class="legacy-media-tag">Department of Mass Communication</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-education' %}" class="legacy-media-slide">
+              <img src="{% static 'img/edu1.png' %}" alt="Education">
+              <span class="legacy-media-tag">Department of Education</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-agriculture' %}" class="legacy-media-slide">
+              <img src="{% static 'img/agri-course.jpg' %}" alt="Education">
+              <span class="legacy-media-tag">Department of Agriculture</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'school-of-management' %}" class="legacy-media-slide">
+              <img src="{% static 'img/management.jpg' %}" alt="Management">
+              <span class="legacy-media-tag">School of Management</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-physiotherapy' %}" class="legacy-media-slide">
+              <img src="{% static 'img/psy.jpg' %}" alt="Physiotherapy">
+              <span class="legacy-media-tag">Department of Physiotherapy</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-optometry' %}" class="legacy-media-slide">
+              <img src="{% static 'img/opto1.png' %}" alt="Optometry">
+              <span class="legacy-media-tag">Department of Optometry</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-food-nutrition' %}" class="legacy-media-slide">
+              <img src="{% static 'img/nutri.jpg' %}" alt="food and nutrition">
+              <span class="legacy-media-tag">Department of Food and Nutrition</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-psychology' %}" class="legacy-media-slide">
+              <img src="{% static 'img/psco.png' %}" alt="Psychology">
+              <span class="legacy-media-tag">Department of Psychology</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-medical-laboratory-technology' %}" class="legacy-media-slide">
+              <img src="{% static 'img/mlt.png' %}" alt="medical laboratory technology">
+              <span class="legacy-media-tag">Department of Medical Laboratory Technology</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-medical-radiology-imaging-technology' %}" class="legacy-media-slide">
+              <img src="{% static 'img/radiology1.png' %}" alt="medical radiology and imaging technology">
+              <span class="legacy-media-tag">Department of Medical Radiology & Imaging Technology</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-legal-studies' %}" class="legacy-media-slide">
+              <img src="{% static 'img/LLBCourse.jpg' %}" alt="legal studies">
+              <span class="legacy-media-tag">Department of Legal Studies</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-computer-application' %}" class="legacy-media-slide">
+              <img src="{% static 'img/cp.jpg' %}" alt="computer application">
+              <span class="legacy-media-tag">Department of Computer Application</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-data-science' %}" class="legacy-media-slide">
+              <img src="{% static 'img/ba-data.jpg' %}" alt="data science">
+              <span class="legacy-media-tag">Department of Data Science</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-cyber-security-and-advanced-networking' %}" class="legacy-media-slide">
+              <img src="{% static 'img/cyber-sec.jpg' %}" alt="cyber security and advanced networking">
+              <span class="legacy-media-tag">Department of Cyber Security & Advanced Networking</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-animation' %}" class="legacy-media-slide">
+              <img src="{% static 'img/ani1.png' %}" alt="animation">
+              <span class="legacy-media-tag">Department of Animation</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-animation' %}" class="legacy-media-slide">
+              <img src="{% static 'img/ani1.png' %}" alt="animation">
+              <span class="legacy-media-tag">Department of Animation</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-biotechnology' %}" class="legacy-media-slide">
+              <img src="{% static 'img/biotechnology.png' %}" alt="biotechnology">
+              <span class="legacy-media-tag">Department of Biotechnology</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-microbiology' %}" class="legacy-media-slide">
+              <img src="{% static 'img/mcrobiologys.jpg' %}" alt="Microbiology">
+              <span class="legacy-media-tag">Department of Microbiology</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-mathematics' %}" class="legacy-media-slide">
+              <img src="{% static 'img/mathematics-png.jpg' %}" alt="Mathematics">
+              <span class="legacy-media-tag">Department of Mathematics</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-chemistry' %}" class="legacy-media-slide">
+              <img src="{% static 'img/chemistry.jpg' %}" alt="Chemistry">
+              <span class="legacy-media-tag">Department of Chemistry</span>
+            </a>
+          </div>
+          <div class="swiper-slide">
+            <a href="{% url 'placeholder_page' 'department-of-physics' %}" class="legacy-media-slide">
+              <img src="{% static 'img/physics_image.webp' %}" alt="Physics">
+              <span class="legacy-media-tag">Department of Physics</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <button class="spotlight-arrow legacy-media-next" type="button" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+  </div>
+</section>

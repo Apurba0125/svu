@@ -1,0 +1,762 @@
+/* ==========================================================================
+   Design tokens
+   ========================================================================== */
+:root {
+  --cu-red: #e30613;
+  --cu-red-dark: #b8050f;
+  --cu-black: #141414;
+  --cu-black-soft: #1c1c1c;
+  --cu-beige: #f6efe0;
+  --cu-beige-dark: #ecdfc0;
+  --cu-text: #202020;
+  --cu-text-muted: #6b6b6b;
+  --cu-white: #ffffff;
+  --header-h-top: 40px;
+  --header-h-main: 88px;
+  --header-h-nav: 50px;
+  --container-w: 1300px;
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.18);
+  --radius: 6px;
+  --transition: 0.2s ease;
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body {
+  /* Defensive safety net: several components (absolutely-positioned mega
+     panels, carousels) can contribute to scrollWidth even while visually
+     hidden/off-screen. Targeted min-width:0 / positioning fixes handle the
+     known cases; this catches anything still slipping through so no device
+     ever gets an unwanted horizontal scrollbar. */
+  overflow-x: hidden;
+  max-width: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--cu-text);
+  background: var(--cu-white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, p, ul, figure { margin: 0; }
+ul { list-style: none; padding: 0; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { font: inherit; cursor: pointer; }
+.container {
+  max-width: var(--container-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 2px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.btn-red { background: var(--cu-red); color: var(--cu-white); }
+.btn-red:hover { background: var(--cu-red-dark); }
+.btn-outline { background: transparent; border-color: var(--cu-white); color: var(--cu-white); }
+.btn-outline:hover { background: var(--cu-white); color: var(--cu-black); }
+.btn-outline-dark { background: transparent; border-color: var(--cu-black); color: var(--cu-black); }
+.btn-outline-dark:hover { background: var(--cu-black); color: var(--cu-white); }
+
+/* ==========================================================================
+   Icon sizing (Font Awesome)
+   ========================================================================== */
+.icon { font-size: 15px; flex-shrink: 0; line-height: 1; }
+
+/* ==========================================================================
+   Top utility bar
+   ========================================================================== */
+/* The header needs more horizontal room than body content sections: brand
+   + the full top-links row + the helpline/search actions add up to ~1470px
+   at their natural size, which never fits inside the shared 1300px
+   .container regardless of viewport (it's capped, not fluid). Give the
+   header's own containers a wider cap instead of fighting for space. */
+.topbar .container,
+.header-main .container,
+.primary-nav .container {
+  max-width: 1560px;
+}
+
+.topbar {
+  background: var(--cu-black);
+  color: #cfcfcf;
+  height: var(--header-h-top);
+  border-bottom: 1px solid #2a2a2a;
+}
+.topbar .container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.topbar-ticker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  flex: 1;
+}
+.ticker-arrow {
+  background: none; border: none; color: #cfcfcf;
+  width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  transition: background var(--transition);
+}
+.ticker-arrow:hover { background: rgba(255,255,255,0.1); }
+.ticker-swiper {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+.ticker-slide { display: flex; align-items: center; }
+.ticker-slide a {
+  display: block;
+  width: 100%;
+  color: #dcdcdc;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ticker-slide a:hover { color: var(--cu-white); }
+.ticker-cta {
+  background: var(--cu-red);
+  color: var(--cu-white);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 6px 14px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+.topbar-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #cfcfcf;
+  white-space: nowrap;
+}
+.topbar-link:hover { color: var(--cu-white); }
+.topbar-link .icon { font-size: 13px; }
+.topbar-social {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 16px;
+  border-left: 1px solid #333;
+}
+.topbar-social a {
+  width: 15px; height: 15px; color: #cfcfcf;
+  display: flex; align-items: center; justify-content: center;
+}
+.topbar-social a:hover { color: var(--cu-red); }
+.topbar-social .icon { font-size: 13px; }
+
+/* ==========================================================================
+   Main header
+   ========================================================================== */
+.site-header { background: var(--cu-black); position: relative; z-index: 200; }
+.header-main {
+  /* min-height (not a fixed height) so that if the top-links row ever
+     wraps to a second line at an in-between width, the box grows to fit
+     it instead of the overflow visually bleeding into the mega-nav row
+     that follows right after in the document. */
+  min-height: var(--header-h-main);
+}
+.header-main .container {
+  min-height: var(--header-h-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.brand-badge {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: var(--cu-white);
+  object-fit: cover;
+  border: 2px solid #fff;
+  flex-shrink: 0;
+}
+.offcanvas-brand { display: flex; align-items: center; gap: 10px; }
+.offcanvas-brand .brand-name { color: var(--cu-white); font-size: 15px; font-weight: 800; }
+#mobileNav .offcanvas-header { padding: 16px 14px 16px 20px; align-items: center; }
+#mobileNav .btn-close {
+  box-sizing: border-box !important;
+  width: 44px !important; height: 44px !important;
+  padding: 0 !important;
+  background-size: 16px;
+  opacity: 0.9;
+  border-radius: 50%;
+  transition: background-color var(--transition), opacity var(--transition);
+}
+#mobileNav .btn-close:hover,
+#mobileNav .btn-close:focus { opacity: 1; background-color: rgba(255, 255, 255, 0.12); }
+.footer-brand .offcanvas-brand .brand-badge { width: 42px; height: 42px; }
+.footer-brand .offcanvas-brand .brand-name { font-size: 16px; }
+.brand-text { display: flex; flex-direction: column; }
+.brand-text .brand-name {
+  display: block;
+  color: var(--cu-white);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.brand-text .brand-tagline {
+  display: block;
+  color: #a9a9a9;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  margin-top: 3px;
+}
+.header-top-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+.header-top-links a {
+  color: #e6e6e6;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.header-top-links a:hover { color: var(--cu-red); }
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.helpline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cu-red);
+  color: var(--cu-white);
+  padding: 8px 18px;
+  border-radius: 2px;
+}
+.helpline-icon {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.helpline-icon .icon { font-size: 14px; }
+.helpline-text { line-height: 1.2; }
+.helpline-label { font-size: 10.5px; opacity: 0.9; }
+.helpline-number { font-size: 15px; font-weight: 800; letter-spacing: 0.02em; }
+.hamburger-btn, .search-btn {
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--cu-white);
+  border: none;
+  transition: background var(--transition);
+}
+.hamburger-btn:hover, .search-btn:hover { background: rgba(255,255,255,0.1); }
+.search-btn { background: var(--cu-white); color: var(--cu-black); }
+.search-btn:hover { background: #e6e6e6; }
+
+/* ==========================================================================
+   Primary nav (mega menu row)
+   ========================================================================== */
+.primary-nav {
+  background: var(--cu-black-soft);
+  border-top: 1px solid #2a2a2a;
+}
+.primary-nav .container { display: flex; }
+.nav-list { display: flex; align-items: stretch; }
+.nav-item { position: relative; }
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--header-h-nav);
+  padding: 0 18px;
+  color: #e0e0e0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+}
+.nav-link .chev { font-size: 10px; transition: transform var(--transition); }
+.nav-item:hover .nav-link,
+.nav-item.active .nav-link {
+  color: var(--cu-white);
+  border-bottom-color: var(--cu-red);
+}
+.nav-item:hover .nav-link .chev { transform: rotate(180deg); }
+
+.mega-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--cu-white);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+  z-index: 100;
+}
+.nav-item:hover .mega-panel { opacity: 1; visibility: visible; transform: translateY(0); }
+
+/* The last nav item sits at the right edge of the viewport — its wide
+   left-anchored panel would run off the right side of the screen. Hang it
+   from the right edge of the item instead. */
+.nav-item:last-child .mega-panel:not(.mega-programs) { left: auto; right: 0; }
+
+/* Simple single-column dropdown */
+.mega-panel.mega-simple {
+  min-width: 260px;
+  padding: 10px 0;
+}
+.mega-panel.mega-simple a {
+  display: block;
+  padding: 10px 22px;
+  font-size: 13.5px;
+  color: var(--cu-text);
+  font-weight: 500;
+}
+.mega-panel.mega-simple a:hover { background: #f7f7f7; color: var(--cu-red); }
+
+/* ABOUT mega menu */
+.mega-panel.mega-about {
+  display: grid;
+  grid-template-columns: 240px 240px 320px;
+  width: 800px;
+}
+.mega-col { padding: 26px 24px; }
+.mega-col-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #9a9a9a;
+  margin-bottom: 14px;
+}
+.mega-col ul li { margin-bottom: 10px; }
+.mega-col ul li a { font-size: 13.5px; font-weight: 600; color: var(--cu-text); }
+.mega-col ul li a:hover { color: var(--cu-red); }
+.mega-promo {
+  background: linear-gradient(160deg, #262626, #101010);
+  color: var(--cu-white);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mega-promo-title { font-size: 17px; font-weight: 800; line-height: 1.3; margin-bottom: 16px; }
+.mega-promo-title span { color: var(--cu-red); }
+.mega-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #333; margin-bottom: 16px; }
+.mega-tile {
+  background: var(--cu-red);
+  color: var(--cu-white);
+  padding: 16px 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.mega-tile:nth-child(2n) { background: #1e1e1e; }
+
+/* PROGRAMS mega menu */
+.mega-panel.mega-programs {
+  width: min(1180px, 92vw);
+  /* left:50% on an absolutely-positioned element centers it on its
+     containing block — which is this narrow .nav-item, not the viewport.
+     That pushed a 1180px panel far off-screen. position:fixed makes the
+     viewport the reference instead, so 50%/-50% actually centers the page. */
+  position: fixed;
+  top: calc(var(--header-h-top) + var(--header-h-main) + var(--header-h-nav));
+  left: 50%;
+  transform: translate(-50%, 8px);
+  display: flex;
+  flex-direction: column;
+}
+.nav-item:hover .mega-panel.mega-programs { transform: translate(-50%, 0); }
+.programs-main { display: flex; }
+.programs-sidebar {
+  width: 150px;
+  background: #f6f6f6;
+  padding: 26px 0;
+  flex-shrink: 0;
+}
+.programs-sidebar-tab {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 22px;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--cu-text);
+  border-left: 3px solid var(--cu-red);
+  background: var(--cu-white);
+}
+.programs-body { display: flex; flex: 1; padding: 24px 10px; gap: 8px; }
+.programs-col { flex: 1; min-width: 0; padding: 0 12px; }
+.programs-col ul li { margin-bottom: 9px; }
+.programs-col ul li a { font-size: 12.5px; color: var(--cu-text); line-height: 1.35; display: block; }
+.programs-col ul li a:hover { color: var(--cu-red); }
+.programs-promo {
+  width: 260px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #1a1a1a, #0c0c0c);
+  color: var(--cu-white);
+  padding: 22px;
+}
+.programs-promo-eyebrow { font-size: 13px; color: #ccc; }
+.programs-promo-title { font-size: 20px; font-weight: 800; color: var(--cu-red); margin-bottom: 16px; }
+.promo-stat { background: var(--cu-red); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 10px; }
+.promo-stat-value { font-size: 20px; font-weight: 800; line-height: 1.1; }
+.promo-stat-label { font-size: 10.5px; letter-spacing: 0.03em; margin-top: 2px; opacity: 0.9; }
+.programs-footer-row {
+  border-top: 1px solid #eee;
+  display: flex;
+  gap: 40px;
+  padding: 16px 26px;
+}
+.programs-footer-row a { font-size: 12.5px; font-weight: 800; letter-spacing: 0.03em; color: var(--cu-text); }
+.programs-footer-row a:hover { color: var(--cu-red); }
+
+/* Reusable icon-tile component, used across the Academics / Admissions /
+   Campus Life mega panels */
+.icon-tile-row { display: flex; }
+.icon-tile-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.icon-tile {
+  flex: 1;
+  text-align: center;
+  padding: 18px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-width: 0 1px 1px 0;
+}
+.icon-tile i { font-size: 20px; display: block; margin-bottom: 8px; }
+.icon-tile span { display: block; font-size: 11.5px; font-weight: 700; line-height: 1.35; }
+.icon-tile-banner { background: var(--cu-red); color: var(--cu-white); }
+.icon-tile-banner-title { text-align: center; font-size: 15px; font-weight: 800; padding: 14px 0 0; }
+
+/* ACADEMICS mega menu */
+.mega-panel.mega-academics { width: 620px; display: flex; }
+.academics-links { width: 300px; padding: 26px; flex-shrink: 0; }
+.academics-links ul li { margin-bottom: 10px; }
+.academics-links ul li a { font-size: 13.5px; font-weight: 600; color: var(--cu-text); }
+.academics-links ul li a:hover { color: var(--cu-red); }
+.academics-promo { flex: 1; display: flex; flex-direction: column; }
+.academics-promo-banner {
+  flex: 1;
+  padding: 24px;
+  color: var(--cu-white);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+}
+.academics-promo-banner h3 { font-size: 19px; font-weight: 800; line-height: 1.3; }
+.academics-promo-banner h3 span { display: block; color: var(--cu-red); }
+
+/* ADMISSIONS mega menu */
+.mega-panel.mega-admissions { width: 860px; }
+.admissions-cols { display: flex; gap: 30px; padding: 26px; }
+.admissions-col { flex: 1; min-width: 0; }
+.admissions-col-title { font-size: 12px; font-weight: 800; letter-spacing: 0.05em; color: #9a9a9a; margin-bottom: 14px; }
+.admissions-col ul li { margin-bottom: 9px; }
+.admissions-col ul li a { font-size: 13px; font-weight: 600; color: var(--cu-text); }
+.admissions-col ul li a:hover { color: var(--cu-red); }
+.admissions-banner .icon-tile-row { padding: 0 10px; }
+.admissions-banner .icon-tile { border: none; }
+
+/* CAMPUS LIFE mega menu */
+.mega-panel.mega-campus-life { width: 780px; }
+.campus-banner .icon-tile-row { padding: 0 10px; }
+.campus-banner .icon-tile { border: none; }
+.campus-cols { display: flex; gap: 34px; padding: 24px 26px; }
+.campus-col { flex: 1; min-width: 0; }
+.campus-col ul li { margin-bottom: 9px; }
+.campus-col ul li a { font-size: 13px; font-weight: 600; color: var(--cu-text); line-height: 1.4; display: block; }
+.campus-col ul li a:hover { color: var(--cu-red); }
+
+/* Below ~1300px the Campus Life panel (780px, left-anchored) starts
+   pushing a few px past the right edge — right-anchoring it like Research
+   would just push it off the LEFT edge instead (it sits mid-nav, not at
+   the far right), so shrink it a little instead of flipping anchors. */
+@media (max-width: 1300px) {
+  .mega-panel.mega-campus-life { width: 680px; }
+  .campus-cols { gap: 22px; padding: 20px; }
+}
+
+/* RESEARCH & INNOVATION mega menu */
+.mega-panel.mega-research { width: 900px; display: flex; }
+.research-media {
+  width: 320px;
+  flex-shrink: 0;
+  color: var(--cu-white);
+  padding: 24px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.research-media h3 { font-size: 22px; font-weight: 800; line-height: 1.25; }
+.research-media h3 span { display: block; color: var(--cu-red); }
+.research-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-top: 18px; }
+.research-stat-tile { background: var(--cu-red); padding: 12px; }
+.research-stat-value { font-size: 18px; font-weight: 800; }
+.research-stat-label { font-size: 10.5px; margin-top: 2px; line-height: 1.3; }
+.research-sections { flex: 1; padding: 24px 26px; min-width: 0; }
+.research-section { margin-bottom: 18px; }
+.research-section:last-child { margin-bottom: 0; }
+.research-section-title { font-size: 11.5px; font-weight: 800; letter-spacing: 0.04em; color: #9a9a9a; margin-bottom: 10px; }
+.research-section ul li { margin-bottom: 8px; }
+.research-section ul li a { font-size: 13px; font-weight: 600; color: var(--cu-text); }
+.research-section ul li a:hover { color: var(--cu-red); }
+
+/* Mobile nav toggle (hidden on desktop) */
+.mobile-nav-backdrop { display: none; }
+
+/* ==========================================================================
+   Mobile offcanvas nav accordion — mirrors each desktop mega-panel's links
+   ========================================================================== */
+.mobile-nav-accordion { display: flex; flex-direction: column; }
+.mobile-nav-item { border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+.mobile-nav-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  padding: 14px 2px;
+  color: var(--cu-white);
+  font-size: 14.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+.mobile-nav-toggle i { font-size: 12px; color: #9a9a9a; transition: transform var(--transition); }
+.mobile-nav-toggle[aria-expanded="true"] i { transform: rotate(180deg); }
+.mobile-nav-toggle[aria-expanded="true"] { color: var(--cu-red); }
+.mobile-nav-sublist { padding: 0 2px 14px; }
+.mobile-nav-sublist li a {
+  display: block;
+  padding: 8px 0 8px 14px;
+  color: #cfcfcf;
+  font-size: 13.5px;
+  border-left: 2px solid rgba(255, 255, 255, 0.12);
+}
+.mobile-nav-sublist li a:hover { color: var(--cu-white); border-left-color: var(--cu-red); }
+.mobile-nav-subhead {
+  padding: 12px 0 4px 14px;
+  color: var(--cu-red);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.mobile-nav-subhead:first-child { padding-top: 0; }
+.mobile-nav-more-label { padding-top: 18px; padding-left: 2px; border-top: 1px solid rgba(255, 255, 255, 0.12); margin-top: 6px; }
+.mobile-nav-more-list { padding: 4px 0 0; }
+.mobile-nav-more-list li a {
+  display: block;
+  padding: 10px 2px;
+  color: #e6e6e6;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.mobile-nav-more-list li a:hover { color: var(--cu-red); }
+
+/* ==========================================================================
+   Header responsiveness
+   Tiers: >=1200 full row; 992-1199 laptop (top-links hidden, mega nav still
+   shown); <992 mobile/tablet (mega nav swapped for the offcanvas drawer —
+   handled by Bootstrap's own d-none/d-lg-block + d-lg-none pairing, so it
+   is NOT duplicated here to avoid the two rules disagreeing at different
+   breakpoints and hiding the nav trigger entirely in between).
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  /* Below this the mega-nav itself is swapped for the offcanvas drawer,
+     which already lists these same links — no room and no need to
+     duplicate them in the header row too. */
+  .header-top-links { display: none; }
+}
+@media (min-width: 992px) and (max-width: 1399.98px) {
+  /* Laptop tier: still tight even at the smaller size, so drop the
+     helpline's label/number text (icon-only) to free up room. */
+  .helpline-text { display: none; }
+  .helpline { padding: 10px; border-radius: 50%; }
+  .helpline-icon { width: 22px; height: 22px; margin: 0; }
+  .header-top-links { gap: 10px; }
+  .header-top-links a { font-size: 10px; }
+}
+@media (max-width: 767.98px) {
+  /* Not enough room for text labels + the 360°/social icon cluster in one
+     40px-tall strip on phones and small tablets — keep only what's
+     actionable: Register, WhatsApp, Call. */
+  .topbar-actions .topbar-link span { display: none; }
+  .topbar-actions { gap: 12px; }
+  .topbar-link-360, .topbar-social { display: none; }
+}
+@media (max-width: 575.98px) {
+  .ticker-prev, .ticker-next, .ticker-swiper { display: none; }
+  .topbar-ticker { flex: 0 0 auto; gap: 0; }
+  .topbar-actions { gap: 14px; }
+}
+@media (max-width: 991.98px) {
+  .header-main { height: auto; min-height: var(--header-h-main); padding: 10px 0; }
+  .helpline-text { display: none; }
+  .helpline { padding: 10px; border-radius: 50%; }
+  .helpline-icon { width: 22px; height: 22px; margin: 0; }
+  .header-actions { gap: 10px; }
+}
+@media (max-width: 575.98px) {
+  .brand { gap: 8px; }
+  .brand-badge { width: 38px; height: 38px; border-width: 1px; }
+  .brand-text .brand-name {
+    font-size: 12.5px;
+    white-space: normal;
+    line-height: 1.15;
+    max-width: 150px;
+  }
+  .brand-text .brand-tagline { font-size: 8.5px; margin-top: 1px; }
+  .hamburger-btn, .search-btn { width: 34px; height: 34px; }
+  .hamburger-btn .icon, .search-btn i, .helpline-icon .icon { font-size: 13px; }
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.site-footer { background: var(--cu-black); color: #bdbdbd; }
+.footer-top { padding: 56px 0 32px; border-bottom: 1px solid #2a2a2a; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(5, 1fr);
+  gap: 32px;
+}
+.footer-brand .brand-name { color: var(--cu-white); font-size: 20px; font-weight: 800; }
+.footer-brand .brand-tagline { color: #8f8f8f; font-size: 12px; margin: 6px 0 18px; }
+.footer-brand p { font-size: 13px; line-height: 1.7; color: #9c9c9c; margin-bottom: 18px; }
+.footer-col-title { color: var(--cu-white); font-size: 13.5px; font-weight: 800; letter-spacing: 0.03em; margin-bottom: 18px; }
+.footer-col ul li { margin-bottom: 11px; }
+.footer-col ul li a { font-size: 13px; color: #b0b0b0; }
+.footer-col ul li a:hover { color: var(--cu-red); }
+.footer-social { display: flex; gap: 10px; }
+.footer-social a {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #232323; display: flex; align-items: center; justify-content: center;
+  color: #d5d5d5;
+}
+.footer-social a:hover { background: var(--cu-red); color: var(--cu-white); }
+.footer-social .icon { font-size: 14px; }
+.footer-bottom { padding: 20px 0; }
+.footer-bottom .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12.5px;
+  color: #8a8a8a;
+}
+.footer-bottom-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-bottom-links a { color: #8a8a8a; }
+.footer-bottom-links a:hover { color: var(--cu-white); }
+
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: span 2; }
+}
+@media (max-width: 575.98px) {
+  .footer-top { padding: 44px 0 24px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+  .footer-brand { grid-column: auto; }
+  .footer-bottom .container { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+/* ==========================================================================
+   Chat / talk-to-us floating widgets
+   ========================================================================== */
+.floating-widgets {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  z-index: 300;
+}
+.floating-chat-btn {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #1b6fd8;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-md);
+  color: var(--cu-white);
+}
+.floating-chat-btn .icon { font-size: 26px; }
+.floating-talk-btn {
+  background: #f2b705;
+  color: #141414;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   Placeholder page
+   ========================================================================== */
+.placeholder-page { padding: 90px 0; text-align: center; }
+.placeholder-page h1 { font-size: 30px; margin-bottom: 12px; }
+.placeholder-page p { color: var(--cu-text-muted); }
