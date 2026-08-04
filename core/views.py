@@ -309,7 +309,7 @@ SPOTLIGHT_SLIDES = [
         "eyebrow": "Built for",
         "title": "Ambitious Bharat",
         "url_text": "www.svu.ac.in",
-        "phone_text": "Toll Free: 1800 1212 88800",
+        "phone_text": "Call: 7044086270",
     },
     {
         "type": "news",
@@ -326,7 +326,7 @@ SPOTLIGHT_SLIDES = [
         "eyebrow": "Shaping",
         "title": "Tomorrow's Leaders",
         "url_text": "www.svu.ac.in",
-        "phone_text": "Toll Free: 1800 1212 88800",
+        "phone_text": "Call: 7044086270",
     },
     {
         "type": "news",
