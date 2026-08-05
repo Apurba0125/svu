@@ -639,17 +639,22 @@ button { font: inherit; cursor: pointer; }
   .header-top-links a { font-size: 10px; }
 }
 @media (max-width: 767.98px) {
-  /* Not enough room for text labels + the 360°/social icon cluster in one
-     40px-tall strip on phones and small tablets — keep only what's
-     actionable: Register, WhatsApp, Call. */
+  /* Not enough room for text labels + the 360° icon in one 40px-tall
+     strip on phones and small tablets — drop those, but keep the
+     social icons visible (icon-only, tightened up) alongside
+     Register, WhatsApp and Call. */
   .topbar-actions .topbar-link span { display: none; }
-  .topbar-actions { gap: 12px; }
-  .topbar-link-360, .topbar-social { display: none; }
+  .topbar-actions { gap: 10px; }
+  .topbar-link-360 { display: none; }
+  .topbar-social { gap: 8px; padding-left: 10px; }
 }
 @media (max-width: 575.98px) {
   .ticker-prev, .ticker-next, .ticker-swiper { display: none; }
   .topbar-ticker { flex: 0 0 auto; gap: 0; }
-  .topbar-actions { gap: 14px; }
+  .topbar-actions { gap: 8px; }
+  .topbar-social { gap: 6px; padding-left: 8px; }
+  .topbar-social a { width: 13px; height: 13px; }
+  .topbar-social .icon { font-size: 11px; }
 }
 @media (max-width: 991.98px) {
   .header-main { height: auto; min-height: var(--header-h-main); padding: 10px 0; }
