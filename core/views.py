@@ -305,10 +305,10 @@ RESEARCH_STATS = [
 ]
 
 RESEARCH_MEDIA = [
-    {"tag": "Moot Court", "image": "https://placehold.co/640x420/eeeeee/999999?text=Moot+Court"},
-    {"tag": "SVU Centre of Excellence", "image": "https://placehold.co/640x420/eeeeee/999999?text=SVU+Centre+of+Excellence"},
-    {"tag": "Research Symposium", "image": "https://placehold.co/640x420/eeeeee/999999?text=Research+Symposium"},
-    {"tag": "Innovation Lab", "image": "https://placehold.co/640x420/eeeeee/999999?text=Innovation+Lab"},
+    {"tag": "Moot Court", "image": static("img/mootcourt.png")},
+    {"tag": "SVU Centre of Excellence", "image": static("img/ce.png")},
+    {"tag": "Research Symposium", "image": static("img/rs.png")},
+    {"tag": "Innovation Lab", "image": static("img/innovation.png")},
 ]
 
 SPOTLIGHT_SLIDES = [
@@ -358,9 +358,9 @@ SPOTLIGHT_SLIDES = [
 ]
 
 AERIAL_SLIDES = [
-    {"image": "https://placehold.co/1920x640/2a2a2a/2a2a2a", "caption": "Sprawling Campus Infrastructure"},
-    {"image": "https://placehold.co/1920x640/1f2a2a/1f2a2a", "caption": "State-of-the-Art Learning Spaces"},
-    {"image": "https://placehold.co/1920x640/262220/262220", "caption": "Vibrant Student Life"},
+    {"image": static("img/li_1.jpg"), "caption": "Sprawling Campus Infrastructure"},
+    {"image": static("img/li_2.jpg"), "caption": "State-of-the-Art Learning Spaces"},
+    {"image": static("img/li_3.jpg"), "caption": "Vibrant Student Life"},
 ]
 
 NEWS_LIST_ITEMS = [
@@ -398,19 +398,25 @@ NEWS_LIST_ITEMS = [
 
 NEWS_FEATURED_SLIDES = [
     {
-        "image": "https://placehold.co/1100x620/8b2fa8/8b2fa8",
+        "image": static("img/news1.jpg"),
         "date": "Jan 23", "category": "AI Fest",
         "headline": "Swami Vivekananda University Launches West Bengal's First 'AI Fest 2026' to Empower Young Innovators and Transform Ideas into Tech-Driven Solutions for a Digital Bharat",
         "cta_label": "AI Fest 2026",
     },
     {
-        "image": "https://placehold.co/1100x620/1f3a8b/1f3a8b",
+        "image": static("img/news2.jpg"),
         "date": "Feb 14", "category": "Convocation",
         "headline": "Swami Vivekananda University Celebrates Its Largest Convocation Ceremony with 5,000+ Graduating Students",
         "cta_label": "Convocation 2026",
     },
     {
-        "image": "https://placehold.co/1100x620/1f8b5a/1f8b5a",
+        "image": static("img/news3.jpg"),
+        "date": "Mar 10", "category": "Innovation",
+        "headline": "SVU Innovation Tank Backs 40 Student Startups with Seed Funding and Mentorship",
+        "cta_label": "Innovation Tank",
+    },
+    {
+        "image": static("img/news4.jpg"),
         "date": "Mar 10", "category": "Innovation",
         "headline": "SVU Innovation Tank Backs 40 Student Startups with Seed Funding and Mentorship",
         "cta_label": "Innovation Tank",
@@ -419,17 +425,17 @@ NEWS_FEATURED_SLIDES = [
 
 NEWS_SIDE_CARDS = [
     {
-        "image": "https://placehold.co/540x360/5a5a72/5a5a72",
+        "image": static("img/event1.jpg"),
         "date": "June 08", "category": "Influencer Visit",
-        "headline": "India's Top Influencer - Flying Beast | Gaurav Taneja Speaks about Swami Vivekananda University",
+        "headline": "1st counelling meeting at Swami Vivekananda University with 2026 batch students",
         "source": "Campus Life",
-        "quote": "Excellent Infrastructure at SVU prepares you for life",
+        "quote": "",
         "quote_name": "Gaurav Taneja",
     },
     {
-        "image": "https://placehold.co/540x360/8b3a2f/8b3a2f",
+        "image": static("img/event2.jpg"),
         "date": "May 13", "category": "SVU Visit",
-        "headline": "The Editor-in-Chief of Curly Tales, Kamiya Jani, visited Swami Vivekananda University",
+        "headline": "Swami Vivekananda University Welcomes Renowned AI Researcher Dr. Ananya Gupta for a Seminar on 'AI in Healthcare'",
         "source": "Campus Life",
         "quote": "", "quote_name": "",
     },

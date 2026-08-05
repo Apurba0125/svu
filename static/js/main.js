@@ -72,12 +72,16 @@ window.addEventListener("load", function () {
     new Swiper(".stats-banner-swiper", {
       loop: true,
       slidesPerView: "auto",
-      spaceBetween: 60,
+      spaceBetween: 40,
       speed: 4000,
       autoplay: { delay: 0, disableOnInteraction: false },
       allowTouchMove: false,
       resizeObserver: false,
       observer: false,
+      breakpoints: {
+        768: { spaceBetween: 100 },
+        1200: { spaceBetween: 180 },
+      },
     });
   }
 
