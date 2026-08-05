@@ -68,6 +68,19 @@ window.addEventListener("load", function () {
     });
   }
 
+  if (document.querySelector(".stats-banner-swiper")) {
+    new Swiper(".stats-banner-swiper", {
+      loop: true,
+      slidesPerView: "auto",
+      spaceBetween: 60,
+      speed: 4000,
+      autoplay: { delay: 0, disableOnInteraction: false },
+      allowTouchMove: false,
+      resizeObserver: false,
+      observer: false,
+    });
+  }
+
   if (document.querySelector(".legacy-media-swiper")) {
     new Swiper(".legacy-media-swiper", {
       loop: true,

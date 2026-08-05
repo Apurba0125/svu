@@ -3,12 +3,12 @@
   <div class="container">
     <div class="global-grid">
       <div class="global-media" data-aos="fade-right">
-        <img src="https://placehold.co/640x480/eeeeee/999999?text=Global+Campus+Experience" alt="Students from around the world at Swami Vivekananda University">
+        <img src="{% static 'img/global.png' %}" alt="Students from around the world at Swami Vivekananda University">
         <button class="global-play-btn" type="button" aria-label="Play video"><i class="fa-solid fa-play"></i></button>
       </div>
       <div class="global-content" data-aos="fade-left">
         <span class="section-eyebrow">Global Educational Experience</span>
-        <h2 class="section-title text-start">Immerse Yourself with Peers from <span>68 Countries</span></h2>
+        <h2 class="section-title text-start">Learn, Innovate & Grow with a  <span>World-Class Education</span></h2>
         <ul class="global-list">
           {% for item in global_experience_items %}
           <li><i class="fa-solid fa-circle-check"></i> {{ item }}</li>

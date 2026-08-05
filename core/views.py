@@ -3,11 +3,29 @@ from django.templatetags.static import static
 
 
 LEGACY_STATS = [
-    {"value": "154+", "label": "Industry Collaborations"},
-    {"value": "980+", "label": "International MoUs"},
-    {"value": "1350+", "label": "Patents Filed"},
-    {"value": "300+", "label": "Programs Offered"},
-    {"value": "100000+", "label": "Alumni Network"},
+    {"value": "500+", "label": "Industry Collaborations"},
+    {"value": "200+", "label": "International MoUs"},
+    {"value": "1,350+", "label": "Patents Filed"},
+    {"value": "50+", "label": "Programs Offered"},
+    {"value": "5,000+", "label": "Alumni Network"},
+]
+
+STAT_HIGHLIGHTS = [
+    {"icon": static("img/Icon2.png"), "value": "300+", "label": "PHD Faculties"},
+    {"icon": static("img/Icon3.png"), "value": "50+", "label": "Courses"},
+    {"icon": static("img/Icon4.png"), "value": "500+", "label": "Industry Collaboration"},
+    {"icon": static("img/Icon5.png"), "value": "98%", "label": "Placement"},
+]
+
+CAMPUS_GALLERY_ITEMS = [
+    {"image": static("img/library.jpg"), "caption": "Library"},
+    {"image": static("img/lab.png"), "caption": "Laboratory"},
+    {"image": static("img/classroom.jpg"), "caption": "Classroom"},
+    {"image": static("img/campus.png"), "caption": "Campus Building"},
+    {"image": static("img/garden.png"), "caption": "Gardening"},
+    {"image": static("img/sports.png"), "caption": "Sports"},
+    {"image": static("img/groupstudy.png"), "caption": "Group Study"},
+    {"image": static("img/lab-2.jpg"), "caption": "Practical Laboratory"},
 ]
 
 RANKING_GROUPS = [
@@ -81,7 +99,7 @@ ACCREDITATION_ROWS = [
 ]
 
 NEWS_INTEREST = {
-    "image": "https://placehold.co/560x420/eeeeee/999999?text=Campus+Life",
+    # "image": "https://placehold.co/560x420/eeeeee/999999?text=Campus+Life",
     "topic": "Topic For News",
     "body": "Welcome to Swami Vivekananda University. We are an institution in West Bengal dedicated to the pursuit of knowledge and excellence and providing quality education to our students. Since our inception, we have been striving to provide our students with an exceptional learning experience.",
 }
@@ -127,56 +145,56 @@ PLACEMENT_DRIVES = [
 
 PLACED_STUDENTS = [
     {
-        "first": "Jaspreet", "last": "Singh", "company": "Atlassian",
-        "package": "59.9", "image": "https://placehold.co/460x620/1a2233/1a2233",
+        "first": "Jaspreet", "last": "Singh", "company": "Amazon",
+        "package": "25", "image": "https://placehold.co/460x620/1a2233/1a2233",
     },
     {
-        "first": "Vandana", "last": "Chauhan", "company": "Paloalto",
-        "package": "54.75", "image": "https://placehold.co/460x620/2a3324/2a3324",
+        "first": "Vandana", "last": "Chauhan", "company": "TCS",
+        "package": "17", "image": "https://placehold.co/460x620/2a3324/2a3324",
     },
     {
-        "first": "Rohan", "last": "Mehta", "company": "Oracle",
-        "package": "48.2", "image": "https://placehold.co/460x620/241a1a/241a1a",
+        "first": "Rohan", "last": "Mehta", "company": "IBM",
+        "package": "10", "image": "https://placehold.co/460x620/241a1a/241a1a",
     },
     {
-        "first": "Ananya", "last": "Roy", "company": "Microsoft",
-        "package": "42.6", "image": "https://placehold.co/460x620/1a2422/1a2422",
+        "first": "Ananya", "last": "Roy", "company": "Rich Panel",
+        "package": "5", "image": "https://placehold.co/460x620/1a2422/1a2422",
     },
 ]
 
 PLACEMENT_OVERVIEW_STATS = [
-    {"value": "10000+", "label": "Placement Offers", "tone": "beige"},
-    {"value": "1300+", "label": "Companies Visited for Recruitment", "tone": "grey"},
-    {"value": "59.9", "suffix": "LPA", "label": "Highest National Package Offered", "tone": "black"},
-    {"value": "1.7", "suffix": "CR", "label": "Highest International Package Offered", "tone": "grey"},
+    {"value": "100+", "label": "Placement Offers", "tone": "beige"},
+    {"value": "500+", "label": "Companies Visited for Recruitment", "tone": "grey"},
+    {"value": "25", "suffix": "LPA", "label": "Highest National Package Offered", "tone": "black"},
+    # {"value": "1.7", "suffix": "CR", "label": "Highest International Package Offered", "tone": "grey"},
 ]
 
 PACKAGE_TIERS = [
-    {"value": "20", "companies": "40+"},
-    {"value": "15", "companies": "50+"},
-    {"value": "10", "companies": "100+"},
-    {"value": "7", "companies": "350+"},
-    {"value": "5", "companies": "650+"},
+    {"value": "5", "companies": "5+"},
+    {"value": "4.5", "companies": "10+"},
+    {"value": "3.5", "companies": "15+"},
+    {"value": "2", "companies": "8+"},
+    {"value": "1.80", "companies": "25+"},
 ]
 
 HIRING_COMPANIES = [
-    {"name": "RBS", "color": "#002d72"},
-    {"name": "Bank of America", "color": "#e31837"},
-    {"name": "ICICI Securities", "color": "#f37021"},
-    {"name": "Muthoot Finance", "color": "#ed1c24"},
-    {"name": "Godrej", "color": "#00a651"},
-    {"name": "Motorola", "color": "#5b2c91"},
-    {"name": "TATA AIA", "color": "#1e4b9c"},
-    {"name": "Radisson", "color": "#141414"},
-    {"name": "Infosys", "color": "#007cc3"},
-    {"name": "TCS", "color": "#00539f"},
     {"name": "Amazon", "color": "#141414"},
-    {"name": "Microsoft", "color": "#5e5e5e"},
+    {"name": "TATA AIA", "color": "#1e4b9c"},
+    {"name": "Tech Mahindra", "color": "#00539f"},
+    {"name": "GoComet", "color": "#002d72"},
+    {"name": "Focalyt", "color": "#e31837"},
+    {"name": "EXPOSYS DATA LABS", "color": "#f37021"},
+    {"name": "Skytel Tele Services", "color": "#ed1c24"},
+    {"name": "METCONNECT INFOTECH", "color": "#00a651"},
+    {"name": "ZigZag AI", "color": "#5b2c91"},
+    {"name": " ICE MEDIA LAB", "color": "#141414"},
+    {"name": "Saasaro Technova", "color": "#007cc3"},
+    
 ]
 
 GLOBAL_EXPERIENCE_ITEMS = [
     "My Campus Life",
-    "Dual Degree Programs",
+    "Degree Programs",
     "Language Certificate",
     "International Faculty",
     "Career Pathways",
@@ -433,6 +451,8 @@ def home(request):
         "testimonials": TESTIMONIALS,
         "aerial_slides": AERIAL_SLIDES,
         "hiring_companies": HIRING_COMPANIES,
+        "stat_highlights": STAT_HIGHLIGHTS * 4,
+        "campus_gallery_items": CAMPUS_GALLERY_ITEMS,
         "global_experience_items": GLOBAL_EXPERIENCE_ITEMS,
         "why_choose_cu": WHY_CHOOSE_CU,
         "research_stats": RESEARCH_STATS,
