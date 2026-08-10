@@ -95,7 +95,7 @@ PROGRAM_SCHOOL_COLUMNS = [
 
 ABOUT_MENU = {
     "who_we_are": [
-        "Overview", "Our Identity", "Vision & Mission", "Leadership", "Core Values",
+        "Overview", "Our Identity","Our Mentors", "Vision & Mission", "Leadership", "Core Values",
         "Recognition & Approvals", "Awards & Rankings", "Institutional Social Responsibility",
         "SVU Edge",
     ],

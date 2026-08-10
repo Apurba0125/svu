@@ -442,6 +442,30 @@ NEWS_SIDE_CARDS = [
 ]
 
 
+# Slides for the Our Mentors hero. "image" is a static-relative path resolved by
+# {% static %} in the template rather than static() here, so adding a mentor
+# never depends on the staticfiles manifest being built at import time.
+# Drop a photo into static/img/our_mentors/ and add a row to slide it in.
+# stat_label/stat_value are optional — leave blank and the stat block is hidden.
+MENTOR_SLIDES = [
+    {
+        "image": "img/our_mentors/vc.png",
+        "name": "Prof. (Dr.) Subrata Dey",
+        # "role": "Swami Vivekananda University",
+        "role": "Vice Chancellor, Swami Vivekananda University",
+        # "stat_label": "123",
+        # "stat_value": "123",
+    },
+    {
+        "image": "img/our_mentors/deputy_register.png",
+        "name": "Tanmoy Mazumder",
+        "role": "Deputy Register, Swami Vivekananda University",
+        # "stat_label": "",
+        # "stat_value": "",
+    },
+]
+
+
 def home(request):
     context = {
         "legacy_stats": LEGACY_STATS,
@@ -469,6 +493,10 @@ def home(request):
         "news_side_cards": NEWS_SIDE_CARDS,
     }
     return render(request, "core/home.html", context)
+
+
+def mentors(request):
+    return render(request, "core/mentors.html", {"mentor_slides": MENTOR_SLIDES})
 
 
 def placeholder_page(request, slug):

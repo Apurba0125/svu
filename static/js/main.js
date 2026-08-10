@@ -245,6 +245,38 @@ window.addEventListener("load", function () {
     });
   }
 
+  if (document.querySelector(".mentors-swiper")) {
+    // The name/role/stat live outside the carousel (bottom-left of the hero),
+    // so they are driven off the active slide's dataset — same approach as the
+    // news feature carousel above.
+    const setMentorText = (selector, value) => {
+      const el = document.querySelector(selector);
+      if (el) el.textContent = value || "";
+    };
+
+    new Swiper(".mentors-swiper", {
+      loop: true,
+      speed: 700,
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      resizeObserver: false,
+      observer: false,
+      navigation: { prevEl: ".mentors-prev", nextEl: ".mentors-next" },
+      pagination: { el: ".mentors-pagination", clickable: true },
+      on: {
+        slideChange(sw) {
+          const active = sw.slides[sw.activeIndex];
+          if (!active) return;
+          setMentorText("[data-mentor-name]", active.dataset.name);
+          setMentorText("[data-mentor-role]", active.dataset.role);
+          setMentorText("[data-mentor-stat-label]", active.dataset.statLabel);
+          setMentorText("[data-mentor-stat-value]", active.dataset.statValue);
+          const stat = document.querySelector("[data-mentor-stat]");
+          if (stat) stat.hidden = !active.dataset.statValue;
+        },
+      },
+    });
+  }
+
   if (document.querySelector(".alumni-swiper")) {
     const alumniThumbs = document.querySelectorAll(".alumni-thumb");
     const alumniSwiper = new Swiper(".alumni-swiper", {

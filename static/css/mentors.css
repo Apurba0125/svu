@@ -1,0 +1,209 @@
+/* ==========================================================================
+   Our Mentors — video-backed hero with an auto-sliding mentor carousel.
+   Copy sits left, photos slide on the right; below 992px the two stack.
+   ========================================================================== */
+.mentors-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* Painted behind the video so the section never flashes white while the
+     file is still being fetched. */
+  background: var(--cu-black);
+  color: var(--cu-white);
+}
+.mentors-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+/* Weighted to the left so the copy always has contrast, while the right side
+   stays open enough to read as video rather than a flat panel. */
+.mentors-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    rgba(12, 12, 12, 0.96) 0%,
+    rgba(12, 12, 12, 0.88) 34%,
+    rgba(12, 12, 12, 0.55) 62%,
+    rgba(12, 12, 12, 0.72) 100%
+  );
+}
+
+.mentors-hero-inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 48px;
+  padding-top: 72px;
+  padding-bottom: 72px;
+  min-height: min(720px, calc(100vh - var(--header-h-top) - var(--header-h-main) - var(--header-h-nav)));
+}
+
+/* --------------------------------------------------------------- copy ---- */
+.mentors-copy { min-width: 0; }
+.mentors-title {
+  margin: 0;
+  font-size: clamp(30px, 4.2vw, 54px);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+.mentors-title strong { display: block; font-weight: 800; }
+.mentors-rule {
+  display: block;
+  width: 54px;
+  height: 2px;
+  margin: 26px 0;
+  background: rgba(255, 255, 255, 0.65);
+}
+.mentors-lead {
+  max-width: 46ch;
+  margin: 0 0 28px;
+  color: #d2d2d2;
+  font-size: clamp(14px, 1.1vw, 15.5px);
+  line-height: 1.75;
+}
+.mentors-cta { display: inline-flex; align-items: center; gap: 10px; }
+
+/* ----------------------------------------------------- mentor meta bar ---- */
+.mentors-meta {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 52px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.mentors-meta-person { min-width: 0; }
+.mentors-meta-name {
+  display: block;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.mentors-meta-role {
+  display: block;
+  margin-top: 3px;
+  color: #a6a6a6;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.mentors-meta-arrow { flex-shrink: 0; color: #8f8f8f; font-size: 15px; }
+.mentors-meta-stat { min-width: 0; }
+.mentors-meta-stat[hidden] { display: none; }
+.mentors-meta-stat-label {
+  display: block;
+  max-width: 15ch;
+  color: #a6a6a6;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+.mentors-meta-stat-value {
+  display: block;
+  margin-top: 2px;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.mentors-nav { display: flex; gap: 12px; margin-top: 30px; }
+.mentors-arrow {
+  appearance: none;
+  -webkit-appearance: none;
+  display: grid;
+  place-items: center;
+  width: 40px; height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--cu-red);
+  color: var(--cu-white);
+  font-size: 14px;
+  transition: background-color var(--transition), transform var(--transition);
+}
+.mentors-arrow:hover { background-color: var(--cu-red-dark); transform: translateY(-2px); }
+.mentors-arrow:focus-visible { outline: 2px solid var(--cu-white); outline-offset: 2px; }
+
+/* -------------------------------------------------------------- media ---- */
+.mentors-media { position: relative; min-width: 0; }
+.mentors-swiper { overflow: hidden; }
+.mentors-photo {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-md);
+}
+.mentors-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.mentors-pagination {
+  position: static;
+  margin-top: 18px;
+  text-align: center;
+}
+.mentors-pagination .swiper-pagination-bullet {
+  width: 8px; height: 8px;
+  background: rgba(255, 255, 255, 0.45);
+  opacity: 1;
+}
+.mentors-pagination .swiper-pagination-bullet-active { background: var(--cu-red); width: 22px; border-radius: 4px; }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  /* Stack: photo first so the page opens on a face, copy underneath. */
+  .mentors-hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+    padding-top: 48px;
+    padding-bottom: 52px;
+    min-height: 0;
+  }
+  .mentors-media { order: -1; }
+  .mentors-photo { max-width: 420px; margin-inline: auto; }
+  /* The left-weighted gradient reads wrong once the columns stack. */
+  .mentors-hero-overlay {
+    background: linear-gradient(180deg, rgba(12, 12, 12, 0.82) 0%, rgba(12, 12, 12, 0.93) 55%, rgba(12, 12, 12, 0.97) 100%);
+  }
+  .mentors-meta { margin-top: 36px; padding-top: 22px; }
+}
+
+@media (max-width: 575.98px) {
+  .mentors-hero-inner { padding-top: 36px; padding-bottom: 40px; gap: 28px; }
+  .mentors-rule { margin: 20px 0; }
+  .mentors-lead { margin-bottom: 24px; }
+  /* Name and stat side by side get too cramped to read under ~420px. */
+  .mentors-meta {
+    flex-wrap: wrap;
+    gap: 16px 18px;
+    margin-top: 30px;
+  }
+  .mentors-meta-arrow { display: none; }
+  .mentors-meta-stat-label { max-width: none; }
+  .mentors-meta-name { font-size: 17px; }
+  .mentors-meta-stat-value { font-size: 19px; }
+  .mentors-arrow { width: 36px; height: 36px; font-size: 13px; }
+}
+
+/* Users who ask for reduced motion get a still frame, not a looping video. */
+@media (prefers-reduced-motion: reduce) {
+  .mentors-hero-video { display: none; }
+  .mentors-arrow:hover { transform: none; }
+}

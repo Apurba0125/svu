@@ -1,0 +1,71 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Our Mentors | Swami Vivekananda University{% endblock %}
+{% block meta_description %}Meet the mentors and academic leadership guiding Swami Vivekananda University.{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/mentors.css' %}">{% endblock %}
+
+{% block content %}
+<section class="mentors-hero">
+  <video class="mentors-hero-video" autoplay muted loop playsinline preload="metadata">
+    <source src="{% static 'img/swamibannervideonew.mp4' %}" type="video/mp4">
+  </video>
+  <span class="mentors-hero-overlay"></span>
+
+  <div class="container mentors-hero-inner">
+    <div class="mentors-copy">
+      <h1 class="mentors-title">Meet the Minds <strong>Shaping Swami Vivekananda University</strong></h1>
+      <span class="mentors-rule"></span>
+      <p class="mentors-lead">
+        Our mentors bring together decades of academic leadership, research depth and industry
+        experience &mdash; guiding students from their first lecture to their first offer letter.
+      </p>
+
+      <!-- <a href="{% url 'placeholder_page' 'apply-now' %}" class="btn btn-red mentors-cta">
+        Apply Today <i class="fa-solid fa-arrow-right"></i>
+      </a> -->
+
+      <div class="mentors-meta">
+        <div class="mentors-meta-person">
+          <span class="mentors-meta-name" data-mentor-name>{{ mentor_slides.0.name }}</span>
+          <span class="mentors-meta-role" data-mentor-role>{{ mentor_slides.0.role }}</span>
+        </div>
+        <span class="mentors-meta-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
+        <div class="mentors-meta-stat" data-mentor-stat {% if not mentor_slides.0.stat_value %}hidden{% endif %}>
+          <span class="mentors-meta-stat-label" data-mentor-stat-label>{{ mentor_slides.0.stat_label }}</span>
+          <span class="mentors-meta-stat-value" data-mentor-stat-value>{{ mentor_slides.0.stat_value }}</span>
+        </div>
+      </div>
+
+      {% if mentor_slides|length > 1 %}
+      <div class="mentors-nav">
+        <button class="mentors-arrow mentors-prev" type="button" aria-label="Previous mentor"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="mentors-arrow mentors-next" type="button" aria-label="Next mentor"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="mentors-media">
+      <div class="swiper mentors-swiper">
+        <div class="swiper-wrapper">
+          {% for m in mentor_slides %}
+          <div class="swiper-slide"
+               data-name="{{ m.name }}"
+               data-role="{{ m.role }}"
+               data-stat-label="{{ m.stat_label }}"
+               data-stat-value="{{ m.stat_value }}">
+            <div class="mentors-photo">
+              <img src="{% static m.image %}" alt="{{ m.name }}, {{ m.role }}"
+                   {% if not forloop.first %}loading="lazy"{% endif %}>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% if mentor_slides|length > 1 %}
+      <div class="swiper-pagination mentors-pagination"></div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
