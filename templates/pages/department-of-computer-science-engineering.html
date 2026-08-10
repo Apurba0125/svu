@@ -1,0 +1,499 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+HOW TO MAKE ANOTHER PAGE
+---------------------------------------------------------------------------
+1. Copy this file into templates/pages/ and rename it to the slug of the
+   page you want, e.g.  department-of-civil-engineering.html
+                        b-tech-in-computer-science-and-engineering.html
+2. Edit the text and images below. Nothing else to touch.
+
+The filename IS the URL. templates/pages/SLUG.html is served at
+/page/SLUG/ automatically, so the PROGRAMS menu link and the homepage
+course-carousel card for that slug stop showing "under construction" and
+start opening this page. No Python, no urls.py, no registry.
+
+Slugs already linked from the menu are listed in core/context_processors.py
+under PROGRAM_SCHOOL_COLUMNS. Course slugs are whatever you link to below.
+
+Styling lives in static/css/department.css and is shared by every page —
+do not copy the CSS, just link it as the extra_css block does.
+
+Delete any whole section you do not need; they are independent.
+
+NOTE ON COMMENTS: the hash-style Django comment only covers a SINGLE line.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Department Of Computer Science &amp; Engineering | Swami Vivekananda University{% endblock %}
+{% block meta_description %}The Department of Computer Science &amp; Engineering at Swami Vivekananda University offers Diploma, B.Tech and M.Tech programmes taught through project-based learning.{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/department.css' %}">{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+{# Swap the image path and the title. #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/li_1.jpg' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Department Of Computer Science &amp; Engineering</h1>
+  </div>
+</section>
+
+
+{# ========================================================  INTRO  ======= #}
+{# Image left, text right. The data-aos attributes animate them in. #}
+<section class="section dept-intro">
+  <div class="container">
+    <div class="dept-intro-grid">
+
+      <div class="dept-intro-media" data-aos="fade-right" data-aos-duration="800">
+        <img src="{% static 'img/comp1.png' %}" alt="Department Of Computer Science &amp; Engineering">
+      </div>
+
+      <div class="dept-intro-body" data-aos="fade-left" data-aos-duration="800" data-aos-delay="120">
+        <div class="dept-section-head">
+          {# The span tail is the red part of the heading. #}
+          <h2 class="dept-heading">Department Of Computer <span>Science &amp; Engineering</span></h2>
+          <span class="dept-heading-rule"></span>
+        </div>
+        <p>
+          Computer Science serves as the foundation for various technological advancements that the
+          world sees today. The field has grown by leaps and bounds. The future innovations that it
+          brings along never seem to slow down. Yet another beauty of computer science is that it
+          finds a place in many interdisciplinary fields as well. With these, there also comes a
+          necessity to keep up to the global demand of finding highly skilled engineers and
+          scientists. Swami Vivekananda University drives on the purpose of providing quality
+          education and improving competence among students, thereby living up to its motto,
+          'Progress Through Knowledge'.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+{# ======================================================  COURSES  ======= #}
+{% comment %}
+Auto-sliding. To add a course, copy one swiper-slide block below.
+The href slug decides which page Read More opens — create a matching
+templates/pages/THAT-SLUG.html to build that course page.
+{% endcomment %}
+<section class="section dept-courses">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">Our <span>Courses</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <div class="dept-carousel" data-aos="fade-up">
+      <button class="dept-arrow dept-course-prev" type="button" aria-label="Previous course"><i class="fa-solid fa-chevron-left"></i></button>
+
+      <div class="swiper dept-course-swiper">
+        <div class="swiper-wrapper">
+
+          <!-- ---- course card ---- -->
+          <div class="swiper-slide">
+            <article class="dept-course-card">
+              <div class="dept-course-media">
+                <img src="{% static 'img/comp1.png' %}" alt="Diploma in Computer Science" loading="lazy">
+                <span class="dept-course-level">Diploma</span>
+              </div>
+              <div class="dept-course-body">
+                <h3 class="dept-course-title">Diploma in Computer Science</h3>
+                <p class="dept-course-text">
+                  The Diploma in Computer Science and Technology program at Swami Vivekananda
+                  University builds practical, industry-ready skills from the first semester.
+                </p>
+                <a href="{% url 'placeholder_page' 'diploma-in-computer-science' %}" class="dept-readmore">
+                  Read More <i class="fa-solid fa-chevron-right"></i>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <!-- ---- course card ---- -->
+          <div class="swiper-slide">
+            <article class="dept-course-card">
+              <div class="dept-course-media">
+                <img src="{% static 'img/cyber-sec.jpg' %}" alt="B.Tech in Computer Science and Engineering" loading="lazy">
+                <span class="dept-course-level">B.Tech</span>
+              </div>
+              <div class="dept-course-body">
+                <h3 class="dept-course-title">B.Tech in Computer Science and Engineering</h3>
+                <p class="dept-course-text">
+                  A four-year programme covering algorithms, systems, AI and software engineering,
+                  taught through project-based and experiential learning.
+                </p>
+                <a href="{% url 'placeholder_page' 'b-tech-in-computer-science-and-engineering' %}" class="dept-readmore">
+                  Read More <i class="fa-solid fa-chevron-right"></i>
+                </a>
+              </div>
+            </article>
+          </div>
+
+          <!-- ---- course card ---- -->
+          <div class="swiper-slide">
+            <article class="dept-course-card">
+              <div class="dept-course-media">
+                <img src="{% static 'img/ba-data.jpg' %}" alt="M.Tech in Computer Science and Engineering" loading="lazy">
+                <span class="dept-course-level">M.Tech</span>
+              </div>
+              <div class="dept-course-body">
+                <h3 class="dept-course-title">M.Tech in Computer Science and Engineering</h3>
+                <p class="dept-course-text">
+                  A research-oriented postgraduate programme with specialisations spanning data
+                  science, cyber security and intelligent systems.
+                </p>
+                <a href="{% url 'placeholder_page' 'm-tech-in-computer-science-and-engineering' %}" class="dept-readmore">
+                  Read More <i class="fa-solid fa-chevron-right"></i>
+                </a>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </div>
+
+      <button class="dept-arrow dept-course-next" type="button" aria-label="Next course"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div class="swiper-pagination dept-course-pagination"></div>
+  </div>
+</section>
+
+
+{# ======================================================  FACULTY  ======= #}
+{% comment %}
+Auto-sliding. Copy one swiper-slide block per faculty member.
+PLACEHOLDER CONTENT — replace the names before publishing.
+For a photo, replace the dept-faculty-avatar-fallback span with an img tag
+whose src uses the static tag, the same way the course images below do.
+Any row inside the dl can be deleted if that field does not apply.
+{% endcomment %}
+<section class="section dept-faculty">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">Our <span>Faculty</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <div class="dept-carousel" data-aos="fade-up">
+      <button class="dept-arrow dept-faculty-prev" type="button" aria-label="Previous faculty member"><i class="fa-solid fa-chevron-left"></i></button>
+
+      <div class="swiper dept-faculty-swiper">
+        <div class="swiper-wrapper">
+
+          <!-- ---- faculty card ---- -->
+          <div class="swiper-slide">
+            <article class="dept-faculty-card">
+              <div class="dept-faculty-avatar">
+                <span class="dept-faculty-avatar-fallback" aria-hidden="true"><i class="fa-solid fa-user-tie"></i></span>
+              </div>
+              <h3 class="dept-faculty-name">Faculty Name</h3>
+              <span class="dept-faculty-designation">Professor &amp; Head</span>
+              <dl class="dept-faculty-meta">
+                <div><dt>Qualification</dt><dd>Ph.D. (Computer Science &amp; Engineering)</dd></div>
+                <div><dt>Publications</dt><dd>40+ papers</dd></div>
+                <div><dt>Experience</dt><dd>18 years</dd></div>
+                <div><dt>Research Area</dt><dd>Distributed Systems, Cloud Computing</dd></div>
+              </dl>
+              <a href="{% url 'placeholder_page' 'faculty-profile' %}" class="dept-readmore">
+                Read More <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            </article>
+          </div>
+
+          <!-- ---- faculty card ---- -->
+          <div class="swiper-slide">
+            <article class="dept-faculty-card">
+              <div class="dept-faculty-avatar">
+                <span class="dept-faculty-avatar-fallback" aria-hidden="true"><i class="fa-solid fa-user-tie"></i></span>
+              </div>
+              <h3 class="dept-faculty-name">Faculty Name</h3>
+              <span class="dept-faculty-designation">Associate Professor</span>
+              <dl class="dept-faculty-meta">
+                <div><dt>Qualification</dt><dd>Ph.D. (Information Technology)</dd></div>
+                <div><dt>Publications</dt><dd>26 papers</dd></div>
+                <div><dt>Experience</dt><dd>12 years</dd></div>
+                <div><dt>Research Area</dt><dd>Machine Learning, Computer Vision</dd></div>
+              </dl>
+              <a href="{% url 'placeholder_page' 'faculty-profile' %}" class="dept-readmore">
+                Read More <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            </article>
+          </div>
+
+          <!-- ---- faculty card ---- -->
+          <div class="swiper-slide">
+            <article class="dept-faculty-card">
+              <div class="dept-faculty-avatar">
+                <span class="dept-faculty-avatar-fallback" aria-hidden="true"><i class="fa-solid fa-user-tie"></i></span>
+              </div>
+              <h3 class="dept-faculty-name">Faculty Name</h3>
+              <span class="dept-faculty-designation">Assistant Professor</span>
+              <dl class="dept-faculty-meta">
+                <div><dt>Qualification</dt><dd>M.Tech, Ph.D. (pursuing)</dd></div>
+                <div><dt>Publications</dt><dd>14 papers</dd></div>
+                <div><dt>Experience</dt><dd>8 years</dd></div>
+                <div><dt>Research Area</dt><dd>Cyber Security, Network Forensics</dd></div>
+              </dl>
+              <a href="{% url 'placeholder_page' 'faculty-profile' %}" class="dept-readmore">
+                Read More <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            </article>
+          </div>
+
+          <!-- ---- faculty card ---- -->
+          <div class="swiper-slide">
+            <article class="dept-faculty-card">
+              <div class="dept-faculty-avatar">
+                <span class="dept-faculty-avatar-fallback" aria-hidden="true"><i class="fa-solid fa-user-tie"></i></span>
+              </div>
+              <h3 class="dept-faculty-name">Faculty Name</h3>
+              <span class="dept-faculty-designation">Assistant Professor</span>
+              <dl class="dept-faculty-meta">
+                <div><dt>Qualification</dt><dd>M.Tech (Computer Science &amp; Engineering)</dd></div>
+                <div><dt>Publications</dt><dd>9 papers</dd></div>
+                <div><dt>Experience</dt><dd>6 years</dd></div>
+                <div><dt>Research Area</dt><dd>Data Mining, Natural Language Processing</dd></div>
+              </dl>
+              <a href="{% url 'placeholder_page' 'faculty-profile' %}" class="dept-readmore">
+                Read More <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            </article>
+          </div>
+
+          <!-- ---- faculty card ---- -->
+          <div class="swiper-slide">
+            <article class="dept-faculty-card">
+              <div class="dept-faculty-avatar">
+                <span class="dept-faculty-avatar-fallback" aria-hidden="true"><i class="fa-solid fa-user-tie"></i></span>
+              </div>
+              <h3 class="dept-faculty-name">Faculty Name</h3>
+              <span class="dept-faculty-designation">Assistant Professor</span>
+              <dl class="dept-faculty-meta">
+                <div><dt>Qualification</dt><dd>M.Tech (Computer Science &amp; Engineering)</dd></div>
+                <div><dt>Publications</dt><dd>9 papers</dd></div>
+                <div><dt>Experience</dt><dd>6 years</dd></div>
+                <div><dt>Research Area</dt><dd>Data Mining, Natural Language Processing</dd></div>
+              </dl>
+              <a href="{% url 'placeholder_page' 'faculty-profile' %}" class="dept-readmore">
+                Read More <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            </article>
+          </div>
+
+          <!-- ---- faculty card ---- -->
+          <div class="swiper-slide">
+            <article class="dept-faculty-card">
+              <div class="dept-faculty-avatar">
+                <span class="dept-faculty-avatar-fallback" aria-hidden="true"><i class="fa-solid fa-user-tie"></i></span>
+              </div>
+              <h3 class="dept-faculty-name">Faculty Name</h3>
+              <span class="dept-faculty-designation">Assistant Professor</span>
+              <dl class="dept-faculty-meta">
+                <div><dt>Qualification</dt><dd>M.Tech (Computer Science &amp; Engineering)</dd></div>
+                <div><dt>Publications</dt><dd>9 papers</dd></div>
+                <div><dt>Experience</dt><dd>6 years</dd></div>
+                <div><dt>Research Area</dt><dd>Data Mining, Natural Language Processing</dd></div>
+              </dl>
+              <a href="{% url 'placeholder_page' 'faculty-profile' %}" class="dept-readmore">
+                Read More <i class="fa-solid fa-chevron-right"></i>
+              </a>
+            </article>
+          </div>
+
+        </div>
+      </div>
+
+      <button class="dept-arrow dept-faculty-next" type="button" aria-label="Next faculty member"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div class="swiper-pagination dept-faculty-pagination"></div>
+  </div>
+</section>
+
+
+{# =========================================================  TABS  ======= #}
+{% comment %}
+To add a tab: add one button to .dept-tab-nav and one .tab-pane below,
+matching data-bs-target="#deptpane-X" to id="deptpane-X". Exactly one button
+carries class "active" and one pane carries "show active".
+{% endcomment %}
+<section class="section dept-info">
+  <div class="container">
+
+    <div class="dept-tab-nav" role="tablist" aria-label="Department information">
+      <button class="dept-tab active" type="button" role="tab" id="depttab-mission-vision"
+              data-bs-toggle="tab" data-bs-target="#deptpane-mission-vision"
+              aria-controls="deptpane-mission-vision" aria-selected="true">Mission &amp; Vision</button>
+      <button class="dept-tab" type="button" role="tab" id="depttab-core-values"
+              data-bs-toggle="tab" data-bs-target="#deptpane-core-values"
+              aria-controls="deptpane-core-values" aria-selected="false">Core Values</button>
+      <button class="dept-tab" type="button" role="tab" id="depttab-salient-features"
+              data-bs-toggle="tab" data-bs-target="#deptpane-salient-features"
+              aria-controls="deptpane-salient-features" aria-selected="false">Salient Features</button>
+      <button class="dept-tab" type="button" role="tab" id="depttab-why-this-department"
+              data-bs-toggle="tab" data-bs-target="#deptpane-why-this-department"
+              aria-controls="deptpane-why-this-department" aria-selected="false">Why This Department</button>
+      <button class="dept-tab" type="button" role="tab" id="depttab-message-desk"
+              data-bs-toggle="tab" data-bs-target="#deptpane-message-desk"
+              aria-controls="deptpane-message-desk" aria-selected="false">Message Desk</button>
+    </div>
+
+    <div class="tab-content dept-tab-content">
+
+      <!-- ---- tab pane ---- -->
+      <div class="tab-pane fade show active" id="deptpane-mission-vision" role="tabpanel"
+           aria-labelledby="depttab-mission-vision" tabindex="0">
+        <h3 class="dept-tab-heading">Mission &amp; Vision</h3>
+        <p class="dept-tab-intro">
+          The primary goal of the Department of Computer Science and Engineering is to advance
+          knowledge and education in the fields of computer science and engineering. The department
+          serves various objectives, including:
+        </p>
+        <ul class="dept-point-list">
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Education:</strong> The department aims to provide high-quality education to students at
+              various levels, including undergraduate, graduate and doctoral programmes. The goal is to equip
+              students with a solid foundation in computer science and engineering principles, theories and
+              practical skills.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Research:</strong> One of the key goals is to advance the state of knowledge in computer
+              science and engineering through research. Faculty members and students engage in cutting-edge
+              research projects that lead to innovations, discoveries and contributions to the field's body
+              of knowledge.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Innovation:</strong> The department fosters an environment that encourages innovation and
+              entrepreneurship, incubating new ideas, technologies and startups that address real-world
+              problems and contribute to societal progress.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Technology Transfer:</strong> In collaboration with industry partners, the department works
+              on technology transfer initiatives, facilitating the application of research findings in
+              practical settings through licensing and industry-sponsored projects.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Professional Development:</strong> The department focuses on the professional development
+              of its students by providing internships, co-op programmes and industry connections, preparing
+              them for successful careers in computing.</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ---- tab pane ---- -->
+      <div class="tab-pane fade" id="deptpane-core-values" role="tabpanel"
+           aria-labelledby="depttab-core-values" tabindex="0">
+        <h3 class="dept-tab-heading">Core Values</h3>
+        <p class="dept-tab-intro">The values that shape how the department teaches, researches and collaborates:</p>
+        <ul class="dept-point-list">
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Academic Integrity:</strong> Honest, transparent and ethical conduct in teaching,
+              assessment and research.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Inclusivity:</strong> A learning environment where students of every background are
+              supported and heard.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Curiosity:</strong> Encouraging students to question, experiment and build beyond the
+              syllabus.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Collaboration:</strong> Working across departments, institutions and industry to solve
+              problems that matter.</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ---- tab pane ---- -->
+      <div class="tab-pane fade" id="deptpane-salient-features" role="tabpanel"
+           aria-labelledby="depttab-salient-features" tabindex="0">
+        <h3 class="dept-tab-heading">Salient Features</h3>
+        <p class="dept-tab-intro">What distinguishes the department's approach to computing education:</p>
+        <ul class="dept-point-list">
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Industry-Aligned Curriculum:</strong> Course content reviewed with industry partners so
+              graduates enter the workforce current.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Advanced Laboratories:</strong> Dedicated labs for AI, cyber security, networking and
+              high-performance computing.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Project-Based Learning:</strong> Every semester carries a build component, from first-year
+              fundamentals to capstone projects.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Certification Support:</strong> Preparation and support for globally recognised industry
+              certifications alongside the degree.</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ---- tab pane ---- -->
+      <div class="tab-pane fade" id="deptpane-why-this-department" role="tabpanel"
+           aria-labelledby="depttab-why-this-department" tabindex="0">
+        <h3 class="dept-tab-heading">Why This Department</h3>
+        <p class="dept-tab-intro">Reasons students choose to study computer science and engineering here:</p>
+        <ul class="dept-point-list">
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Placement Record:</strong> A dedicated placement cell with recruiters spanning product,
+              services and research organisations.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Research Exposure:</strong> Undergraduates are welcomed into faculty research groups rather
+              than waiting for postgraduate study.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Mentorship:</strong> Every student is assigned a faculty mentor who tracks academic and
+              career progress.</p>
+          </li>
+          <li class="dept-point">
+            <span class="dept-point-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></span>
+            <p><strong>Student Chapters:</strong> Active coding clubs, hackathon teams and professional-body
+              chapters running year-round.</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ---- tab pane ---- -->
+      <div class="tab-pane fade" id="deptpane-message-desk" role="tabpanel"
+           aria-labelledby="depttab-message-desk" tabindex="0">
+        <h3 class="dept-tab-heading">Message Desk</h3>
+        <p class="dept-tab-intro">
+          Computing is no longer a discipline students enter only to write software. It underpins
+          medicine, agriculture, finance and the arts. Our aim is to graduate engineers who are
+          fluent in the fundamentals, comfortable with change, and grounded in the responsibility
+          that comes with building technology people rely on.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

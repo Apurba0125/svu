@@ -1,7 +1,7 @@
 from django.shortcuts import render
+from django.template import TemplateDoesNotExist
+from django.template.loader import get_template
 from django.templatetags.static import static
-
-from .departments import DEPARTMENTS
 
 
 LEGACY_STATS = [
@@ -500,16 +500,20 @@ def mentors(request):
 
 
 def placeholder_page(request, slug):
-    """Serve a built department page when we have content for the slug.
+    """Serve templates/pages/<slug>.html when it exists, else the stub.
 
-    Every nav link and course-carousel card already points here, so adding an
-    entry to core.departments.DEPARTMENTS is all it takes to turn one of those
-    links into a real page. Anything without content falls through to the
-    under-construction stub.
+    Every nav link and course-carousel card already points here, so building a
+    department or course page is just dropping a file into templates/pages/
+    named after its slug — no Python, no URLconf entry, no registry.
+
+    The slug comes from the <slug:slug> URL converter, which only matches
+    [-a-zA-Z0-9_]+. No dots or slashes can reach the template path.
     """
-    department = DEPARTMENTS.get(slug)
-    if department:
-        return render(request, "core/department.html", {"dept": department})
+    template = f"pages/{slug}.html"
+    try:
+        get_template(template)
+    except TemplateDoesNotExist:
+        title = slug.replace("-", " ").title()
+        return render(request, "core/placeholder.html", {"title": title})
 
-    title = slug.replace("-", " ").title()
-    return render(request, "core/placeholder.html", {"title": title})
+    return render(request, template)
