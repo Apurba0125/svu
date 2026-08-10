@@ -224,11 +224,23 @@ button { font: inherit; cursor: pointer; }
 }
 .offcanvas-brand { display: flex; align-items: center; gap: 10px; }
 .offcanvas-brand .brand-name { color: var(--cu-white); font-size: 15px; font-weight: 800; }
-#mobileNav .offcanvas-header { padding: 16px 14px 16px 20px; align-items: center; }
+#mobileNav .offcanvas-header { padding: 16px 14px 16px 20px; align-items: center; gap: 12px; }
+/* The brand wraps to two lines and is allowed to shrink, so the 44px close
+   button keeps its slot on every width instead of being pushed off-canvas. */
+#mobileNav .offcanvas-brand { flex: 1; min-width: 0; }
+#mobileNav .offcanvas-brand .brand-name {
+  font-size: 14px;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
 #mobileNav .btn-close {
   box-sizing: border-box !important;
   width: 44px !important; height: 44px !important;
   padding: 0 !important;
+  margin: 0 !important;
+  flex: 0 0 44px;
   background-size: 16px;
   opacity: 0.9;
   border-radius: 50%;
@@ -413,7 +425,7 @@ button { font: inherit; cursor: pointer; }
 
 /* PROGRAMS mega menu */
 .mega-panel.mega-programs {
-  width: min(1180px, 92vw);
+  width: min(1340px, 96vw);
   /* left:50% on an absolutely-positioned element centers it on its
      containing block — which is this narrow .nav-item, not the viewport.
      That pushed a 1180px panel far off-screen. position:fixed makes the
@@ -424,11 +436,16 @@ button { font: inherit; cursor: pointer; }
   transform: translate(-50%, 8px);
   display: flex;
   flex-direction: column;
+  /* Safety net: the four-column split keeps the panel short on a normal
+     laptop, but on a short viewport (or with browser zoom) the tail of the
+     longest column would otherwise sit below the fold, unreachable. */
+  max-height: calc(100vh - var(--header-h-top) - var(--header-h-main) - var(--header-h-nav) - 12px);
+  overflow-y: auto;
 }
 .nav-item:hover .mega-panel.mega-programs { transform: translate(-50%, 0); }
-.programs-main { display: flex; }
+.programs-main { display: flex; align-items: stretch; }
 .programs-sidebar {
-  width: 150px;
+  width: 140px;
   background: #f6f6f6;
   padding: 26px 0;
   flex-shrink: 0;
@@ -443,13 +460,50 @@ button { font: inherit; cursor: pointer; }
   border-left: 3px solid var(--cu-red);
   background: var(--cu-white);
 }
-.programs-body { display: flex; flex: 1; padding: 24px 10px; gap: 8px; }
-.programs-col { flex: 1; min-width: 0; padding: 0 12px; }
-.programs-col ul li { margin-bottom: 9px; }
-.programs-col ul li a { font-size: 12.5px; color: var(--cu-text); line-height: 1.35; display: block; }
-.programs-col ul li a:hover { color: var(--cu-red); }
+/* Four equal columns. minmax(0,1fr) rather than flex:1 so a long department
+   name cannot push its column wider than its share and squeeze the others. */
+.programs-body {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  flex: 1;
+  min-width: 0;
+  padding: 24px 8px;
+  gap: 0 6px;
+}
+.programs-col { min-width: 0; padding: 0 10px; }
+
+/* Each column stacks school groups: a heading with a short red rule, then the
+   departments as rows divided by hairlines. */
+.programs-school + .programs-school { margin-top: 20px; }
+.programs-school-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  color: #2b2b2b;
+  text-transform: uppercase;
+}
+.programs-school-title::after {
+  content: "";
+  display: block;
+  width: 96px;
+  max-width: 70%;
+  height: 3px;
+  margin-top: 6px;
+  background: var(--cu-red);
+}
+.programs-school ul li a {
+  display: block;
+  padding: 8px 2px;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--cu-text);
+  border-bottom: 1px solid #ececec;
+}
+.programs-school ul li:last-child a { border-bottom: 0; }
+.programs-school ul li a:hover { color: var(--cu-red); }
 .programs-promo {
-  width: 260px;
+  width: 240px;
   flex-shrink: 0;
   background: linear-gradient(180deg, #1a1a1a, #0c0c0c);
   color: var(--cu-white);
@@ -468,6 +522,16 @@ button { font: inherit; cursor: pointer; }
 }
 .programs-footer-row a { font-size: 12.5px; font-weight: 800; letter-spacing: 0.03em; color: var(--cu-text); }
 .programs-footer-row a:hover { color: var(--cu-red); }
+
+/* The mega nav appears from 992px up. Between there and 1200px the promo rail
+   would leave the four department columns too narrow to hold a department name
+   on two lines, so give its 240px back to the columns. */
+@media (max-width: 1199.98px) {
+  .programs-promo { display: none; }
+  .programs-body { padding: 20px 6px; }
+  .programs-col { padding: 0 8px; }
+  .programs-school ul li a { font-size: 12px; }
+}
 
 /* Reusable icon-tile component, used across the Academics / Admissions /
    Campus Life mega panels */
@@ -595,6 +659,73 @@ button { font: inherit; cursor: pointer; }
   border-left: 2px solid rgba(255, 255, 255, 0.12);
 }
 .mobile-nav-sublist li a:hover { color: var(--cu-white); border-left-color: var(--cu-red); }
+/* PROGRAMS nests a second accordion level so each school opens on its own.
+   The outer .mobile-nav-collapse has no data-bs-parent, so these inner
+   collapses toggle independently without fighting the parent panel. */
+.mobile-nav-school + .mobile-nav-school { border-top: 1px solid rgba(255, 255, 255, 0.07); }
+.mobile-nav-subtoggle {
+  /* Reset the UA button box explicitly. Bootstrap's reboot only neutralises
+     buttons carrying .btn, so a bare <button> in the drawer would otherwise
+     render as a grey system control with a border. */
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 8px 11px 14px;
+  border-radius: var(--radius);
+  color: #c9c9c9;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  line-height: 1.45;
+  text-transform: uppercase;
+  text-align: left;
+  transition: color var(--transition), background-color var(--transition);
+}
+.mobile-nav-subtoggle:hover { color: var(--cu-white); background-color: rgba(255, 255, 255, 0.04); }
+.mobile-nav-subtoggle:focus-visible { outline: 2px solid var(--cu-red); outline-offset: -2px; }
+.mobile-nav-subtoggle[aria-expanded="true"] { color: var(--cu-red); background-color: rgba(227, 6, 19, 0.09); }
+
+/* Chevron sits in its own disc so the open state reads at a glance on a
+   dark panel where a bare colour change is easy to miss. */
+.mobile-nav-subtoggle .chev {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #b4b4b4;
+  font-size: 9px;
+  transition: transform var(--transition), background-color var(--transition), color var(--transition);
+}
+.mobile-nav-subtoggle[aria-expanded="true"] .chev {
+  transform: rotate(180deg);
+  background-color: var(--cu-red);
+  color: var(--cu-white);
+}
+.mobile-nav-school-list {
+  margin: 0 0 8px 22px;
+  padding: 2px 0 2px 14px;
+  border-left: 1px solid rgba(255, 255, 255, 0.13);
+}
+.mobile-nav-school-list li a {
+  display: block;
+  padding: 8px 6px;
+  border-radius: 4px;
+  color: #bdbdbd;
+  font-size: 13px;
+  line-height: 1.45;
+  transition: color var(--transition), background-color var(--transition);
+}
+.mobile-nav-school-list li a:hover { color: var(--cu-white); background-color: rgba(255, 255, 255, 0.05); }
+
 .mobile-nav-subhead {
   padding: 12px 0 4px 14px;
   color: var(--cu-red);

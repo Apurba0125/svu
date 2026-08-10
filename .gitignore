@@ -6,3 +6,7 @@ staticfiles/
 server.log
 server.pid
 .env
+
+# Anything under static/ is collected by collectstatic and served publicly by
+# WhiteNoise, so never let a stray binary in there reach a deploy.
+*.exe

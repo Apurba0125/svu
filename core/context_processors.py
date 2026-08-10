@@ -1,38 +1,96 @@
-PROGRAM_COLUMNS = [
-    [
-        "Engineering", "Management (BBA/MBA)", "Business Management (BBA/MBA Flagship)",
-        "Industry Collaborated (BBA/MBA)", "Computing (BCA/MCA)", "Airlines & Airport Management",
-        "Allied Health Sciences", "Animation & Multimedia", "Architecture",
-        "Arts & Humanities (B.A & M.A)", "Basic Sciences (Physics/Chemistry/Maths)",
-        "Biotechnology & Biosciences", "B.Sc. Digital Film Making",
+# Departments grouped by school, rendered as the columns of the PROGRAMS mega
+# panel and, on small screens, as collapsible sections in the drawer.
+# Slugs are explicit rather than derived with |slugify so a department resolves
+# to the same URL here and in the "Our Course" carousel on the homepage.
+SCHOOL_ENGINEERING = {
+    "title": "School of Engineering",
+    "departments": [
+        {"label": "Department Of Computer Science & Engineering", "slug": "department-of-computer-science-engineering"},
+        {"label": "Department Of Civil Engineering", "slug": "department-of-civil-engineering"},
+        {"label": "Department Of Electrical Engineering", "slug": "department-of-electrical-engineering"},
+        {"label": "Department Of Electronics & Communication", "slug": "department-of-electronics-communication-engineering"},
+        {"label": "Department Of Mechanical Engineering", "slug": "department-of-mechanical-engineering"},
     ],
-    [
-        "Commerce (B.Com/M.Com)", "B.Sc. Medical", "Culinary Sciences", "Data Science",
-        "Economics", "Education (B.A.B.Ed/ B.Sc.B.Ed)", "Fashion & Design",
-        "Finance & Accounting", "Fine Arts", "Forensic Sciences (B.Sc./M.Sc.)",
-        "Hotel & Hospitality Management", "Interior Design",
+}
+
+SCHOOL_HUMANITY = {
+    "title": "School of Humanity & Social Science",
+    "departments": [
+        {"label": "Department Of Language, Literature And Cultural Studies", "slug": "department-of-language-literature-cultural-studies"},
+        {"label": "Department Of Journalism & Mass Communication", "slug": "department-of-mass-communication"},
+        {"label": "Department Of Education", "slug": "department-of-education"},
     ],
-    [
-        "Legal Studies", "Mathematics (B.Sc./M.Sc./PhD)", "M.Sc. Zoology/Botany",
-        "Travel and Tourism", "MBA Tourism, Hospitality and Aviation", "Media Studies",
-        "Microbiology", "Medical Laboratory Sciences", "Nutrition & Dietetics",
-        "Optometry", "Pharma Sciences", "Physiotherapy",
+}
+
+SCHOOL_AGRICULTURE = {
+    "title": "School of Agriculture",
+    "departments": [
+        {"label": "Department Of Agriculture", "slug": "department-of-agriculture"},
     ],
-    [
-        "Product & Industrial Design", "Psychology", "MCA Data Science with Intel",
-        "CSE with IBM", "BE CSE Artificial Intelligence with Microsoft",
-        "ME CSE Cloud Computing with Virtusa", "CSE with TATA Consultancy Services",
-        "B.Com in Applied Finance & Accounting with Grant Thornton",
-        "MBA - CASSM", "MBA Healthcare and Hospital Management with Max",
+}
+
+SCHOOL_MANAGEMENT = {
+    "title": "School of Management",
+    "departments": [
+        {"label": "Department Of Management Studies", "slug": "school-of-management"},
     ],
-    [
-        "MBA in Capital Markets with NISM", "MBA Strategic HR with AON",
-        "MBA Data Science & AI with SAS", "MBA Business Analytics with IBM",
-        "MBA in Applied Finance & Analytics with PwC",
-        "MBA in Banking, Financial Services and Insurance with SBI",
-        "MBA Digital Marketing", "MBA FinTech & AI with NSE Academy",
-        "MBA Logistics and Supply Chain Management with CII Institute of Logistics",
+}
+
+SCHOOL_ALLIED_HEALTH = {
+    "title": "School of Allied Health Services",
+    "departments": [
+        {"label": "Department Of Physiotherapy", "slug": "department-of-physiotherapy"},
+        {"label": "Department Of Optometry", "slug": "department-of-optometry"},
+        {"label": "Department Of Food & Nutrition", "slug": "department-of-food-nutrition"},
+        {"label": "Department Of Psychology", "slug": "department-of-psychology"},
+        {"label": "Department Of Medical Laboratory Technology", "slug": "department-of-medical-laboratory-technology"},
+        {"label": "Department Of Medical Radiology & Imaging Technology", "slug": "department-of-medical-radiology-imaging-technology"},
     ],
+}
+
+SCHOOL_LEGAL_STUDIES = {
+    "title": "School of Legal Studies",
+    "departments": [
+        {"label": "Department Of Legal Studies", "slug": "department-of-legal-studies"},
+    ],
+}
+
+SCHOOL_COMPUTER_SCIENCE = {
+    "title": "School of Computer Science",
+    "departments": [
+        {"label": "Department Of Computer Application", "slug": "department-of-computer-application"},
+        {"label": "Department Of Data Science", "slug": "department-of-data-science"},
+        {"label": "Department Of Advanced Networking & Cyber Security", "slug": "department-of-cyber-security-and-advanced-networking"},
+        {"label": "Department Of Multimedia & Animation", "slug": "department-of-animation"},
+    ],
+}
+
+SCHOOL_LIFE_SCIENCE = {
+    "title": "School of Life Science",
+    "departments": [
+        {"label": "Department Of Biotechnology", "slug": "department-of-biotechnology"},
+        {"label": "Department Of Microbiology", "slug": "department-of-microbiology"},
+    ],
+}
+
+SCHOOL_BASIC_SCIENCE = {
+    "title": "School of Basic Science",
+    "departments": [
+        {"label": "Department Of Mathematics", "slug": "department-of-mathematics"},
+        {"label": "Department Of Chemistry", "slug": "department-of-chemistry"},
+        {"label": "Department Of Physics", "slug": "department-of-physics"},
+    ],
+}
+
+# Four columns, balanced by row count (heading + departments) so the panel stays
+# short enough to fit a laptop viewport — three columns pushed the tail of the
+# longest column below the fold. Rebalance by moving a school between the lists.
+# Weights: 8 / 9 / 9 / 9 rows.
+PROGRAM_SCHOOL_COLUMNS = [
+    [SCHOOL_ENGINEERING, SCHOOL_AGRICULTURE],
+    [SCHOOL_MANAGEMENT, SCHOOL_ALLIED_HEALTH],
+    [SCHOOL_COMPUTER_SCIENCE, SCHOOL_HUMANITY],
+    [SCHOOL_LIFE_SCIENCE, SCHOOL_BASIC_SCIENCE, SCHOOL_LEGAL_STUDIES],
 ]
 
 ABOUT_MENU = {
@@ -217,7 +275,7 @@ FOOTER_COLUMNS = [
 def nav_context(request):
     return {
         "topbar_announcements": TOPBAR_ANNOUNCEMENTS,
-        "program_columns": PROGRAM_COLUMNS,
+        "program_school_columns": PROGRAM_SCHOOL_COLUMNS,
         "about_menu": ABOUT_MENU,
         "academics_menu": ACADEMICS_MENU,
         "admissions_menu": ADMISSIONS_MENU,

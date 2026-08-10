@@ -12,8 +12,8 @@
           {% endfor %}
         </div>
       </div>
-      <a href="#" class="ticker-cta">REGISTER NOW</a>
       <button class="ticker-arrow ticker-next" aria-label="Next announcement"><i class="fa-solid fa-chevron-right"></i></button>
+      <a href="#" class="ticker-cta">REGISTER NOW</a>
     </div>
     <div class="topbar-actions">
       <a href="#" class="topbar-link"><i class="fa-brands fa-whatsapp icon"></i><span>Whatsapp</span></a>
@@ -56,9 +56,9 @@
         <button class="hamburger-btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav" aria-label="Menu">
           <i class="fa-solid fa-bars"></i>
         </button>
-        <button class="search-btn" type="button" aria-label="Search">
+        <!-- <button class="search-btn" type="button" aria-label="Search">
           <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
@@ -109,13 +109,18 @@
                 <div class="programs-sidebar-tab"><i class="fa-solid fa-caret-down"></i> REGULAR</div>
               </div>
               <div class="programs-body">
-                {% for col in program_columns %}
+                {% for col in program_school_columns %}
                 <div class="programs-col">
-                  <ul>
-                    {% for p in col %}
-                    <li><a href="{% url 'placeholder_page' p|slugify %}">{{ p }}</a></li>
-                    {% endfor %}
-                  </ul>
+                  {% for school in col %}
+                  <div class="programs-school">
+                    <div class="programs-school-title">{{ school.title }}</div>
+                    <ul>
+                      {% for dept in school.departments %}
+                      <li><a href="{% url 'placeholder_page' dept.slug %}">{{ dept.label }}</a></li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  {% endfor %}
                 </div>
                 {% endfor %}
               </div>
@@ -258,7 +263,7 @@
   <div class="offcanvas-header">
     <span class="brand offcanvas-brand">
       <img src="{% static 'img/logo.jpeg' %}" alt="Swami Vivekananda University logo" class="brand-badge">
-      <span class="brand-name">SWAMI VIVEKANANDA UNIVERSITY</span>
+      <span class="brand-name">SWAMI VIVEKANANDA<br>UNIVERSITY</span>
     </span>
     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
@@ -283,9 +288,23 @@
             {% endfor %}
 
             {% elif item.mega == 'programs' %}
-            {% for col in program_columns %}
-            {% for p in col %}
-            <li><a href="{% url 'placeholder_page' p|slugify %}">{{ p }}</a></li>
+            {% for col in program_school_columns %}
+            {% for school in col %}
+            <li class="mobile-nav-school">
+              <button class="mobile-nav-subtoggle" type="button"
+                      data-bs-toggle="collapse" data-bs-target="#mschool{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
+                      aria-expanded="false" aria-controls="mschool{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                <span>{{ school.title }}</span>
+                <span class="chev"><i class="fa-solid fa-chevron-down"></i></span>
+              </button>
+              <div class="collapse" id="mschool{{ forloop.parentloop.counter }}-{{ forloop.counter }}">
+                <ul class="list-unstyled mobile-nav-school-list">
+                  {% for dept in school.departments %}
+                  <li><a href="{% url 'placeholder_page' dept.slug %}">{{ dept.label }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
             {% endfor %}
             {% endfor %}
             <li class="mobile-nav-subhead">More</li>
