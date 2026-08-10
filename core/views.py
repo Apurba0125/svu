@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.templatetags.static import static
 
+from .departments import DEPARTMENTS
+
 
 LEGACY_STATS = [
     {"value": "500+", "label": "Industry Collaborations"},
@@ -201,10 +203,10 @@ GLOBAL_EXPERIENCE_ITEMS = [
 ]
 
 GLOBAL_ACCORDION_PANELS = [
-    {"label": "Central Campus", "image": static("img/campaus.png")},
+    {"label": "Central Campus", "image": static("img/campaus.png"),"active": True},
     {"label": "Global Collaborations", "image": static("img/campaus.png")},
     {"label": "Degree Opportunities", "image": static("img/campaus.png")},
-    {"label": "Language and Culture", "image": static("img/campaus.png"), "active": True},
+    {"label": "Language and Culture", "image": static("img/campaus.png"), },
     {"label": "International Research Projects", "image": static("img/campaus.png")},
     {"label": "International Faculty", "image": static("img/campaus.png")},
     {"label": "Career Pathways", "image": static("img/campaus.png")},
@@ -262,38 +264,36 @@ WHY_CHOOSE_CU = [
 ]
 
 TESTIMONIALS = [
+
+
+       # {
+        #     "name_first": "Rohit", "name_last": "Kumar",
+        #     "role": "Software Engineer at Google", "dept": "Computer Science & Engineering",
+        #     "heading": 'From <strong>Engineering</strong> Labs to the <span class="alumni-hl">Skies of Duty</span>',
+        #     "body": "Every takeoff begins with a strong runway and mine was built at Swami Vivekananda University. Proud to now serve as a Flying Officer in the Indian Air Force.",
+        #     # "avatar": "https://placehold.co/120x120/1a2733/1a2733",
+        #     "photo": static("img/testmonials/rohitkumar.png"),
+        # },
+
     {
-        "name_first": "Shardul", "name_last": "Jaiswal",
-        "role": "Flying Officer", "dept": "Computer Science & Engineering - Alumni",
-        "heading": 'From <strong>Engineering</strong> Labs to the <span class="alumni-hl">Skies of Duty</span>',
-        "body": "Every takeoff begins with a strong runway and mine was built at Swami Vivekananda University. Proud to now serve as a Flying Officer in the Indian Air Force.",
-        "avatar": "https://placehold.co/120x120/1a2733/1a2733",
-        "photo": "https://placehold.co/900x700/2a3540/2a3540",
+        "name_first": "Uhona", "name_last": "Thiessen",
+        "role": "Senior Data Scientist at Meta", 
+        "heading": 'From <strong>Engineering</strong> Labs to the <span class="alumni-hl">Data Scientist at Meta</span>',
+        "body": "My experience @ SVU has been a very awesome one. The staff have been so accommodating. The students are very interested in our presentation. They asked very intelligent questions. We enjoyed our time very much.",
+        "avatar": static("img/testmonials/uohnathiessen.png"),
+        "photo": static("img/testmonials/uohnathiessen.png"),
     },
+
+
     {
-        "name_first": "Anand", "name_last": "Bhatia",
-        "role": "Product Manager", "dept": "MBA - Alumni",
-        "heading": 'From <strong>Classrooms</strong> to <span class="alumni-hl">Boardrooms</span>',
-        "body": "The case studies and mentorship I received shaped how I lead product teams today. Swami Vivekananda University gave me the confidence to think like a founder.",
-        "avatar": "https://placehold.co/120x120/24211a/24211a",
-        "photo": "https://placehold.co/900x700/33291f/33291f",
+            "name_first": "Dr. Abhay", "name_last": "Jere",
+            "role": "Vice-chairman, AICTE", 
+            # "heading": 'From <strong>Engineering</strong> Labs to the <span class="alumni-hl">Data Scientist at Meta</span>',
+            "body": "Really enjoyed my visit. Wishing SVU all the best for future growth.",
+            "avatar": static("img/testmonials/drabhajere.jfif"),
+            "photo": static("img/testmonials/drabhajere.jfif"),
     },
-    {
-        "name_first": "Arshdeep", "name_last": "Singh",
-        "role": "Software Engineer", "dept": "Information Technology - Alumni",
-        "heading": 'From <strong>Labs</strong> to <span class="alumni-hl">Live Products</span>',
-        "body": "Hands-on projects and hackathons on campus prepared me for the real world faster than I imagined. I now ship features used by millions.",
-        "avatar": "https://placehold.co/120x120/1a2a24/1a2a24",
-        "photo": "https://placehold.co/900x700/1f332b/1f332b",
-    },
-    {
-        "name_first": "Vandana", "name_last": "Chauhan",
-        "role": "Business Analyst", "dept": "International Placement - Alumni",
-        "heading": 'From <strong>Campus</strong> to <span class="alumni-hl">Global Careers</span>',
-        "body": "The global exposure and placement support at Swami Vivekananda University opened doors I never thought possible straight out of college.",
-        "avatar": "https://placehold.co/120x120/241a24/241a24",
-        "photo": "https://placehold.co/900x700/332133/332133",
-    },
+ 
 ]
 
 RESEARCH_STATS = [
@@ -500,5 +500,16 @@ def mentors(request):
 
 
 def placeholder_page(request, slug):
+    """Serve a built department page when we have content for the slug.
+
+    Every nav link and course-carousel card already points here, so adding an
+    entry to core.departments.DEPARTMENTS is all it takes to turn one of those
+    links into a real page. Anything without content falls through to the
+    under-construction stub.
+    """
+    department = DEPARTMENTS.get(slug)
+    if department:
+        return render(request, "core/department.html", {"dept": department})
+
     title = slug.replace("-", " ").title()
     return render(request, "core/placeholder.html", {"title": title})

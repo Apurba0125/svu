@@ -1,0 +1,374 @@
+/* ==========================================================================
+   Department pages — banner, animated intro, course + faculty carousels and
+   the tabbed information panel. Driven entirely by core/departments.py, so
+   these styles must hold for any number of courses, faculty or tabs.
+   ========================================================================== */
+
+/* ------------------------------------------------------------- banner ---- */
+.dept-banner {
+  display: flex;
+  align-items: center;
+  min-height: 260px;
+  padding: 40px 0;
+  background-color: var(--cu-black);
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+.dept-banner-title {
+  margin: 0;
+  color: var(--cu-white);
+  font-size: clamp(20px, 3vw, 34px);
+  font-weight: 800;
+  line-height: 1.25;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+}
+
+/* -------------------------------------------------- shared heading bits --- */
+/* Heading and its rule move as one block, so the pair can carry a single AOS
+   trigger instead of animating out of step with each other. */
+.dept-section-head { margin-bottom: 30px; }
+.dept-intro-body .dept-section-head { margin-bottom: 18px; }
+.dept-heading {
+  margin: 0;
+  color: var(--cu-text);
+  font-size: clamp(21px, 2.4vw, 29px);
+  font-weight: 800;
+  line-height: 1.3;
+}
+.dept-heading span { color: var(--cu-red); }
+.dept-heading-rule {
+  display: block;
+  width: 62px;
+  height: 3px;
+  margin-top: 10px;
+  background: var(--cu-red);
+}
+
+.dept-readmore {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--cu-red);
+  font-size: 13px;
+  font-weight: 700;
+  transition: gap var(--transition);
+}
+.dept-readmore i { font-size: 10px; }
+.dept-readmore:hover { color: var(--cu-red-dark); gap: 11px; }
+
+/* -------------------------------------------------------------- intro ---- */
+.dept-intro-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: 48px;
+}
+.dept-intro-media {
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.dept-intro-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.dept-intro-media:hover img { transform: scale(1.05); }
+.dept-intro-body p {
+  margin: 0;
+  color: #4a4a4a;
+  font-size: 14.5px;
+  line-height: 1.85;
+  text-align: justify;
+}
+
+/* ------------------------------------------------- carousel scaffolding --- */
+/* Arrows sit outside the track on desktop and tuck back inside once the
+   container runs out of gutter. */
+.dept-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dept-carousel .swiper { flex: 1; min-width: 0; padding-bottom: 6px; }
+.dept-arrow {
+  appearance: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 38px; height: 38px;
+  padding: 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  background-color: var(--cu-white);
+  color: var(--cu-text);
+  font-size: 13px;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+.dept-arrow:hover { background-color: var(--cu-red); border-color: var(--cu-red); color: var(--cu-white); }
+.dept-arrow:focus-visible { outline: 2px solid var(--cu-red); outline-offset: 2px; }
+.dept-arrow.swiper-button-disabled { opacity: 0.4; pointer-events: none; }
+
+.dept-course-pagination,
+.dept-faculty-pagination {
+  position: static;
+  margin-top: 18px;
+  text-align: center;
+}
+.dept-course-pagination .swiper-pagination-bullet,
+.dept-faculty-pagination .swiper-pagination-bullet {
+  width: 8px; height: 8px;
+  background: #c9c9c9;
+  opacity: 1;
+}
+.dept-course-pagination .swiper-pagination-bullet-active,
+.dept-faculty-pagination .swiper-pagination-bullet-active {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--cu-red);
+}
+
+/* ------------------------------------------------------------ courses ---- */
+.dept-courses { background: linear-gradient(180deg, #fdf6f4 0%, #f7f4fb 100%); }
+/* Equal-height cards regardless of blurb length. */
+.dept-course-swiper .swiper-slide { height: auto; }
+.dept-course-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--cu-white);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.dept-course-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.dept-course-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+.dept-course-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.dept-course-card:hover .dept-course-media img { transform: scale(1.06); }
+.dept-course-level {
+  position: absolute;
+  left: 14px; bottom: 12px;
+  padding: 5px 14px;
+  border-radius: 3px;
+  background: var(--cu-red);
+  color: var(--cu-white);
+  font-size: 12px;
+  font-weight: 700;
+}
+.dept-course-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px 18px 20px;
+}
+.dept-course-title {
+  margin: 0 0 8px;
+  font-size: 15.5px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--cu-text);
+}
+.dept-course-text {
+  /* margin-bottom:auto pins Read More to the card foot on every card. */
+  margin: 0 0 16px;
+  margin-bottom: auto;
+  padding-bottom: 16px;
+  color: #6b6b6b;
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
+/* ------------------------------------------------------------ faculty ---- */
+.dept-faculty-swiper .swiper-slide { height: auto; }
+.dept-faculty-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 22px 20px 24px;
+  border: 1px solid #ededed;
+  border-radius: var(--radius);
+  background: var(--cu-white);
+  text-align: center;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+.dept-faculty-card:hover {
+  transform: translateY(-4px);
+  border-color: transparent;
+  box-shadow: var(--shadow-md);
+}
+.dept-faculty-avatar {
+  width: 112px; height: 112px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f1f1f1;
+  border: 3px solid #f6f6f6;
+  box-shadow: 0 0 0 1px #e8e8e8;
+}
+.dept-faculty-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dept-faculty-avatar-fallback {
+  display: grid;
+  place-items: center;
+  width: 100%; height: 100%;
+  color: #b6b6b6;
+  font-size: 40px;
+}
+.dept-faculty-name {
+  margin: 0 0 3px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--cu-text);
+}
+.dept-faculty-designation {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--cu-red);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.dept-faculty-meta {
+  margin: 0 0 16px;
+  margin-bottom: auto;
+  padding: 14px 0 16px;
+  border-top: 1px solid #efefef;
+  text-align: left;
+}
+.dept-faculty-meta > div + div { margin-top: 9px; }
+.dept-faculty-meta dt {
+  color: #9a9a9a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.dept-faculty-meta dd {
+  margin: 2px 0 0;
+  color: #4a4a4a;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.dept-faculty-card .dept-readmore { justify-content: center; }
+
+/* --------------------------------------------------------------- tabs ---- */
+/* Tinted so the tabbed block reads as its own zone rather than running into
+   the white faculty section above it. */
+.dept-info { background: #f7f8fb; }
+.dept-tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.dept-tab {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 1 1 170px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 26px;
+  background-color: #1b3a8f;
+  color: var(--cu-white);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  transition: background-color var(--transition), transform var(--transition);
+}
+.dept-tab:hover { background-color: #16307a; }
+.dept-tab.active { background-color: var(--cu-red); }
+.dept-tab:focus-visible { outline: 2px solid var(--cu-text); outline-offset: 2px; }
+
+.dept-tab-heading {
+  margin: 0 0 12px;
+  font-size: clamp(18px, 2vw, 23px);
+  font-weight: 800;
+  color: var(--cu-text);
+}
+.dept-tab-intro {
+  margin: 0 0 22px;
+  color: #4a4a4a;
+  font-size: 14.5px;
+  line-height: 1.8;
+  text-align: justify;
+}
+.dept-point-list { list-style: none; margin: 0; padding: 0; }
+.dept-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.dept-point + .dept-point { margin-top: 18px; }
+.dept-point-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 4px;
+  background: #1b3a8f;
+  color: var(--cu-white);
+  font-size: 14px;
+}
+.dept-point p {
+  margin: 0;
+  color: #4a4a4a;
+  font-size: 14px;
+  line-height: 1.75;
+  text-align: justify;
+}
+.dept-point strong { color: var(--cu-text); }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 991.98px) {
+  /* 72px of section padding is generous on a laptop and heavy on a tablet.
+     Scoped to department sections so the homepage rhythm is untouched. */
+  .dept-intro, .dept-courses, .dept-faculty, .dept-info { padding: 56px 0; }
+  .dept-section-head { margin-bottom: 24px; }
+  .dept-banner { min-height: 200px; }
+  .dept-intro-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .dept-intro-media img { max-height: 300px; }
+  .dept-tab { flex: 1 1 140px; font-size: 12.5px; padding: 11px 14px; }
+}
+
+@media (max-width: 767.98px) {
+  /* Justified text creates rivers of whitespace in a narrow column. */
+  .dept-intro-body p,
+  .dept-tab-intro,
+  .dept-point p { text-align: left; }
+  .dept-banner { min-height: 170px; padding: 30px 0; }
+}
+
+@media (max-width: 575.98px) {
+  /* Arrows would eat the slide width on a phone — the track is swipeable and
+     the pagination dots stay, so the buttons come out of the row. */
+  .dept-arrow { display: none; }
+  .dept-carousel { gap: 0; }
+  .dept-tab-nav { gap: 8px; }
+  .dept-tab { flex: 1 1 calc(50% - 4px); font-size: 12px; padding: 10px 10px; }
+  .dept-point { gap: 11px; }
+  .dept-point-icon { width: 28px; height: 28px; font-size: 12px; }
+  .dept-faculty-avatar { width: 96px; height: 96px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dept-intro-media:hover img,
+  .dept-course-card:hover,
+  .dept-course-card:hover .dept-course-media img,
+  .dept-faculty-card:hover { transform: none; }
+}

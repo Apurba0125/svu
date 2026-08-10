@@ -245,6 +245,52 @@ window.addEventListener("load", function () {
     });
   }
 
+  if (document.querySelector(".dept-course-swiper")) {
+    // Department course/faculty counts come from data, so loop only once there
+    // are more slides than the widest breakpoint shows — otherwise Swiper
+    // disables loop and logs a warning on a department with two courses.
+    const courseCount = document.querySelectorAll(".dept-course-swiper .swiper-slide").length;
+    new Swiper(".dept-course-swiper", {
+      loop: courseCount > 3,
+      speed: 600,
+      spaceBetween: 24,
+      autoplay: { delay: 4500, disableOnInteraction: false },
+      // A department with fewer courses than the breakpoint shows would leave
+      // them jammed left against a gap; centre them in the track instead.
+      centerInsufficientSlides: true,
+      resizeObserver: false,
+      observer: false,
+      navigation: { prevEl: ".dept-course-prev", nextEl: ".dept-course-next" },
+      pagination: { el: ".dept-course-pagination", clickable: true },
+      slidesPerView: 1,
+      breakpoints: {
+        576: { slidesPerView: 2 },
+        992: { slidesPerView: 3 },
+      },
+    });
+  }
+
+  if (document.querySelector(".dept-faculty-swiper")) {
+    const facultyCount = document.querySelectorAll(".dept-faculty-swiper .swiper-slide").length;
+    new Swiper(".dept-faculty-swiper", {
+      loop: facultyCount > 4,
+      speed: 600,
+      spaceBetween: 22,
+      autoplay: { delay: 4000, disableOnInteraction: false },
+      centerInsufficientSlides: true,
+      resizeObserver: false,
+      observer: false,
+      navigation: { prevEl: ".dept-faculty-prev", nextEl: ".dept-faculty-next" },
+      pagination: { el: ".dept-faculty-pagination", clickable: true },
+      slidesPerView: 1,
+      breakpoints: {
+        576: { slidesPerView: 2 },
+        992: { slidesPerView: 3 },
+        1200: { slidesPerView: 4 },
+      },
+    });
+  }
+
   if (document.querySelector(".mentors-swiper")) {
     // The name/role/stat live outside the carousel (bottom-left of the hero),
     // so they are driven off the active slide's dataset — same approach as the
