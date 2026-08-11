@@ -28,7 +28,7 @@
             <a href="{% if media.url %}{{ media.url }}{% else %}{% url 'placeholder_page' media.slug|default:'research' %}{% endif %}"
                class="legacy-media-slide"
                {% if media.url %}target="_blank" rel="noopener"{% endif %}>
-              <img src="{{ media.image }}" alt="{{ media.tag }} at Swami Vivekananda University">
+              <img src="{{ media.image }}" alt="{{ media.tag }} &mdash; Swami Vivekananda University podcast episode">
               <span class="legacy-media-tag">{{ media.tag }}</span>
             </a>
           </div>

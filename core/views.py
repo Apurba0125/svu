@@ -310,9 +310,9 @@ RESEARCH_STATS = [
 # ("slug" is still supported as an alternative and opens /page/<slug>/ instead,
 # but "url" wins when both are present.)
 RESEARCH_MEDIA = [
-    {"tag": "Civil Engineering", "image": static("img/podcast/civil.jpg"), "url": "https://www.youtube.com/watch?v=q-kk3jtXz9I"},
-    {"tag": "Food Processing", "image": static("img/podcast/food.jpg"), "url": "https://www.youtube.com/watch?v=co-O7fs01Ro"},
-    {"tag": "Civil Engineering", "image": static("img/podcast/civil2.jpg"), "url": "https://www.youtube.com/watch?v=2xLu_2pcyP8"},
+    {"tag": "Why Study Civil Engineering?", "image": static("img/podcast/civil.jpg"), "url": "https://www.youtube.com/watch?v=q-kk3jtXz9I"},
+    {"tag": "Food & Nutrition", "image": static("img/podcast/food.jpg"), "url": "https://www.youtube.com/watch?v=co-O7fs01Ro"},
+    {"tag": "Civil Engineering Podcast", "image": static("img/podcast/civil2.jpg"), "url": "https://www.youtube.com/watch?v=2xLu_2pcyP8"},
     {"tag": "Optometry", "image": static("img/podcast/eye.jpg"), "url": "https://www.youtube.com/watch?v=BPn1xnN5fUY"},
     {"tag": "Biotechnology", "image": static("img/podcast/biotech.jpg"), "url": "https://www.youtube.com/watch?v=xJchmgshzAs"},
     {"tag": "Alvito D'Cunha", "image": static("img/podcast/play.jpg"), "url": "https://www.youtube.com/watch?v=MR1wKKw81FE"},
