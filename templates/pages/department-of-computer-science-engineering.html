@@ -39,7 +39,7 @@ the first endcomment it sees and the real one is then orphaned.
 
 {# =======================================================  BANNER  ======= #}
 {# Swap the image path and the title. #}
-<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/li_1.jpg' %}');">
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
   <div class="container">
     <h1 class="dept-banner-title">Department Of Computer Science &amp; Engineering</h1>
   </div>
@@ -321,30 +321,54 @@ Any row inside the dl can be deleted if that field does not apply.
 
 {# =========================================================  TABS  ======= #}
 {% comment %}
-To add a tab: add one button to .dept-tab-nav and one .tab-pane below,
-matching data-bs-target="#deptpane-X" to id="deptpane-X". Exactly one button
-carries class "active" and one pane carries "show active".
+To add a tab, add two things that reference the same id:
+  1. a list item + button in .dept-tab-nav   data-bs-target="#deptpane-X"
+  2. a .tab-pane below                       id="deptpane-X"
+Exactly one button carries "active" and one pane carries "show active", and
+they must be the same tab. The mobile dropdown builds itself from this same
+list, so there is nothing extra to keep in step.
 {% endcomment %}
 <section class="section dept-info">
   <div class="container">
 
-    <div class="dept-tab-nav" role="tablist" aria-label="Department information">
-      <button class="dept-tab active" type="button" role="tab" id="depttab-mission-vision"
-              data-bs-toggle="tab" data-bs-target="#deptpane-mission-vision"
-              aria-controls="deptpane-mission-vision" aria-selected="true">Mission &amp; Vision</button>
-      <button class="dept-tab" type="button" role="tab" id="depttab-core-values"
-              data-bs-toggle="tab" data-bs-target="#deptpane-core-values"
-              aria-controls="deptpane-core-values" aria-selected="false">Core Values</button>
-      <button class="dept-tab" type="button" role="tab" id="depttab-salient-features"
-              data-bs-toggle="tab" data-bs-target="#deptpane-salient-features"
-              aria-controls="deptpane-salient-features" aria-selected="false">Salient Features</button>
-      <button class="dept-tab" type="button" role="tab" id="depttab-why-this-department"
-              data-bs-toggle="tab" data-bs-target="#deptpane-why-this-department"
-              aria-controls="deptpane-why-this-department" aria-selected="false">Why This Department</button>
-      <button class="dept-tab" type="button" role="tab" id="depttab-message-desk"
-              data-bs-toggle="tab" data-bs-target="#deptpane-message-desk"
-              aria-controls="deptpane-message-desk" aria-selected="false">Message Desk</button>
-    </div>
+    {% comment %}
+    Wide screens show the pill list. Narrow screens hide it behind this toggle
+    and drop the very same list down as the menu, so the options keep the
+    rounded pill shape and there is only one list to maintain.
+    {% endcomment %}
+    <button class="dept-tab-toggle" type="button" data-dept-tab-toggle
+            aria-expanded="false" aria-controls="deptTabNav">
+      <span data-dept-tab-current>Mission &amp; Vision</span>
+      <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+    </button>
+
+    <ul class="dept-tab-nav" id="deptTabNav" role="tablist" aria-label="Department information">
+      <li class="dept-tab-item" role="presentation">
+        <button class="dept-tab active" type="button" role="tab" id="depttab-mission-vision"
+                data-bs-toggle="tab" data-bs-target="#deptpane-mission-vision"
+                aria-controls="deptpane-mission-vision" aria-selected="true">Mission &amp; Vision</button>
+      </li>
+      <li class="dept-tab-item" role="presentation">
+        <button class="dept-tab" type="button" role="tab" id="depttab-core-values"
+                data-bs-toggle="tab" data-bs-target="#deptpane-core-values"
+                aria-controls="deptpane-core-values" aria-selected="false">Core Values</button>
+      </li>
+      <li class="dept-tab-item" role="presentation">
+        <button class="dept-tab" type="button" role="tab" id="depttab-salient-features"
+                data-bs-toggle="tab" data-bs-target="#deptpane-salient-features"
+                aria-controls="deptpane-salient-features" aria-selected="false">Salient Features</button>
+      </li>
+      <li class="dept-tab-item" role="presentation">
+        <button class="dept-tab" type="button" role="tab" id="depttab-why-this-department"
+                data-bs-toggle="tab" data-bs-target="#deptpane-why-this-department"
+                aria-controls="deptpane-why-this-department" aria-selected="false">Why This Department</button>
+      </li>
+      <li class="dept-tab-item" role="presentation">
+        <button class="dept-tab" type="button" role="tab" id="depttab-message-desk"
+                data-bs-toggle="tab" data-bs-target="#deptpane-message-desk"
+                aria-controls="deptpane-message-desk" aria-selected="false">Message Desk</button>
+      </li>
+    </ul>
 
     <div class="tab-content dept-tab-content">
 

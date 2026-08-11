@@ -23,6 +23,44 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // Department information tabs. Wide screens show the pill list outright;
+  // narrow screens collapse it behind a toggle that opens the same list as a
+  // dropdown. Bootstrap still drives the panes — this only handles opening,
+  // closing and keeping the toggle's label on the current tab.
+  document.querySelectorAll("[data-dept-tab-toggle]").forEach((toggle) => {
+    const scope = toggle.closest(".dept-info") || document;
+    const nav = scope.querySelector(".dept-tab-nav");
+    if (!nav) return;
+    const label = toggle.querySelector("[data-dept-tab-current]");
+
+    function closeNav() {
+      nav.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
+    toggle.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    // Picking a tab closes the menu and moves the label onto it. Listening for
+    // shown.bs.tab rather than click means a pill click on desktop updates the
+    // label too, so shrinking the window never shows a stale heading.
+    scope.querySelectorAll('[data-bs-toggle="tab"]').forEach((trigger) => {
+      trigger.addEventListener("shown.bs.tab", () => {
+        if (label) label.textContent = trigger.textContent.trim();
+        closeNav();
+      });
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!nav.contains(event.target) && !toggle.contains(event.target)) closeNav();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeNav();
+    });
+  });
+
   const newsList = document.querySelector("[data-news-autoscroll]");
   if (newsList) {
     // Track is rendered twice back-to-back so scrollTop can wrap by exactly
