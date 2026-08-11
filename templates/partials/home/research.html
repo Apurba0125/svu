@@ -20,10 +20,17 @@
         <div class="swiper-wrapper">
           {% for media in research_media %}
           <div class="swiper-slide">
-            <div class="legacy-media-slide">
+            {% comment %}
+            An external "url" wins; otherwise "slug" opens /page/THAT-SLUG/.
+            Falls back to the research page so a card with neither set still
+            links somewhere instead of failing the whole page render.
+            {% endcomment %}
+            <a href="{% if media.url %}{{ media.url }}{% else %}{% url 'placeholder_page' media.slug|default:'research' %}{% endif %}"
+               class="legacy-media-slide"
+               {% if media.url %}target="_blank" rel="noopener"{% endif %}>
               <img src="{{ media.image }}" alt="{{ media.tag }} at Swami Vivekananda University">
               <span class="legacy-media-tag">{{ media.tag }}</span>
-            </div>
+            </a>
           </div>
           {% endfor %}
         </div>

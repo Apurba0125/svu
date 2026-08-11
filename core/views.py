@@ -5,17 +5,17 @@ from django.templatetags.static import static
 
 
 LEGACY_STATS = [
-    {"value": "500+", "label": "Industry Collaborations"},
-    {"value": "200+", "label": "International MoUs"},
-    {"value": "1,350+", "label": "Patents Filed"},
-    {"value": "50+", "label": "Programs Offered"},
-    {"value": "5,000+", "label": "Alumni Network"},
+    {"value": "200+", "label": "Industry Collaborations"},
+    {"value": "50+", "label": "International MoUs"},
+    {"value": "500+", "label": "Patents Filed"},
+    {"value": "60+", "label": "Programs Offered"},
+    {"value": "3,000+", "label": "Alumni Network"},
 ]
 
 STAT_HIGHLIGHTS = [
-    {"icon": static("img/Icon2.png"), "value": "300+", "label": "PHD Faculties"},
-    {"icon": static("img/Icon3.png"), "value": "50+", "label": "Courses"},
-    {"icon": static("img/Icon4.png"), "value": "500+", "label": "Industry Collaboration"},
+    {"icon": static("img/Icon2.png"), "value": "150+", "label": "PHD Faculties"},
+    {"icon": static("img/Icon3.png"), "value": "60+", "label": "Courses"},
+    {"icon": static("img/Icon4.png"), "value": "200+", "label": "Industry Collaboration"},
     {"icon": static("img/Icon5.png"), "value": "98%", "label": "Placement"},
 ]
 
@@ -304,11 +304,18 @@ RESEARCH_STATS = [
     {"value": "15+", "label": "Centres of Excellence"},
 ]
 
+# Each card opens its YouTube video in a new tab. Paste the real watch URL into
+# "url" — the placeholders below deliberately point nowhere so an unreplaced one
+# is obvious rather than silently sending visitors to someone else's video.
+# ("slug" is still supported as an alternative and opens /page/<slug>/ instead,
+# but "url" wins when both are present.)
 RESEARCH_MEDIA = [
-    {"tag": "Moot Court", "image": static("img/mootcourt.png")},
-    {"tag": "SVU Centre of Excellence", "image": static("img/ce.png")},
-    {"tag": "Research Symposium", "image": static("img/rs.png")},
-    {"tag": "Innovation Lab", "image": static("img/innovation.png")},
+    {"tag": "Civil Engineering", "image": static("img/podcast/civil.jpg"), "url": "https://www.youtube.com/watch?v=q-kk3jtXz9I"},
+    {"tag": "Food Processing", "image": static("img/podcast/food.jpg"), "url": "https://www.youtube.com/watch?v=co-O7fs01Ro"},
+    {"tag": "Civil Engineering", "image": static("img/podcast/civil2.jpg"), "url": "https://www.youtube.com/watch?v=2xLu_2pcyP8"},
+    {"tag": "Optometry", "image": static("img/podcast/eye.jpg"), "url": "https://www.youtube.com/watch?v=BPn1xnN5fUY"},
+    {"tag": "Biotechnology", "image": static("img/podcast/biotech.jpg"), "url": "https://www.youtube.com/watch?v=xJchmgshzAs"},
+    {"tag": "Alvito D'Cunha", "image": static("img/podcast/play.jpg"), "url": "https://www.youtube.com/watch?v=MR1wKKw81FE"},
 ]
 
 SPOTLIGHT_SLIDES = [
