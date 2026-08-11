@@ -78,10 +78,15 @@
   .hero-swiper .swiper-slide { padding-bottom: 72px; }
 }
 @media (max-width: 576px) {
-  /* Height is content-driven here, so the slide's bottom padding would stack on
-     top of the swiper's own 60px and push the copy off the frame. */
-  .hero-swiper { height: auto; padding: 90px 0 60px; }
-  .hero-swiper .swiper-slide { padding-bottom: 34px; }
+  /* The floor has to sit on the slide, not the frame. Swiper's .swiper-wrapper
+     is height:100%, and a percentage height against an auto-height parent
+     resolves to auto — so a min-height on .hero-swiper never reaches the slides.
+     They stayed content-sized, flex-end had nothing to push against, and the
+     copy sat at the top of the frame with the extra height as dead space below.
+     Putting the floor on the slide itself makes each one tall enough for the
+     copy to settle at its foot, and a long slide can still grow past it. */
+  .hero-swiper { height: auto; padding: 0; }
+  .hero-swiper .swiper-slide { min-height: 70vh; padding: 40px 0 56px; }
   .hero-cta-group .btn { width: 100%; }
 }
 
