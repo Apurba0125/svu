@@ -175,8 +175,8 @@ PACKAGE_TIERS = [
     {"value": "5", "companies": "5+"},
     {"value": "4.5", "companies": "10+"},
     {"value": "3.5", "companies": "15+"},
-    {"value": "2", "companies": "8+"},
-    {"value": "1.80", "companies": "25+"},
+    {"value": "2.40", "companies": "8+"},
+    # {"value": "1.80", "companies": "25+"},
 ]
 
 HIRING_COMPANIES = [
@@ -346,15 +346,15 @@ SPOTLIGHT_SLIDES = [
         "url_text": "www.svu.ac.in",
         "phone_text": "Call: 7044086270",
     },
-    {
-        "type": "news",
-        "image": "https://placehold.co/900x620/1a1a1a/1a1a1a",
-        "title": "SVU Athletes Bring Home Gold and Silver at the 2026 Commonwealth Games",
-        "body": "The university’s sports scholarship program continues to produce national and international medal-winning athletes …",
-        "cta_label": "Sports & Adventure",
-        "cta_slug": "sports-adventure",
-        "tags": ["Campus Life", "Sports"],
-    },
+    # {
+    #     "type": "news",
+    #     "image": "https://placehold.co/900x620/1a1a1a/1a1a1a",
+    #     "title": "SVU Athletes Bring Home Gold and Silver at the 2026 Commonwealth Games",
+    #     "body": "The university’s sports scholarship program continues to produce national and international medal-winning athletes …",
+    #     "cta_label": "Sports & Adventure",
+    #     "cta_slug": "sports-adventure",
+    #     "tags": ["Campus Life", "Sports"],
+    # },
 ]
 
 AERIAL_SLIDES = [
