@@ -35,6 +35,14 @@ html, body {
   overflow-x: hidden;
   max-width: 100%;
 }
+/* overflow-x:hidden forces overflow-y to `auto`, which turns <body> into a
+   scroll container — and a scroll container on <body> silently disables
+   position:sticky for every descendant (the Our Mentors panels). `clip` hides
+   the same overflow without creating one, so the guard above is kept and the
+   side effect is dropped. Browsers without clip support fall back to hidden. */
+@supports (overflow-x: clip) {
+  body { overflow-x: clip; }
+}
 body {
   margin: 0;
   font-family: "Segoe UI", Roboto, Arial, sans-serif;

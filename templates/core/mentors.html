@@ -6,7 +6,7 @@
 {% block extra_css %}<link rel="stylesheet" href="{% static 'css/mentors.css' %}">{% endblock %}
 
 {% block content %}
-<section class="mentors-hero">
+<!-- <section class="mentors-hero">
   <video class="mentors-hero-video" autoplay muted loop playsinline preload="metadata">
     <source src="{% static 'img/swamibannervideonew.mp4' %}" type="video/mp4">
   </video>
@@ -21,9 +21,9 @@
         experience &mdash; guiding students from their first lecture to their first offer letter.
       </p>
 
-      <!-- <a href="{% url 'placeholder_page' 'apply-now' %}" class="btn btn-red mentors-cta">
+      <a href="{% url 'placeholder_page' 'apply-now' %}" class="btn btn-red mentors-cta">
         Apply Today <i class="fa-solid fa-arrow-right"></i>
-      </a> -->
+      </a> 
 
       <div class="mentors-meta">
         <div class="mentors-meta-person">
@@ -67,5 +67,46 @@
       {% endif %}
     </div>
   </div>
+</section> -->
+
+{% comment %}
+Scroll-stacked mentor panels. Each panel is sticky at top:0, so the next one
+scrolls up and covers the one before it instead of pushing it away. Pure CSS —
+the only JS involved is the site-wide AOS fade, and that is attached to the
+children rather than to the sticky element itself, because a transform on a
+sticky box's ancestor would break the stacking.
+Below 768px the sticky behaviour is switched off in mentors.css and the panels
+simply flow, since a 100vh panel plus a photo is unreadable on a phone.
+{% endcomment %}
+<section class="mentor-stack" aria-label="Messages from our leadership">
+  {% comment %}
+  This intro is a header element rather than a div so the alternating-side
+  rules below can key off :nth-of-type(even) on the article panels. Under
+  :nth-child the heading would have counted as child 1 and flipped the side
+  every panel sits on.
+  {% endcomment %}
+
+  {% for m in mentor_slides %}
+  <article class="mentor-panel">
+    <div class="container">
+      <div class="mentor-row">
+        <figure class="mentor-shot" data-aos="fade-up">
+          <img src="{% static m.image %}" alt="{{ m.name }}, {{ m.role }}" loading="lazy">
+        </figure>
+
+        <div class="mentor-speech" data-aos="fade-up" data-aos-delay="120">
+          <span class="mentor-index">
+            {{ forloop.counter|stringformat:"02d" }}
+            <em>/ {{ mentor_slides|length|stringformat:"02d" }}</em>
+          </span>
+          <h2 class="mentor-name">{{ m.name }}</h2>
+          <p class="mentor-role">{{ m.role }}</p>
+          <span class="mentor-rule"></span>
+          {% if m.message %}<p class="mentor-message">{{ m.message }}</p>{% endif %}
+        </div>
+      </div>
+    </div>
+  </article>
+  {% endfor %}
 </section>
 {% endblock %}

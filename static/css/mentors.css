@@ -207,3 +207,183 @@
   .mentors-hero-video { display: none; }
   .mentors-arrow:hover { transform: none; }
 }
+
+/* ==========================================================================
+   Scroll-stacked mentor panels
+   Every panel is sticky at top:0, so the next one rides up and covers the one
+   before it rather than pushing it off. The dark .mentor-stack background is
+   the floor the panels sit on — it is only ever seen for a frame during an
+   overscroll bounce, but without it that gap flashes white.
+   ========================================================================== */
+.mentor-stack { background: var(--cu-black); }
+
+/* Intro band. Deliberately NOT sticky: it scrolls away normally and the first
+   panel rides up over it, which is what sets the stacking effect going. */
+.mentor-stack-head {
+  padding: clamp(52px, 7.5vw, 92px) 0 clamp(46px, 6.5vw, 78px);
+  background: var(--cu-black);
+  color: var(--cu-white);
+  text-align: center;
+}
+.mentor-stack-title {
+  margin: 0;
+  font-size: clamp(27px, 4vw, 50px);
+  font-weight: 300;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+}
+/* Second half drops to its own line and carries the weight, matching the
+   two-line treatment the hero uses. */
+.mentor-stack-title strong { display: block; font-weight: 800; }
+/* Reuses the hero's rule; only the centring differs. */
+.mentor-stack-head .mentors-rule { margin: 26px auto 0; }
+
+.mentor-panel {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  padding: 64px 0;
+  background: var(--cu-white);
+  /* Upward shadow: the only thing that reads as "this panel is on top of the
+     previous one" once the two backgrounds are close in tone. */
+  box-shadow: 0 -30px 60px rgba(0, 0, 0, 0.22);
+}
+/* svh ignores the mobile URL bar, so the panel does not jump as it hides. */
+@supports (min-height: 100svh) {
+  .mentor-panel { min-height: 100svh; }
+}
+.mentor-panel:nth-of-type(even) { background: var(--cu-beige); }
+
+.mentor-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  width: 100%;
+}
+/* Alternate the sides so two mentors in a row never look like the same slide.
+   The track widths flip too, otherwise the photo lands in the text column. */
+.mentor-panel:nth-of-type(even) .mentor-row {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+}
+.mentor-panel:nth-of-type(even) .mentor-shot { order: 2; }
+
+/* ------------------------------------------------------------- photo ----- */
+.mentor-shot {
+  position: relative;
+  justify-self: center;
+  width: 100%;
+  max-width: 440px;
+  margin: 0;
+}
+.mentor-shot img {
+  display: block;
+  width: 100%;
+  /* Height is capped against the viewport rather than set by an aspect-ratio:
+     a panel taller than the screen would stick with its own bottom off-screen
+     and the text under it could never be scrolled to. */
+  height: min(58vh, 520px);
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 1;
+}
+/* Offset outline in brand red. Sits above the panel background but below the
+   photo, so only the part that overhangs is visible. */
+.mentor-shot::after {
+  content: "";
+  position: absolute;
+  right: -16px;
+  bottom: -16px;
+  width: 55%;
+  height: 45%;
+  border: 2px solid var(--cu-red);
+  border-radius: var(--radius);
+  z-index: 0;
+}
+.mentor-panel:nth-of-type(even) .mentor-shot::after { right: auto; left: -16px; }
+
+/* ------------------------------------------------------------ speech ----- */
+.mentor-speech { min-width: 0; max-width: 60ch; }
+.mentor-index {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--cu-red);
+}
+.mentor-index em { font-style: normal; font-weight: 700; color: var(--cu-text-muted); }
+.mentor-name {
+  margin: 14px 0 5px;
+  font-size: clamp(25px, 3.1vw, 38px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--cu-text);
+}
+.mentor-role {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cu-text-muted);
+}
+.mentor-rule {
+  display: block;
+  width: 56px;
+  height: 3px;
+  margin: 24px 0;
+  border-radius: 2px;
+  background: var(--cu-red);
+}
+.mentor-message {
+  margin: 0;
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.85;
+  color: #4a4a4a;
+}
+
+/* ==========================================================================
+   Responsive — below 992px the two columns stack, and stacking a photo on top
+   of a paragraph no longer fits in one screen. Sticky is dropped there so the
+   panels just flow; the same guard catches short desktop windows.
+   ========================================================================== */
+@media (max-width: 991.98px), (max-height: 640px) {
+  .mentor-panel {
+    position: static;
+    min-height: 0;
+    padding: 56px 0;
+    box-shadow: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+  }
+}
+
+@media (max-width: 991.98px) {
+  .mentor-row,
+  .mentor-panel:nth-of-type(even) .mentor-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    justify-items: center;
+    text-align: center;
+  }
+  /* Photo first on every panel — alternating sides means nothing in one column. */
+  .mentor-shot,
+  .mentor-panel:nth-of-type(even) .mentor-shot { order: -1; max-width: 300px; }
+  /* Square matches the source headshots exactly, so nothing gets cropped. */
+  .mentor-shot img { height: auto; aspect-ratio: 1 / 1; }
+  .mentor-shot::after,
+  .mentor-panel:nth-of-type(even) .mentor-shot::after { right: -12px; left: auto; bottom: -12px; }
+  .mentor-rule { margin: 20px auto; }
+}
+
+@media (max-width: 575.98px) {
+  .mentor-panel { padding: 44px 0; }
+  .mentor-shot { max-width: 240px; }
+  .mentor-message { line-height: 1.8; }
+}

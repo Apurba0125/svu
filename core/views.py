@@ -449,10 +449,17 @@ NEWS_SIDE_CARDS = [
 ]
 
 
-# Slides for the Our Mentors hero. "image" is a static-relative path resolved by
+# Mentors for the Our Mentors page. "image" is a static-relative path resolved by
 # {% static %} in the template rather than static() here, so adding a mentor
 # never depends on the staticfiles manifest being built at import time.
-# Drop a photo into static/img/our_mentors/ and add a row to slide it in.
+# Drop a photo into static/img/our_mentors/ and add a row — the hero carousel and
+# the scroll-stacked panels below it are both driven off this one list.
+#
+# "message" is the paragraph shown in the stacked panel. The copy below is
+# neutral, third-person placeholder text describing the office, NOT a quotation:
+# nobody should publish invented words under a real person's name. Replace each
+# one with the mentor's own approved message before this page goes public.
+#
 # stat_label/stat_value are optional — leave blank and the stat block is hidden.
 MENTOR_SLIDES = [
     {
@@ -460,13 +467,26 @@ MENTOR_SLIDES = [
         "name": "Prof. (Dr.) Subrata Dey",
         # "role": "Swami Vivekananda University",
         "role": "Vice Chancellor, Swami Vivekananda University",
+        "message": (
+            "The Vice Chancellor's office sets the academic direction of the "
+            "university — curriculum design, research priorities, faculty "
+            "development and accreditation. Students meet that work in the form "
+            "of syllabi that keep pace with the field, laboratories that are "
+            "actually used, and teachers who are still learning themselves."
+        ),
         # "stat_label": "123",
         # "stat_value": "123",
     },
     {
         "image": "img/our_mentors/deputy_register.png",
         "name": "Tanmoy Mazumder",
-        "role": "Deputy Register, Swami Vivekananda University",
+        "role": "Deputy Registrar, Swami Vivekananda University",
+        "message": (
+            "The Registrar's office is where a student's record lives: admission, "
+            "enrolment, examinations, results and the certificates that follow "
+            "them into their career. Its work is to make sure the administrative "
+            "side of a degree is never the thing that slows a student down."
+        ),
         # "stat_label": "",
         # "stat_value": "",
     },
