@@ -19,15 +19,25 @@ STAT_HIGHLIGHTS = [
     {"icon": static("img/Icon5.png"), "value": "98%", "label": "Placement"},
 ]
 
+# "Life at SVU" tiles on the homepage. Each one links to /page/<slug>/, so the
+# whole tile — image and caption — opens that page.
+#
+# The slug IS the filename of the page: build one by dropping
+# templates/pages/<slug>.html into place, e.g. templates/pages/library.html.
+# Until that file exists the link still works and shows the standard
+# "under construction" stub, so nothing 404s while the pages are written.
+#
+# Slugs are lower case with hyphens to match every other page on the site.
+# A tile with no "slug" renders as a plain, unclickable tile.
 CAMPUS_GALLERY_ITEMS = [
-    {"image": static("img/library.jpg"), "caption": "Library"},
-    {"image": static("img/lab.png"), "caption": "Laboratory"},
-    {"image": static("img/classroom.jpg"), "caption": "Classroom"},
-    {"image": static("img/campus.png"), "caption": "Campus Building"},
-    {"image": static("img/garden.png"), "caption": "Gardening"},
-    {"image": static("img/sports.png"), "caption": "Sports"},
-    {"image": static("img/groupstudy.png"), "caption": "Group Study"},
-    {"image": static("img/lab-2.jpg"), "caption": "Practical Laboratory"},
+    {"image": static("img/library.jpg"), "caption": "Library", "slug": "library"},
+    {"image": static("img/lab.png"), "caption": "Laboratory", "slug": "laboratory"},
+    {"image": static("img/classroom.jpg"), "caption": "Classroom", "slug": "classroom"},
+    {"image": static("img/campus.png"), "caption": "Campus Building", "slug": "campus-building"},
+    {"image": static("img/garden.png"), "caption": "Gardening", "slug": "gardening"},
+    {"image": static("img/sports.png"), "caption": "Sports", "slug": "sports"},
+    {"image": static("img/groupstudy.png"), "caption": "Group Study", "slug": "group-study"},
+    {"image": static("img/lab-2.jpg"), "caption": "Practical Laboratory", "slug": "practical-laboratory"},
 ]
 
 RANKING_GROUPS = [
@@ -463,10 +473,10 @@ NEWS_SIDE_CARDS = [
 # stat_label/stat_value are optional — leave blank and the stat block is hidden.
 MENTOR_SLIDES = [
     {
-        "image": "img/our_mentors/vc.png",
-        "name": "Prof. (Dr.) Subrata Dey",
+        "image": "img/our_mentors/1707036444prof-dr-suranjan-das.jpeg",
+        "name": "Prof. (Dr.) Suranjan Das",
         # "role": "Swami Vivekananda University",
-        "role": "Vice Chancellor, Swami Vivekananda University",
+        "role": "Vice-Chancellor, Adamas University",
         "message": (
             "The Vice Chancellor's office sets the academic direction of the "
             "university — curriculum design, research priorities, faculty "
@@ -478,11 +488,11 @@ MENTOR_SLIDES = [
         # "stat_value": "123",
     },
     {
-        "image": "img/our_mentors/deputy_register.png",
-        "name": "Tanmoy Mazumder",
-        "role": "Deputy Registrar, Swami Vivekananda University",
+        "image": "img/our_mentors/1707036474Dhrubajyoti-Chattopadhyay.jpeg",
+        "name": "Prof. (Dr.) Dhrubajyoti Chattopadhyay",
+        "role": "Vice Chancellor, Sister Nivedita University Kolkata",
         "message": (
-            "The Registrar's office is where a student's record lives: admission, "
+            "The Vice Chancellor's office is where a student's record lives: admission, "
             "enrolment, examinations, results and the certificates that follow "
             "them into their career. Its work is to make sure the administrative "
             "side of a degree is never the thing that slows a student down."
@@ -490,6 +500,203 @@ MENTOR_SLIDES = [
         # "stat_label": "",
         # "stat_value": "",
     },
+    {
+        "image": "img/our_mentors/1707201511WhatsApp Image 2024-01-27 at 17.23.39.png",
+        "name": "Prof. (Dr.) Shorosimohan Dan",
+        "role": "Former Vice Chancellor , The University of Burdwan",
+        "message": (
+            "The Vice Chancellor's office is where a student's record lives: admission, "
+            "enrolment, examinations, results and the certificates that follow "
+            "them into their career. Its work is to make sure the administrative "
+            "side of a degree is never the thing that slows a student down."
+        ),
+        # "stat_label": "",
+        # "stat_value": "",
+    },
+    {
+        "image": "img/our_mentors/17320970693. Prof. (Dr.)Deb Narayan Bandyopadhyay.png",
+        "name": "Prof. (Dr.)Deb Narayan Bandyopadhyay",
+        "role": "Founder Vice Chancellor,Bankura University",
+        "message": (
+            "The Vice Chancellor's office is where a student's record lives: admission, "
+            "enrolment, examinations, results and the certificates that follow "
+            "them into their career. Its work is to make sure the administrative "
+            "side of a degree is never the thing that slows a student down."
+        ),
+        # "stat_label": "",
+        # "stat_value": "",
+    },
+    {
+        "image": "img/our_mentors/17363494544. Dr. Ranjan Chakrabarti.jpg",
+        "name": "Prof. (Dr.) Ranjan Chakrabarti",
+        "role": "Former Vice-Chancellor Vidyasar University",
+        "message": (
+            "The Vice Chancellor's office is where a student's record lives: admission, "
+            "enrolment, examinations, results and the certificates that follow "
+            "them into their career. Its work is to make sure the administrative "
+            "side of a degree is never the thing that slows a student down."
+        ),
+        # "stat_label": "",
+        # "stat_value": "",
+    },
+    {
+        "image": "img/our_mentors/17322701125. Prof.(Dr.) Malayendu Saha.jpeg",
+        "name": "Prof.(Dr.) Malayendu Saha",
+        "role": "Former Vice-Chancellor , Kalyani University",
+        "message": (
+            "The Vice Chancellor's office is where a student's record lives: admission, "
+            "enrolment, examinations, results and the certificates that follow "
+            "them into their career. Its work is to make sure the administrative "
+            "side of a degree is never the thing that slows a student down."
+        ),
+        # "stat_label": "",
+        # "stat_value": "",
+    },
+    {
+        "image": "img/our_mentors/17322700986. Prof.(Dr.) Mita Banerjee.jpeg",
+        "name": "Prof.(Dr.) Mita Banerjee",
+        "role": "Former Vice-Chancellor of The West Bengal University of Teachers' Training Education Planning and Administration",
+        "message": (
+            "The Vice Chancellor's office is where a student's record lives: admission, "
+            "enrolment, examinations, results and the certificates that follow "
+            "them into their career. Its work is to make sure the administrative "
+            "side of a degree is never the thing that slows a student down."
+        ),
+        # "stat_label": "",
+        # "stat_value": "",
+    },
+
+     {
+            "image": "img/our_mentors/17322700817. Prof.(Dr.) Swapan Kumar Datta.jpeg",
+            "name": "Prof.(Dr.) Swapan Kumar Datta",
+            "role": "Former Vice-Chancellor Visva-Bharati & Biswa Bangla Biswabidyalay",
+            "message": (
+                "The Vice Chancellor's office is where a student's record lives: admission, "
+                "enrolment, examinations, results and the certificates that follow "
+                "them into their career. Its work is to make sure the administrative "
+                "side of a degree is never the thing that slows a student down."
+            ),
+            # "stat_label": "",
+            # "stat_value": "",
+        },
+         {
+                "image": "img/our_mentors/1726321589asutosh.jpg",
+                "name": "Prof.(Dr.) Ashutosh Ghosh",
+                "role": "Former Vice-Chancellor Rani Rashmoni Green University , Former Pro Vice-Chancellor , (Academic Affairs) University of Calcutta",
+                "message": (
+                    "The Vice Chancellor's office is where a student's record lives: admission, "
+                    "enrolment, examinations, results and the certificates that follow "
+                    "them into their career. Its work is to make sure the administrative "
+                    "side of a degree is never the thing that slows a student down."
+                ),
+                # "stat_label": "",
+                # "stat_value": "",
+            },
+             {
+                    "image": "img/our_mentors/1707201486184896.jpg",
+                    "name": "Prof. (Dr.) Nemai Saha",
+                    "role": "Former Vice-Chancellor , The University of Burdwan",
+                    "message": (
+                        "The Vice Chancellor's office is where a student's record lives: admission, "
+                        "enrolment, examinations, results and the certificates that follow "
+                        "them into their career. Its work is to make sure the administrative "
+                        "side of a degree is never the thing that slows a student down."
+                    ),
+                    # "stat_label": "",
+                    # "stat_value": "",
+                },
+                 {
+                        "image": "img/our_mentors/17072853476 (1).jpg",
+                        "name": "Dr. Baidyanath Chakrabarty",
+                        "role": "Renowned Gynecologist and IVF Specialist",
+                        "message": (
+                            "The Vice Chancellor's office is where a student's record lives: admission, "
+                            "enrolment, examinations, results and the certificates that follow "
+                            "them into their career. Its work is to make sure the administrative "
+                            "side of a degree is never the thing that slows a student down."
+                        ),
+                        # "stat_label": "",
+                        # "stat_value": "",
+                    },
+                     
+                         {
+                                "image": "img/our_mentors/17072853737.jpg",
+                                "name": "Padmashri Bikash Sinha",
+                                "role": "Former Director of the Saha Institute of Nuclear Physics and Variable Energy Cyclotron Centre and the chairman of the Board of Governors of the National Institute of Technology, Durgapur",
+                                "message": (
+                                    "The Vice Chancellor's office is where a student's record lives: admission, "
+                                    "enrolment, examinations, results and the certificates that follow "
+                                    "them into their career. Its work is to make sure the administrative "
+                                    "side of a degree is never the thing that slows a student down."
+                                ),
+                                # "stat_label": "",
+                                # "stat_value": "",
+                            },
+                             {
+                                    "image": "img/our_mentors/17072853858.jpg",
+                                    "name": "Prof.(Dr.) Bashabi Fraser",
+                                    "role": "Professor Emerita of English and Creative Writing Director, Scottish Centre of Tagore Studies (ScoTs) School of Arts & Creative Industries Edinburgh Napier University Honorary Fellow, Centre for South Asian Studies, University of Edinburgh",
+                                    "message": (
+                                        "The Vice Chancellor's office is where a student's record lives: admission, "
+                                        "enrolment, examinations, results and the certificates that follow "
+                                        "them into their career. Its work is to make sure the administrative "
+                                        "side of a degree is never the thing that slows a student down."
+                                    ),
+                                    # "stat_label": "",
+                                    # "stat_value": "",
+                                },
+                                 {
+                                        "image": "img/our_mentors/17072853989.jpg",
+                                        "name": "Prof. (Dr.) Neil Fraser",
+                                        "role": "FProfessor, School of Social and Political Studies University of Edinburgh",
+                                        "message": (
+                                            "The Vice Chancellor's office is where a student's record lives: admission, "
+                                            "enrolment, examinations, results and the certificates that follow "
+                                            "them into their career. Its work is to make sure the administrative "
+                                            "side of a degree is never the thing that slows a student down."
+                                        ),
+                                        # "stat_label": "",
+                                        # "stat_value": "",
+                                    },
+                                     {
+                                            "image": "img/our_mentors/170728540810.jpg",
+                                            "name": "Prof.(Dr.) Arun Bandyopadhyay",
+                                            "role": "Director, Gujarat Biotechnology University, Gandhinagar. Former Director, CSIR-Indian Institute of Chemical Biology, Kolkata",
+                                            "message": (
+                                                "The Vice Chancellor's office is where a student's record lives: admission, "
+                                                "enrolment, examinations, results and the certificates that follow "
+                                                "them into their career. Its work is to make sure the administrative "
+                                                "side of a degree is never the thing that slows a student down."
+                                            ),
+                                            # "stat_label": "",
+                                            # "stat_value": "",
+                                        },
+                                         {
+                                                "image": "img/our_mentors/170720123911.png",
+                                                "name": "Prof. (Dr.) Amlan Chakrabarti",
+                                                "role": "Head IT & Tech. Innovation Cell, Dept. of Higher Education, Govt. of West Bengal, Professor and Director, A.K. Choudhury School of IT, University of Calcutta",
+                                                "message": (
+                                                    "The Vice Chancellor's office is where a student's record lives: admission, "
+                                                    "enrolment, examinations, results and the certificates that follow "
+                                                    "them into their career. Its work is to make sure the administrative "
+                                                    "side of a degree is never the thing that slows a student down."
+                                                ),
+                                                # "stat_label": "",
+                                                # "stat_value": "",
+                                            },
+                                             {
+                                                    "image": "img/our_mentors/170720120612.jpeg",
+                                                    "name": "Prof. (Dr.) Debprasad Chattopadhyay",
+                                                    "role": "Founder Director & Scientist G at ICMR-National Institute of Traditional Medicine",
+                                                    "message": (
+                                                        "The Vice Chancellor's office is where a student's record lives: admission, "
+                                                        "enrolment, examinations, results and the certificates that follow "
+                                                        "them into their career. Its work is to make sure the administrative "
+                                                        "side of a degree is never the thing that slows a student down."
+                                                    ),
+                                                    # "stat_label": "",
+                                                    # "stat_value": "",
+                                                },
 ]
 
 
@@ -518,6 +725,11 @@ def home(request):
         "news_list_items": NEWS_LIST_ITEMS,
         "news_featured_slides": NEWS_FEATURED_SLIDES,
         "news_side_cards": NEWS_SIDE_CARDS,
+        # Opens the admission enquiry modal by itself a moment after the page
+        # loads. The modal partial lives in base.html and is on every page, so
+        # this flag is what keeps the pop-up to the homepage. Add it to another
+        # view to auto-open there too; "Talk to us" still works everywhere.
+        "enquiry_autoshow": True,
     }
     return render(request, "core/home.html", context)
 

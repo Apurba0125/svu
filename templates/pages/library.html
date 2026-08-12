@@ -1,0 +1,170 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+LIBRARY  —  served at /page/library/
+---------------------------------------------------------------------------
+Header and footer come from core/base.html. Do not add them here.
+
+Reached from the "Library" tile in Life at SVU on the homepage. The other
+seven tiles work the same way — copy this file to templates/pages/
+laboratory.html, classroom.html, campus-building.html, gardening.html,
+sports.html, group-study.html, practical-laboratory.html and swap the title,
+copy and photographs. Nothing else to wire up.
+
+HOW THE VIEWER IS WIRED
+  data-viewer on the grid makes it one gallery; data-viewer-item on each cell
+  makes it a frame. That is the whole contract — no onclick attributes and no
+  index numbers to keep in step, so inserting a photograph in the middle does
+  not renumber anything after it. The viewer itself (counter, fullscreen,
+  close, arrows, caption, keyboard, swipe) is built by main.js and styled in
+  base.css, shared by every gallery page.
+
+  The caption under the enlarged photograph is the image's own alt text, so
+  writing a good alt does double duty and there is no second list of titles
+  to fall out of sync with the images.
+
+TO ADD A PHOTOGRAPH
+  1. Put the file in static/img/library/
+  2. Copy one "gallery cell" block and change the src and the alt
+  3. Run:  python manage.py collectstatic --noinput
+     Not optional — a static path with no manifest entry raises ValueError on
+     every request, so the page goes down rather than showing a broken image.
+
+  Cells are a fixed height and the photograph is cropped to fill, so portrait,
+  landscape and square originals all come out identical in the grid. The
+  enlarged view shows the whole uncropped photograph.
+
+  Only two library photographs are in the repository so far, so the grid is
+  seeded with those two.
+
+NOTE ON COMMENTS: the hash-style Django comment covers a SINGLE line only.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Library | Swami Vivekananda University{% endblock %}
+{% block meta_description %}The library at Swami Vivekananda University — thousands of study and literature titles, with open access for every student.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Library</h1>
+  </div>
+</section>
+
+
+{# ======================================================  GALLERY  ======= #}
+<section class="section">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">The <span>Library</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <p class="gallery-lead" data-aos="fade-up" data-aos-delay="80">
+      We have curated our library with thousands of study and literature books. Every student has
+      easy access to the library and can read about interdisciplinary topics to broaden their
+      knowledge boundaries.
+    </p>
+
+    <div class="gallery-grid-lg" data-viewer="library" data-aos="fade-up" data-aos-delay="140">
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/1.jpg' %}"
+             alt="Aisle between the reference stacks, lined with Communication Systems and Bioethics and Biosafety volumes">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/2.jpg' %}"
+             alt="A long run of shelving filled with Communication Systems textbooks"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/3.jpg' %}"
+             alt="Reading room with round study tables set among the colour-coded stacks"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/4.jpg' %}"
+             alt="The library circulation desk, with the campus visible through the glass wall behind it"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/5.jpg' %}"
+             alt="Reference shelves stocked with Bioethics and Biosafety volumes"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/6.jpg' %}"
+             alt="Framed artwork under picture lights along the library stairwell"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/7.jpg' %}"
+             alt="Aisle of economics and psychology titles in the reference section"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/8.jpg' %}"
+             alt="The main reading hall, with study tables along the glass frontage"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/9.jpg' %}"
+             alt="Study tables and colour-coded shelving in the reading room"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/11.jpg' %}"
+             alt="Window-side counter seating overlooking the campus grounds"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/12.jpg' %}"
+             alt="A student reading in the engineering mathematics aisle"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/library/13.jpg' %}"
+             alt="Students and faculty at work in the library reading hall"
+             loading="lazy">
+      </button>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

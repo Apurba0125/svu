@@ -1,32 +1,68 @@
-<div class="modal fade" id="enquiryModal" tabindex="-1" aria-labelledby="enquiryModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+{% comment %}
+Admission enquiry modal. Included from base.html, so it exists on every page and
+"Talk to us" can open it anywhere.
+
+data-enquiry-autoshow is only rendered when the view puts enquiry_autoshow in the
+context — currently just home() — and main.js opens the modal a moment after load
+when it sees that attribute. Once per browser-tab session, not once per pageview.
+
+The Course dropdown is driven off the department the visitor picks. The mapping
+is emitted below with |json_script, which escapes the payload properly; building
+that JSON by hand in a script tag is how a stray apostrophe in a course name
+turns into a syntax error, or worse.
+{% endcomment %}
+{{ enquiry_courses|json_script:"enquiryCourseData" }}
+
+<div class="modal fade" id="enquiryModal" tabindex="-1" aria-labelledby="enquiryModalLabel"
+     aria-hidden="true"{% if enquiry_autoshow %} data-enquiry-autoshow{% endif %}>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content enquiry-modal-content">
       <div class="modal-header">
         <h3 class="modal-title" id="enquiryModalLabel">Admission Enquiry Form</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form novalidate>
           <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Full Name" required>
+            <input type="text" class="form-control" name="full_name" autocomplete="name"
+                   placeholder="Full Name" aria-label="Full name" required>
           </div>
           <div class="mb-3">
-            <input type="tel" class="form-control" placeholder="Mobile Number" required>
+            <input type="tel" class="form-control" name="mobile_number" autocomplete="tel"
+                   placeholder="Mobile Number" aria-label="Mobile number"
+                   inputmode="numeric" pattern="[0-9+\s-]{10,15}" required>
           </div>
           <div class="mb-3">
-            <input type="email" class="form-control" placeholder="Email Address" required>
+            <input type="email" class="form-control" name="email" autocomplete="email"
+                   placeholder="Email Address" aria-label="Email address" required>
           </div>
+
           <div class="mb-3">
-            <select class="form-select" required>
-              <option value="" selected disabled>Select Program of Interest</option>
-              <option>Engineering</option>
-              <option>Management (BBA/MBA)</option>
-              <option>Computing (BCA/MCA)</option>
-              <option>Commerce</option>
-              <option>Law</option>
-              <option>Design</option>
+            <select class="form-select" name="department" aria-label="Department"
+                    data-enquiry-department required>
+              <option value="" selected disabled>Select Department</option>
+              {% for school in enquiry_schools %}
+              <optgroup label="{{ school.title }}">
+                {% for department in school.departments %}
+                <option value="{{ department.slug }}">{{ department.label }}</option>
+                {% endfor %}
+              </optgroup>
+              {% endfor %}
             </select>
           </div>
+
+          <div class="mb-3">
+            {% comment %}
+            Starts disabled with no options. main.js fills it from the department
+            choice; if JS never runs, a disabled empty select is honest about
+            being unusable rather than offering courses from the wrong department.
+            {% endcomment %}
+            <select class="form-select" name="course" aria-label="Course"
+                    data-enquiry-course disabled required>
+              <option value="" selected disabled>Select a department first</option>
+            </select>
+          </div>
+
           <button type="submit" class="btn btn-red w-100">Submit Enquiry</button>
         </form>
       </div>

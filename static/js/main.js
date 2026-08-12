@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
     AOS.init({ duration: 700, once: true, offset: 60 });
   }
   initCounters();
+  initEnquiryForm();
+  initPhotoViewer();
 
   const geoPanels = document.querySelectorAll("[data-geo-panel]");
   geoPanels.forEach((panel) => {
@@ -413,4 +415,240 @@ function initCounters() {
     { threshold: 0.4 }
   );
   counters.forEach((el) => observer.observe(el));
+}
+
+/* ==========================================================================
+   Admission enquiry modal
+   Two jobs: fill the Course dropdown from the chosen Department, and open the
+   modal by itself shortly after the homepage loads.
+   ========================================================================== */
+function initEnquiryForm() {
+  const modal = document.getElementById("enquiryModal");
+  if (!modal) return;
+
+  initEnquiryCourseSelect(modal);
+  initEnquiryAutoShow(modal);
+}
+
+/* Department -> Course. The department <select> carries slugs; the course list
+   for each slug comes from the json_script block the template renders. */
+function initEnquiryCourseSelect(modal) {
+  const department = modal.querySelector("[data-enquiry-department]");
+  const course = modal.querySelector("[data-enquiry-course]");
+  const payload = document.getElementById("enquiryCourseData");
+  if (!department || !course || !payload) return;
+
+  let coursesBySlug = {};
+  try {
+    coursesBySlug = JSON.parse(payload.textContent) || {};
+  } catch (err) {
+    // Leave the course select disabled rather than half-populated.
+    return;
+  }
+
+  function render() {
+    const list = coursesBySlug[department.value] || [];
+
+    // Rebuilt from scratch each time: mutating in place leaves the previous
+    // department's courses behind whenever the new list is shorter.
+    course.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.textContent = list.length
+      ? "Select Course"
+      : "Select a department first";
+    course.appendChild(placeholder);
+
+    list.forEach((name) => {
+      const option = document.createElement("option");
+      // textContent, not innerHTML — course names are data, and "&" in
+      // "Advanced Networking & Cyber Security" must stay a literal ampersand.
+      option.value = name;
+      option.textContent = name;
+      course.appendChild(option);
+    });
+
+    course.disabled = list.length === 0;
+  }
+
+  department.addEventListener("change", render);
+  // Run once on load so a browser-restored department selection (Firefox does
+  // this on back/forward) still gets its matching course list.
+  render();
+}
+
+/* Auto-open, homepage only — the template adds data-enquiry-autoshow there. */
+function initEnquiryAutoShow(modal) {
+  if (!modal.hasAttribute("data-enquiry-autoshow")) return;
+  if (!window.bootstrap || !bootstrap.Modal) return;
+
+  // Once per browser-tab session. Popping the form on every single pageview
+  // (including every back-navigation to the homepage) reads as spam and gets
+  // the site bounced. Change SHOWN_KEY handling below to fire every load.
+  const SHOWN_KEY = "svuEnquiryShown";
+  try {
+    if (sessionStorage.getItem(SHOWN_KEY) === "1") return;
+  } catch (err) {
+    // Safari private mode throws on sessionStorage. Fall through and show it.
+  }
+
+  window.setTimeout(() => {
+    bootstrap.Modal.getOrCreateInstance(modal).show();
+    try {
+      sessionStorage.setItem(SHOWN_KEY, "1");
+    } catch (err) {
+      /* nothing to remember it with; it will show again next load */
+    }
+  }, 1200);
+}
+
+/* ==========================================================================
+   Photo viewer — click a gallery image to see it full size
+   Mark a container with data-viewer and each clickable child with
+   data-viewer-item. Everything else is handled here; styles are in base.css,
+   so no gallery page needs markup or a stylesheet of its own.
+
+   Built on a native <dialog> opened with showModal(), which is doing real
+   work: it puts the viewer in the browser's top layer (nothing can cover it),
+   traps focus inside, makes the rest of the page inert, closes on Escape and
+   supplies ::backdrop. Hand-rolling that correctly is a lot of code.
+   ========================================================================== */
+function initPhotoViewer() {
+  const galleries = document.querySelectorAll("[data-viewer]");
+  if (!galleries.length) return;
+  if (!window.HTMLDialogElement) return;   // very old browser: links still work
+
+  let dialog = null;
+  let frames = [];
+  let index = 0;
+
+  function build() {
+    dialog = document.createElement("dialog");
+    dialog.className = "pv";
+    dialog.setAttribute("aria-label", "Photo viewer");
+    dialog.innerHTML =
+      '<div class="pv-bar">' +
+        '<span class="pv-count"></span>' +
+        '<div class="pv-tools">' +
+          '<button class="pv-btn pv-full" type="button" aria-label="Toggle fullscreen">' +
+            '<i class="fa-solid fa-expand" aria-hidden="true"></i></button>' +
+          '<button class="pv-btn pv-close" type="button" aria-label="Close viewer">' +
+            '<i class="fa-solid fa-xmark" aria-hidden="true"></i></button>' +
+        "</div>" +
+      "</div>" +
+      '<button class="pv-btn pv-nav pv-prev" type="button" aria-label="Previous photograph">' +
+        '<i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>' +
+      '<figure class="pv-figure">' +
+        '<img class="pv-img" alt="">' +
+        '<figcaption class="pv-caption"></figcaption>' +
+      "</figure>" +
+      '<button class="pv-btn pv-nav pv-next" type="button" aria-label="Next photograph">' +
+        '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>';
+    document.body.appendChild(dialog);
+
+    if (!dialog.requestFullscreen) dialog.dataset.nofullscreen = "true";
+
+    dialog.querySelector(".pv-close").addEventListener("click", () => dialog.close());
+    dialog.querySelector(".pv-prev").addEventListener("click", () => step(-1));
+    dialog.querySelector(".pv-next").addEventListener("click", () => step(1));
+    dialog.querySelector(".pv-full").addEventListener("click", toggleFullscreen);
+
+    // Clicking the backdrop closes. The backdrop is not a child element, so
+    // the click lands on the dialog itself — anything inside reports a
+    // descendant as the target and must be ignored, or dragging across the
+    // photograph to select it would dismiss the viewer.
+    dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+
+    // Fires for the close button, the backdrop and the browser's own Escape
+    // handling alike, so the page lock is released exactly once per route out.
+    dialog.addEventListener("close", () => {
+      document.documentElement.classList.remove("pv-open");
+      if (document.fullscreenElement) document.exitFullscreen();
+    });
+
+    // Escape is handled by the dialog itself; only the arrows need wiring.
+    dialog.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+    });
+
+    addSwipe(dialog);
+  }
+
+  function toggleFullscreen() {
+    const icon = dialog.querySelector(".pv-full i");
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      icon.className = "fa-solid fa-expand";
+    } else if (dialog.requestFullscreen) {
+      // Can reject (permissions policy, or not a user gesture); swallow it
+      // rather than letting an unhandled rejection surface in the console.
+      dialog.requestFullscreen().then(
+        () => { icon.className = "fa-solid fa-compress"; },
+        () => {}
+      );
+    }
+  }
+
+  /* Horizontal drag steps through the set; anything under 50px is a tap or a
+     stray finger, and a mostly-vertical drag is a scroll attempt. */
+  function addSwipe(el) {
+    let startX = 0;
+    let startY = 0;
+    el.addEventListener("touchstart", (e) => {
+      startX = e.changedTouches[0].screenX;
+      startY = e.changedTouches[0].screenY;
+    }, { passive: true });
+    el.addEventListener("touchend", (e) => {
+      const dx = e.changedTouches[0].screenX - startX;
+      const dy = e.changedTouches[0].screenY - startY;
+      if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+      step(dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+
+  function render() {
+    const cell = frames[index];
+    const img = cell.querySelector("img");
+    const view = dialog.querySelector(".pv-img");
+    const src = cell.dataset.viewerFull || (img && img.currentSrc) || (img && img.src) || "";
+    const text = cell.dataset.viewerCaption || (img && img.alt) || "";
+
+    // Restart the fade: removing the class and re-adding it in the same frame
+    // is coalesced by the browser, so force a reflow between the two.
+    view.classList.remove("is-swapping");
+    void view.offsetWidth;
+    view.classList.add("is-swapping");
+
+    view.src = src;
+    view.alt = text;
+    dialog.querySelector(".pv-caption").textContent = text;
+    dialog.querySelector(".pv-count").textContent = index + 1 + " / " + frames.length;
+    dialog.dataset.single = frames.length < 2 ? "true" : "false";
+  }
+
+  function step(delta) {
+    if (frames.length < 2) return;
+    index = (index + delta + frames.length) % frames.length;
+    render();
+  }
+
+  function open(list, start) {
+    if (!dialog) build();
+    frames = list;
+    index = start;
+    render();
+    dialog.showModal();
+    document.documentElement.classList.add("pv-open");
+  }
+
+  galleries.forEach((gallery) => {
+    const list = Array.from(gallery.querySelectorAll("[data-viewer-item]"));
+    list.forEach((cell, i) => {
+      cell.addEventListener("click", () => open(list, i));
+    });
+  });
 }

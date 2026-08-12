@@ -244,7 +244,9 @@
   display: flex;
   align-items: center;
   min-height: 100vh;
-  padding: 64px 0;
+  /* 56 rather than 64: the tallest message panel needs every pixel it can get
+     inside one viewport, and the gap already reads as generous. */
+  padding: 56px 0;
   background: var(--cu-white);
   /* Upward shadow: the only thing that reads as "this panel is on top of the
      previous one" once the two backgrounds are close in tone. */
@@ -307,7 +309,15 @@
 .mentor-panel:nth-of-type(even) .mentor-shot::after { right: auto; left: -16px; }
 
 /* ------------------------------------------------------------ speech ----- */
-.mentor-speech { min-width: 0; max-width: 60ch; }
+/* 96ch, far past the 60ch a pure reading measure would want, and deliberately.
+   These messages run to ~1500 characters over as many as five paragraphs. At
+   60ch the tallest panel needed 884px — more than a laptop viewport — and a
+   sticky panel taller than the screen pins at top:0 with its bottom below the
+   fold and no way to scroll to it, so the end of the message was unreachable.
+   Widening the measure is what fixes that; the type size alone could not.
+   Past ~96ch nothing more is gained: the 520px photo becomes the taller of the
+   two columns and starts setting the panel height instead. */
+.mentor-speech { min-width: 0; max-width: 96ch; }
 .mentor-index {
   display: inline-flex;
   align-items: baseline;
@@ -342,19 +352,33 @@
   border-radius: 2px;
   background: var(--cu-red);
 }
+/* Sized so the longest message fits one panel rather than running past the
+   fold. Below ~12.5px this stops being comfortable to read, so if a future
+   message still overflows, cut the copy rather than the type. */
 .mentor-message {
   margin: 0;
-  font-size: clamp(15px, 1.2vw, 17px);
-  line-height: 1.85;
+  font-size: clamp(12.5px, 0.92vw, 13px);
+  line-height: 1.7;
   color: #4a4a4a;
+  /* Justified to match the body copy on the department and About pages. It is
+     switched back to left below 768px, where the measure gets too narrow and
+     justification opens rivers of white space between words. */
+  text-align: justify;
 }
+/* Several people have two to five paragraphs. margin:0 above is deliberate —
+   it keeps a single paragraph tight under the rule — so the gap goes between
+   consecutive ones instead, or they run together as one wall of text. */
+.mentor-message + .mentor-message { margin-top: 10px; }
 
 /* ==========================================================================
    Responsive — below 992px the two columns stack, and stacking a photo on top
    of a paragraph no longer fits in one screen. Sticky is dropped there so the
    panels just flow; the same guard catches short desktop windows.
    ========================================================================== */
-@media (max-width: 991.98px), (max-height: 640px) {
+/* 700px, raised from 640px: the tallest panel now needs ~660px of content, so
+   any viewport shorter than that must drop out of sticky or the end of the
+   message is pinned off-screen with no way to scroll to it. */
+@media (max-width: 991.98px), (max-height: 700px) {
   .mentor-panel {
     position: static;
     min-height: 0;
@@ -380,6 +404,7 @@
   .mentor-shot::after,
   .mentor-panel:nth-of-type(even) .mentor-shot::after { right: -12px; left: auto; bottom: -12px; }
   .mentor-rule { margin: 20px auto; }
+  .mentor-message { text-align: left; }
 }
 
 @media (max-width: 575.98px) {

@@ -8,10 +8,26 @@
 
     <div class="gallery-grid">
       {% for item in campus_gallery_items %}
+      {% comment %}
+      The whole tile is the link — image and caption together — rather than an
+      anchor wrapped around the caption alone, so clicking the photo works too.
+      Slugs live beside the images in CAMPUS_GALLERY_ITEMS (core/views.py).
+      A tile with no slug falls back to the plain div it used to be, so adding
+      a photo without a page to point at cannot break the grid.
+      {% endcomment %}
+      {% if item.slug %}
+      <a href="{% url 'placeholder_page' item.slug %}"
+         class="gallery-tile gallery-tile-link"
+         data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1|stringformat:'d' }}00">
+        <img src="{{ item.image }}" alt="{{ item.caption|default:'Swami Vivekananda University campus life' }}">
+        {% if item.caption %}<span class="gallery-tile-caption">{{ item.caption }}</span>{% endif %}
+      </a>
+      {% else %}
       <div class="gallery-tile" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1|stringformat:'d' }}00">
         <img src="{{ item.image }}" alt="{{ item.caption|default:'Swami Vivekananda University campus life' }}">
         {% if item.caption %}<span class="gallery-tile-caption">{{ item.caption }}</span>{% endif %}
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>

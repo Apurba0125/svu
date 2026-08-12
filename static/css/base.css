@@ -926,3 +926,194 @@ button { font: inherit; cursor: pointer; }
 .placeholder-page { padding: 90px 0; text-align: center; }
 .placeholder-page h1 { font-size: 30px; margin-bottom: 12px; }
 .placeholder-page p { color: var(--cu-text-muted); }
+
+/* ==========================================================================
+   Admission enquiry modal
+   Included from base.html on every page, so these styles belong here rather
+   than in home.css — the modal opens from "Talk to us" site-wide.
+   ========================================================================== */
+.enquiry-modal-content { border: none; border-radius: var(--radius); }
+.enquiry-modal-content .modal-header { border-bottom: none; padding: 26px 26px 0; }
+.enquiry-modal-content .modal-title { font-size: 19px; font-weight: 800; }
+.enquiry-modal-content .modal-body { padding: 20px 26px 26px; }
+.enquiry-modal-content .form-control,
+.enquiry-modal-content .form-select { border-radius: 2px; padding: 10px 14px; font-size: 13.5px; }
+
+/* The Course select is disabled until a department is chosen. Bootstrap greys
+   the text but leaves the field looking active, which reads as a dead control
+   rather than a locked one. */
+.enquiry-modal-content .form-select:disabled {
+  background-color: #f2f2f2;
+  color: var(--cu-text-muted);
+  cursor: not-allowed;
+}
+/* 26 departments in one list: the group headings are what make it scannable. */
+.enquiry-modal-content optgroup {
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cu-text-muted);
+}
+.enquiry-modal-content optgroup option {
+  font-size: 13.5px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--cu-text);
+}
+
+/* ==========================================================================
+   Photo viewer — click a gallery image to see it full size
+   Built by initPhotoViewer() in main.js on a native <dialog>, so these styles
+   live here: any page that marks up a [data-viewer] group gets a working
+   viewer with no extra link tag.
+
+   <dialog> + showModal() is doing real work here — it puts the element in the
+   browser's top layer (so no z-index can cover it), traps focus, makes the
+   rest of the page inert, closes on Escape, and gives us ::backdrop. All of
+   that would otherwise be hand-written and half wrong.
+   ========================================================================== */
+.pv[open] {
+  /* The UA default is display:block plus centring margins; both fight the
+     full-screen layout, so everything is re-declared. */
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 62px 16px 72px;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+}
+.pv::backdrop { background: rgba(9, 9, 11, 0.94); }
+
+/* Animated rather than transitioned: a dialog goes display:none -> block, and
+   a transition has no start value to run from across that change. Animations
+   fire on the display change, so they just work. */
+.pv[open] { animation: pvRise 0.34s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.pv[open]::backdrop { animation: pvFade 0.3s ease both; }
+@keyframes pvFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pvRise {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.pv-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: min(1200px, 100%);
+  max-height: 100%;
+}
+.pv-img {
+  max-width: 100%;
+  /* Leaves room for the caption so the photograph never overflows the frame. */
+  max-height: calc(100vh - 185px);
+  width: auto;
+  height: auto;
+  /* contain, not cover: the ribbon crops to a uniform tile, but here you get
+     the whole photograph at its own proportions. */
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.6);
+  background: #141414;
+}
+/* Re-triggered by JS on every change, so stepping through the set animates. */
+.pv-img.is-swapping { animation: pvSwap 0.28s ease both; }
+@keyframes pvSwap {
+  from { opacity: 0; transform: scale(0.99); }
+  to   { opacity: 1; transform: none; }
+}
+.pv-caption {
+  max-width: 88ch;
+  color: #d7d7d7;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+.pv-caption:empty { display: none; }
+
+/* ------------------------------------------------------------ chrome ----- */
+.pv-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 18px;
+}
+.pv-count {
+  color: #cfcfcf;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  /* Stops the counter jittering as the digits change width. */
+  font-variant-numeric: tabular-nums;
+}
+.pv-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.13);
+  color: var(--cu-white);
+  transition: background var(--transition), transform var(--transition);
+}
+.pv-btn:hover { background: var(--cu-red); }
+.pv-btn:focus-visible { outline: 2px solid var(--cu-white); outline-offset: 3px; }
+.pv-tools { display: flex; align-items: center; gap: 8px; }
+.pv-close,
+.pv-full { width: 40px; height: 40px; font-size: 15px; }
+/* Hidden when the browser has no Fullscreen API — main.js sets the flag. */
+.pv[data-nofullscreen="true"] .pv-full { display: none; }
+.pv-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  font-size: 16px;
+}
+.pv-nav:hover { transform: translateY(-50%) scale(1.07); }
+.pv-prev { left: 18px; }
+.pv-next { right: 18px; }
+/* A single-photograph gallery has nothing to step to. */
+.pv[data-single="true"] .pv-nav,
+.pv[data-single="true"] .pv-count { display: none; }
+
+/* Locks the page behind the dialog. On <html>, and overflow-y only, so it
+   cannot disturb the overflow-x guard on <body> that position:sticky relies
+   on elsewhere in the site. */
+html.pv-open { overflow-y: hidden; }
+
+@media (max-width: 767.98px) {
+  .pv[open] { padding: 54px 10px 64px; }
+  .pv-img { max-height: calc(100vh - 160px); }
+  .pv-nav { width: 40px; height: 40px; font-size: 14px; }
+  .pv-prev { left: 8px; }
+  .pv-next { right: 8px; }
+  .pv-caption { font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pv[open],
+  .pv[open]::backdrop,
+  .pv-img.is-swapping { animation: none; }
+  .pv-btn { transition: none; }
+  .pv-nav:hover { transform: translateY(-50%); }
+}

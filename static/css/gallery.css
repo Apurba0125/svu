@@ -1,0 +1,108 @@
+/* ==========================================================================
+   Photo gallery pages (Library, Laboratory, Classroom, …)
+   Loaded ALONGSIDE department.css — the banner and section headings come from
+   there. This file is the grid. The full-size viewer it feeds lives in
+   base.css, because its markup is built by main.js and has to be styled on
+   any page that uses it.
+   ========================================================================== */
+/* Full width — no measure cap, so the paragraph runs the whole container. */
+.gallery-lead {
+  margin: 0 0 30px;
+  color: #555;
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Grid
+   Four per row, wrapping — five photographs give four then one, eight give
+   four then four. Row count takes care of itself; only the column count is
+   declared, and only here.
+   ========================================================================== */
+.gallery-grid-lg {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+/* Fixed tile height with a cover fit: portrait, landscape and square
+   originals all render identically, and one odd photograph cannot set the
+   height of its whole row. */
+.gallery-cell {
+  display: block;
+  width: 100%;
+  /* 260, not the 330 a three-across row used. Four columns inside a 1300px
+     container leaves each about 295px wide, and 330px tall at that width
+     crops a room photograph into a portrait. Raise this if the photographs
+     are portrait to begin with. */
+  height: 260px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: #eee;
+  cursor: pointer;
+  position: relative;
+}
+.gallery-cell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.gallery-cell:hover img { transform: scale(1.05); }
+.gallery-cell:focus-visible { outline: 3px solid var(--cu-red); outline-offset: 3px; }
+
+/* Magnifier badge. The pointer cursor alone is not an affordance on touch,
+   where there is no hover to reveal anything. */
+.gallery-cell::after {
+  content: "\f00e";                       /* fa-magnifying-glass-plus */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.6);
+  color: #fff;
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.gallery-cell:hover::after,
+.gallery-cell:focus-visible::after { opacity: 1; transform: none; }
+@media (hover: none) {
+  .gallery-cell::after { opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+/* Four columns get too narrow to read a room in well before the tablet
+   breakpoint, so they step down 4 -> 3 -> 2 -> 1. */
+@media (max-width: 1200px) {
+  .gallery-grid-lg { grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .gallery-cell { height: 270px; }
+}
+
+@media (max-width: 1000px) {
+  .gallery-grid-lg { grid-template-columns: repeat(2, 1fr); gap: 25px; }
+  .gallery-cell { height: 280px; }
+}
+
+@media (max-width: 600px) {
+  .gallery-grid-lg { grid-template-columns: 1fr; gap: 20px; }
+  .gallery-cell { height: 250px; }
+  .gallery-lead { margin-bottom: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-cell img,
+  .gallery-cell::after { transition: none; }
+  .gallery-cell:hover img { transform: none; }
+}

@@ -2,83 +2,308 @@
 # panel and, on small screens, as collapsible sections in the drawer.
 # Slugs are explicit rather than derived with |slugify so a department resolves
 # to the same URL here and in the "Our Course" carousel on the homepage.
+#
+# "courses" drives the dependent Course dropdown in the admission enquiry modal:
+# pick a department there and only that department's courses are offered. This
+# list is the single source for both, so adding a department to the menu adds it
+# to the form automatically — but a department with no "courses" key will show an
+# empty Course dropdown, so always fill it in.
+#
+# !! VERIFY BEFORE LAUNCH: the course names below follow the standard naming for
+# each department (the pattern given for Computer Science & Engineering, applied
+# outward). They have NOT been checked against the SVU prospectus. Correct any
+# programme the university does not actually run, and add the ones it does.
 SCHOOL_ENGINEERING = {
     "title": "School of Engineering",
     "departments": [
-        {"label": "Department Of Computer Science & Engineering", "slug": "department-of-computer-science-engineering"},
-        {"label": "Department Of Civil Engineering", "slug": "department-of-civil-engineering"},
-        {"label": "Department Of Electrical Engineering", "slug": "department-of-electrical-engineering"},
-        {"label": "Department Of Electronics & Communication", "slug": "department-of-electronics-communication-engineering"},
-        {"label": "Department Of Mechanical Engineering", "slug": "department-of-mechanical-engineering"},
+        {
+            "label": "Department Of Computer Science & Engineering",
+            "slug": "department-of-computer-science-engineering",
+            "courses": [
+                "Diploma In Computer Science and Engineering",
+                "B.Tech In Computer Science and Engineering",
+                "M.Tech In Computer Science and Engineering",
+                "Ph.D. In Computer Science and Engineering",
+            ],
+        },
+        {
+            "label": "Department Of Civil Engineering",
+            "slug": "department-of-civil-engineering",
+            "courses": [
+                "Diploma In Civil Engineering",
+                "B.Tech In Civil Engineering",
+                "M.Tech In Civil Engineering",
+                "Ph.D. In Civil Engineering",
+            ],
+        },
+        {
+            "label": "Department Of Electrical Engineering",
+            "slug": "department-of-electrical-engineering",
+            "courses": [
+                "Diploma In Electrical Engineering",
+                "B.Tech In Electrical Engineering",
+                "M.Tech In Electrical Engineering",
+                "Ph.D. In Electrical Engineering",
+            ],
+        },
+        {
+            "label": "Department Of Electronics & Communication",
+            "slug": "department-of-electronics-communication-engineering",
+            "courses": [
+                "Diploma In Electronics and Communication Engineering",
+                "B.Tech In Electronics and Communication Engineering",
+                "M.Tech In Electronics and Communication Engineering",
+                "Ph.D. In Electronics and Communication Engineering",
+            ],
+        },
+        {
+            "label": "Department Of Mechanical Engineering",
+            "slug": "department-of-mechanical-engineering",
+            "courses": [
+                "Diploma In Mechanical Engineering",
+                "B.Tech In Mechanical Engineering",
+                "M.Tech In Mechanical Engineering",
+                "Ph.D. In Mechanical Engineering",
+            ],
+        },
     ],
 }
 
 SCHOOL_HUMANITY = {
     "title": "School of Humanity & Social Science",
     "departments": [
-        {"label": "Department Of Language, Literature And Cultural Studies", "slug": "department-of-language-literature-cultural-studies"},
-        {"label": "Department Of Journalism & Mass Communication", "slug": "department-of-mass-communication"},
-        {"label": "Department Of Education", "slug": "department-of-education"},
+        {
+            "label": "Department Of Language, Literature And Cultural Studies",
+            "slug": "department-of-language-literature-cultural-studies",
+            "courses": [
+                "B.A. (Hons.) In English",
+                "M.A. In English",
+                "Ph.D. In English",
+            ],
+        },
+        {
+            "label": "Department Of Journalism & Mass Communication",
+            "slug": "department-of-mass-communication",
+            "courses": [
+                "B.A. In Journalism and Mass Communication",
+                "M.A. In Journalism and Mass Communication",
+                "Ph.D. In Journalism and Mass Communication",
+            ],
+        },
+        {
+            "label": "Department Of Education",
+            "slug": "department-of-education",
+            "courses": [
+                "B.Ed.",
+                "M.Ed.",
+                "Ph.D. In Education",
+            ],
+        },
     ],
 }
 
 SCHOOL_AGRICULTURE = {
     "title": "School of Agriculture",
     "departments": [
-        {"label": "Department Of Agriculture", "slug": "department-of-agriculture"},
+        {
+            "label": "Department Of Agriculture",
+            "slug": "department-of-agriculture",
+            "courses": [
+                "B.Sc. (Hons.) In Agriculture",
+                "M.Sc. In Agriculture",
+                "Ph.D. In Agriculture",
+            ],
+        },
     ],
 }
 
 SCHOOL_MANAGEMENT = {
     "title": "School of Management",
     "departments": [
-        {"label": "Department Of Management Studies", "slug": "school-of-management"},
+        {
+            "label": "Department Of Management Studies",
+            "slug": "school-of-management",
+            "courses": [
+                "BBA (Bachelor Of Business Administration)",
+                "MBA (Master Of Business Administration)",
+                "Ph.D. In Management Studies",
+            ],
+        },
     ],
 }
 
 SCHOOL_ALLIED_HEALTH = {
     "title": "School of Allied Health Services",
     "departments": [
-        {"label": "Department Of Physiotherapy", "slug": "department-of-physiotherapy"},
-        {"label": "Department Of Optometry", "slug": "department-of-optometry"},
-        {"label": "Department Of Food & Nutrition", "slug": "department-of-food-nutrition"},
-        {"label": "Department Of Psychology", "slug": "department-of-psychology"},
-        {"label": "Department Of Medical Laboratory Technology", "slug": "department-of-medical-laboratory-technology"},
-        {"label": "Department Of Medical Radiology & Imaging Technology", "slug": "department-of-medical-radiology-imaging-technology"},
+        {
+            "label": "Department Of Physiotherapy",
+            "slug": "department-of-physiotherapy",
+            "courses": [
+                "BPT (Bachelor Of Physiotherapy)",
+                "MPT (Master Of Physiotherapy)",
+                "Ph.D. In Physiotherapy",
+            ],
+        },
+        {
+            "label": "Department Of Optometry",
+            "slug": "department-of-optometry",
+            "courses": [
+                "B.Sc. In Optometry",
+                "M.Sc. In Optometry",
+                "Ph.D. In Optometry",
+            ],
+        },
+        {
+            "label": "Department Of Food & Nutrition",
+            "slug": "department-of-food-nutrition",
+            "courses": [
+                "B.Sc. In Food and Nutrition",
+                "M.Sc. In Food and Nutrition",
+                "Ph.D. In Food and Nutrition",
+            ],
+        },
+        {
+            "label": "Department Of Psychology",
+            "slug": "department-of-psychology",
+            "courses": [
+                "B.Sc. In Psychology",
+                "M.Sc. In Psychology",
+                "Ph.D. In Psychology",
+            ],
+        },
+        {
+            "label": "Department Of Medical Laboratory Technology",
+            "slug": "department-of-medical-laboratory-technology",
+            "courses": [
+                "B.Sc. In Medical Laboratory Technology",
+                "M.Sc. In Medical Laboratory Technology",
+                "Ph.D. In Medical Laboratory Technology",
+            ],
+        },
+        {
+            "label": "Department Of Medical Radiology & Imaging Technology",
+            "slug": "department-of-medical-radiology-imaging-technology",
+            "courses": [
+                "B.Sc. In Medical Radiology and Imaging Technology",
+                "M.Sc. In Medical Radiology and Imaging Technology",
+                "Ph.D. In Medical Radiology and Imaging Technology",
+            ],
+        },
     ],
 }
 
 SCHOOL_LEGAL_STUDIES = {
     "title": "School of Legal Studies",
     "departments": [
-        {"label": "Department Of Legal Studies", "slug": "department-of-legal-studies"},
+        {
+            "label": "Department Of Legal Studies",
+            "slug": "department-of-legal-studies",
+            "courses": [
+                "B.A. LL.B. (Hons.)",
+                "LL.B.",
+                "LL.M.",
+                "Ph.D. In Law",
+            ],
+        },
     ],
 }
 
 SCHOOL_COMPUTER_SCIENCE = {
     "title": "School of Computer Science",
     "departments": [
-        {"label": "Department Of Computer Application", "slug": "department-of-computer-application"},
-        {"label": "Department Of Data Science", "slug": "department-of-data-science"},
-        {"label": "Department Of Advanced Networking & Cyber Security", "slug": "department-of-cyber-security-and-advanced-networking"},
-        {"label": "Department Of Multimedia & Animation", "slug": "department-of-animation"},
+        {
+            "label": "Department Of Computer Application",
+            "slug": "department-of-computer-application",
+            "courses": [
+                "BCA (Bachelor Of Computer Application)",
+                "MCA (Master Of Computer Application)",
+                "Ph.D. In Computer Application",
+            ],
+        },
+        {
+            "label": "Department Of Data Science",
+            "slug": "department-of-data-science",
+            "courses": [
+                "B.Sc. In Data Science",
+                "M.Sc. In Data Science",
+                "Ph.D. In Data Science",
+            ],
+        },
+        {
+            "label": "Department Of Advanced Networking & Cyber Security",
+            "slug": "department-of-cyber-security-and-advanced-networking",
+            "courses": [
+                "B.Sc. In Advanced Networking and Cyber Security",
+                "M.Sc. In Advanced Networking and Cyber Security",
+                "Ph.D. In Advanced Networking and Cyber Security",
+            ],
+        },
+        {
+            "label": "Department Of Multimedia & Animation",
+            "slug": "department-of-animation",
+            "courses": [
+                "B.Sc. In Multimedia and Animation",
+                "M.Sc. In Multimedia and Animation",
+                "Ph.D. In Multimedia and Animation",
+            ],
+        },
     ],
 }
 
 SCHOOL_LIFE_SCIENCE = {
     "title": "School of Life Science",
     "departments": [
-        {"label": "Department Of Biotechnology", "slug": "department-of-biotechnology"},
-        {"label": "Department Of Microbiology", "slug": "department-of-microbiology"},
+        {
+            "label": "Department Of Biotechnology",
+            "slug": "department-of-biotechnology",
+            "courses": [
+                "B.Sc. In Biotechnology",
+                "M.Sc. In Biotechnology",
+                "Ph.D. In Biotechnology",
+            ],
+        },
+        {
+            "label": "Department Of Microbiology",
+            "slug": "department-of-microbiology",
+            "courses": [
+                "B.Sc. In Microbiology",
+                "M.Sc. In Microbiology",
+                "Ph.D. In Microbiology",
+            ],
+        },
     ],
 }
 
 SCHOOL_BASIC_SCIENCE = {
     "title": "School of Basic Science",
     "departments": [
-        {"label": "Department Of Mathematics", "slug": "department-of-mathematics"},
-        {"label": "Department Of Chemistry", "slug": "department-of-chemistry"},
-        {"label": "Department Of Physics", "slug": "department-of-physics"},
+        {
+            "label": "Department Of Mathematics",
+            "slug": "department-of-mathematics",
+            "courses": [
+                "B.Sc. (Hons.) In Mathematics",
+                "M.Sc. In Mathematics",
+                "Ph.D. In Mathematics",
+            ],
+        },
+        {
+            "label": "Department Of Chemistry",
+            "slug": "department-of-chemistry",
+            "courses": [
+                "B.Sc. (Hons.) In Chemistry",
+                "M.Sc. In Chemistry",
+                "Ph.D. In Chemistry",
+            ],
+        },
+        {
+            "label": "Department Of Physics",
+            "slug": "department-of-physics",
+            "courses": [
+                "B.Sc. (Hons.) In Physics",
+                "M.Sc. In Physics",
+                "Ph.D. In Physics",
+            ],
+        },
     ],
 }
 
@@ -93,9 +318,24 @@ PROGRAM_SCHOOL_COLUMNS = [
     [SCHOOL_LIFE_SCIENCE, SCHOOL_BASIC_SCIENCE, SCHOOL_LEGAL_STUDIES],
 ]
 
+# The enquiry form reads the same schools, flattened out of the four-column
+# layout — that grouping is a presentation detail of the mega panel and means
+# nothing in a dropdown. Each school becomes an <optgroup> so 26 departments
+# stay scannable instead of arriving as one long flat list.
+ENQUIRY_SCHOOLS = [school for column in PROGRAM_SCHOOL_COLUMNS for school in column]
+
+# slug -> course names, serialised into the page with |json_script and read by
+# the dependent Course dropdown. Derived, never hand-maintained: a department
+# can't drift out of sync with the menu because there is only one list.
+ENQUIRY_COURSES = {
+    department["slug"]: department.get("courses", [])
+    for school in ENQUIRY_SCHOOLS
+    for department in school["departments"]
+}
+
 ABOUT_MENU = {
     "who_we_are": [
-        "Overview", "Our Identity","Our Mentors", "Vision & Mission", "Leadership", "Core Values",
+        "Know Us", "Our team","Our Mentors", "Vision & Mission", "Leadership", "Core Values",
         "Recognition & Approvals", "Awards & Rankings", "Institutional Social Responsibility",
         "SVU Edge",
     ],
@@ -276,6 +516,8 @@ def nav_context(request):
     return {
         "topbar_announcements": TOPBAR_ANNOUNCEMENTS,
         "program_school_columns": PROGRAM_SCHOOL_COLUMNS,
+        "enquiry_schools": ENQUIRY_SCHOOLS,
+        "enquiry_courses": ENQUIRY_COURSES,
         "about_menu": ABOUT_MENU,
         "academics_menu": ACADEMICS_MENU,
         "admissions_menu": ADMISSIONS_MENU,
