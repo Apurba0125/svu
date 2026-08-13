@@ -15,7 +15,24 @@
           <div class="swiper-slide">
 
             {% if slide.type == 'video' %}
+            {% comment %}
+            The card is a link when the slide has a "url" (its YouTube video)
+            and a plain div when it does not, so an unfilled slide is inert
+            rather than a play button that goes nowhere. Both branches render
+            identical markup inside — only the wrapper differs, which is why
+            the contents live in one include-free block below rather than being
+            written out twice and drifting apart.
+
+            target=_blank because it leaves the site for YouTube; rel=noopener
+            with it, or the opened tab can reach back through window.opener and
+            navigate this one.
+            {% endcomment %}
+            {% if slide.url %}
+            <a href="{{ slide.url }}" target="_blank" rel="noopener"
+               class="spotlight-card spotlight-card-video" style="background-image:linear-gradient(0deg, rgba(0,0,0,.75), rgba(0,0,0,.35)), url('{{ slide.image }}');">
+            {% else %}
             <div class="spotlight-card spotlight-card-video" style="background-image:linear-gradient(0deg, rgba(0,0,0,.75), rgba(0,0,0,.35)), url('{{ slide.image }}');">
+            {% endif %}
               <div class="spotlight-video-top">
                 <img src="{% static 'img/logo.jpeg' %}" alt="Swami Vivekananda University logo" class="spotlight-video-logo">
                 <span>
@@ -23,16 +40,36 @@
                   <span class="spotlight-video-tagline">Excellence. Innovation. Entrepreneurship</span>
                 </span>
               </div>
+              {% comment %}
+              A span, not a button, when the card is already a link — a button
+              inside an anchor is invalid HTML and browsers recover from it by
+              splitting the anchor, which breaks the click target. The label
+              names the video so a screen reader hears "Play Tomorrow's
+              Leaders", not five identical "Play video" links.
+              {% endcomment %}
+              {% if slide.url %}
+              <span class="spotlight-play-btn" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
+              {% else %}
               <button class="spotlight-play-btn" type="button" aria-label="Play video"><i class="fa-solid fa-play"></i></button>
+              {% endif %}
               <div class="spotlight-video-bottom">
                 <span class="spotlight-video-eyebrow">{{ slide.eyebrow }}</span>
                 <span class="spotlight-video-title">{{ slide.title }}</span>
                 <span class="spotlight-video-meta">{{ slide.url_text }} &nbsp;|&nbsp; {{ slide.phone_text }}</span>
+                {% if slide.url %}<span class="visually-hidden">Play {{ slide.title }} on YouTube (opens in a new tab)</span>{% endif %}
               </div>
-            </div>
+            {% if slide.url %}</a>{% else %}</div>{% endif %}
 
             {% else %}
-            <a href="{% url 'placeholder_page' slide.cta_slug %}" class="spotlight-card spotlight-card-news" style="background-image:url('{{ slide.image }}');">
+            {% comment %}
+            News card: an external "url" wins, otherwise "cta_slug" opens
+            /page/THAT-SLUG/. Same rule as the video cards above and as
+            RESEARCH_MEDIA. The default guards a slide with neither set, which
+            would otherwise raise NoReverseMatch and take the homepage down.
+            {% endcomment %}
+            <a href="{% if slide.url %}{{ slide.url }}{% else %}{% url 'placeholder_page' slide.cta_slug|default:'about' %}{% endif %}"
+               class="spotlight-card spotlight-card-news" style="background-image:url('{{ slide.image }}');"
+               {% if slide.url %}target="_blank" rel="noopener"{% endif %}>
               <div class="spotlight-news-overlay">
                 <div class="spotlight-news-body">
                   <span class="spotlight-news-title">{{ slide.title }}</span>

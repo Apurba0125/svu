@@ -486,6 +486,7 @@ TOP_NAV_LINKS = [
     "CAREER",
     "BLOGS",
     "SVU PODCAST",
+    {"label": "PAYMENT", "url": "https://www.swamivivekanandauniversity.ac.in/Pay-online/"},
     "CONTACT US",
 ]
 

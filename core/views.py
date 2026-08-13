@@ -328,39 +328,127 @@ RESEARCH_MEDIA = [
     {"tag": "Alvito D'Cunha", "image": static("img/podcast/play.jpg"), "url": "https://www.youtube.com/watch?v=MR1wKKw81FE"},
 ]
 
+# "In the Spotlight" carousel on the homepage. Two kinds of card, both keeping
+# every field they already had — nothing was renamed or removed.
+#
+#   image           EITHER a full external URL as a plain string, OR a local
+#                   file via static("img/…") — the FUNCTION CALL, unquoted.
+#                   Writing it as the string "static('img/…')" instead puts
+#                   those inner quotes straight into the CSS the card is built
+#                   from: url('static('img/…')') closes early, the whole
+#                   background-image declaration is invalid, and the browser
+#                   throws away the gradient with it. The card then renders
+#                   white with white text on it — invisible, not merely
+#                   missing a picture. Same rule as CAMPUS_GALLERY_ITEMS and
+#                   AERIAL_SLIDES above.
+#
+#   type: "video"   the branded card with the play button.
+#       url         WHERE THE PLAY BUTTON GOES. Paste the full YouTube watch or
+#                   shorts URL here and the whole card becomes a link that opens
+#                   it in a new tab. Leave it "" and the card renders exactly as
+#                   before, with a play button that does not navigate — so an
+#                   unfilled slide is inert rather than broken.
+#       url_text    DISPLAY TEXT ONLY, printed in the strip along the bottom
+#                   next to phone_text. It is not a link and never was. Putting
+#                   a URL here shows the raw address on the card without making
+#                   anything clickable, which is the trap this pair of fields
+#                   invites — the address goes in "url", the words go here.
+#       image, eyebrow, title, phone_text  unchanged.
+#
+#   type: "news"    the photo card with the red CTA button.
+#       cta_slug    opens /page/<cta_slug>/ as before.
+#       url         optional override for an external destination, same rule as
+#                   RESEARCH_MEDIA above: "url" wins when both are present.
+#       image, title, body, cta_label, tags  unchanged.
+#
+# Same convention as RESEARCH_MEDIA and TOP_NAV_LINKS, so there is one rule to
+# remember across the site: an external "url" beats an internal slug.
 SPOTLIGHT_SLIDES = [
-    {
-        "type": "news",
-        "image": "https://placehold.co/900x620/1a1a1a/1a1a1a",
-        "title": "Swami Vivekananda University Felicitates 500+ Merit Scholars; Offers Scholarships up to 100% at SVU Scholars' Summit 2026",
-        "body": "In a major push toward making world-class education accessible and reducing student dropouts, Swami Vivekananda University inaugurated …",
-        "cta_label": "Scholarships",
-        "cta_slug": "scholarships",
-        "tags": ["Scholarships", "Admissions"],
-    },
+    # {
+    #     "type": "news",
+    #     "image": "https://placehold.co/900x620/1a1a1a/1a1a1a",
+    #     "title": "Not a Real Court⚖️... But It Feels Exactly Like One! 😱 | Law Moot Court ",
+    #     "body": " Learn. Argue. Advocate. Succeed. …",
+    #     "cta_label": "Scholarships",
+    #     "cta_slug": "scholarships",
+    #     "url": "",
+    #     "tags": ["Scholarships", "Admissions"],
+    # },
+    # {
+        
+    #     "type": "video",
+    #     "image": "https://placehold.co/900x620/141414/141414",
+    #     "eyebrow": "Built for",
+    #     "title": "Ambitious Bharat",
+    #     "url": "",
+    #     "url_text": "www.svu.ac.in",
+    #     "phone_text": "Call: 7044086270",
+    # },
+    # {
+    #     "type": "news",
+    #     "image": "https://placehold.co/900x620/1a1a1a/1a1a1a",
+    #     "title": "SVU Signs Landmark MoU for Global Student Exchange with 12 Partner Universities",
+    #     "body": "Students across engineering, management and design programs will now be eligible for semester-abroad and dual-degree pathways …",
+    #     "cta_label": "International",
+    #     "cta_slug": "international",
+    #     "url": "",
+    #     "tags": ["International", "MoU"],
+    # },
+    # {
+    #     "type": "video",
+    #     "image": static("img/Shorts/motivation-1.jpg"),
+    #     "eyebrow": "Explore",
+    #     "title": "Motivational Video",
+    #     "url": "https://www.facebook.com/reel/2225041254931372",
+    #     "url_text": "swamivivekanandauniversity.ac.in",
+    #     "phone_text": "Call: 7044086270",
+    # },
     {
         "type": "video",
-        "image": "https://placehold.co/900x620/141414/141414",
-        "eyebrow": "Built for",
-        "title": "Ambitious Bharat",
-        "url_text": "www.svu.ac.in",
+        "image": static("img/Shorts/Key To Success.png"),
+        "eyebrow": "Explore",
+        "title": "Key To Success",
+        "url": "https://www.youtube.com/shorts/XjUHOBU1tTc",
+        "url_text": "swamivivekanandauniversity.ac.in",
         "phone_text": "Call: 7044086270",
     },
     {
-        "type": "news",
-        "image": "https://placehold.co/900x620/1a1a1a/1a1a1a",
-        "title": "SVU Signs Landmark MoU for Global Student Exchange with 12 Partner Universities",
-        "body": "Students across engineering, management and design programs will now be eligible for semester-abroad and dual-degree pathways …",
-        "cta_label": "International",
-        "cta_slug": "international",
-        "tags": ["International", "MoU"],
+        "type": "video",
+        "image": static("img/Shorts/1.png"),
+        "eyebrow": "Explore",
+        "title": "Virtual Lab",
+        "url": "https://www.youtube.com/shorts/QI4D_vYJdRg",
+        "url_text": "swamivivekanandauniversity.ac.in",
+        "phone_text": "Call: 7044086270",
     },
     {
         "type": "video",
-        "image": "https://placehold.co/900x620/141414/141414",
-        "eyebrow": "Shaping",
-        "title": "Tomorrow's Leaders",
-        "url_text": "www.svu.ac.in",
+        "image": static("img/Shorts/mootcourt.png"),
+        "eyebrow": "Explore",
+        "title": "Law Moot Court ",
+        "body": " Learn. Argue. Advocate. Succeed. …",
+        "url": "https://www.youtube.com/shorts/mWRA03EiuGo",
+        "url_text": "swamivivekanandauniversity.ac.in",
+        "phone_text": "Call: 7044086270",
+    },
+    {
+        "type": "video",
+        "image": static("img/Shorts/neshamukhti.png"),
+        "eyebrow": "Explore",
+        "title": "Nasha Mukt Yuva for Viksit Bharat",
+        "body": " Nasha Mukt Yuva: Building India’s Future",
+        "url": "https://www.youtube.com/shorts/-Vk2kn4AYVQ",
+        "url_text": "swamivivekanandauniversity.ac.in",
+        "phone_text": "Call: 7044086270",
+    },
+    {
+        "type": "video",
+        "image": static("img/Shorts/ot.png"),
+        "eyebrow": "Explore",
+        "title": "OT Zones",
+        "body": " Operating Theatre Zones Explained",
+        "url": "https://www.youtube.com/shorts/GzY85e3B8l0",
+        "url_text": "swamivivekanandauniversity.ac.in",
         "phone_text": "Call: 7044086270",
     },
     # {
@@ -370,6 +458,7 @@ SPOTLIGHT_SLIDES = [
     #     "body": "The university’s sports scholarship program continues to produce national and international medal-winning athletes …",
     #     "cta_label": "Sports & Adventure",
     #     "cta_slug": "sports-adventure",
+    #     "url": "",
     #     "tags": ["Campus Life", "Sports"],
     # },
 ]
