@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Events page — the tabbed galleries at /page/events/
+   Loaded ALONGSIDE department.css (banner, headings, tab pills) and
+   gallery.css (the grid and the cells). This file only adds what neither of
+   those has: the reveal for cells inside a tab pane, and the note shown in a
+   tab that has no photographs yet.
+   ========================================================================== */
+
+/* ==========================================================================
+   Reveal
+   AOS cannot do this job. It is a scroll-position library: it measures every
+   element once at page load, and anything inside a display:none tab pane
+   measures zero, so AOS treats it as already scrolled past and fires it while
+   still hidden — by the time you open the tab the animation is long over and
+   the cells just appear. Keying off .active in CSS instead means the reveal
+   replays every time a tab is opened, which is the behaviour the tabs want.
+   ========================================================================== */
+@keyframes eventsCellIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.tab-pane.active .gallery-cell {
+  animation: eventsCellIn 0.5s ease both;
+}
+
+/* Stagger across the row. nth-child rather than per-cell delays in the markup,
+   so inserting a photograph needs no bookkeeping. Four columns, so the delay
+   resets every fourth cell and each row sweeps left to right rather than the
+   last cell of a long grid waiting two seconds for its turn. */
+.tab-pane.active .gallery-cell:nth-child(4n + 1) { animation-delay: 0s; }
+.tab-pane.active .gallery-cell:nth-child(4n + 2) { animation-delay: 0.06s; }
+.tab-pane.active .gallery-cell:nth-child(4n + 3) { animation-delay: 0.12s; }
+.tab-pane.active .gallery-cell:nth-child(4n)     { animation-delay: 0.18s; }
+
+/* The heading and the intro above the grid come in first. */
+.tab-pane.active .dept-tab-heading,
+.tab-pane.active .dept-tab-intro {
+  animation: eventsCellIn 0.4s ease both;
+}
+
+/* ==========================================================================
+   Empty tab
+   A tab with no photographs yet. Deliberately quiet — it is a note, not an
+   error, and it should not compete with the tabs that do have pictures.
+
+   Currently unused: all four tabs have pictures. Kept because the next tab
+   added will need it before its photographs arrive, and because the
+   alternative when that happens is padding the tab with pictures of a
+   different event, which is worse than an honest note.
+   ========================================================================== */
+.events-empty {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 0;
+  padding: 26px 28px;
+  border: 1px dashed #d6d6d6;
+  border-radius: 10px;
+  background: #fafafa;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.events-empty i {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--cu-red);
+  font-size: 18px;
+}
+.events-empty a { color: var(--cu-red); font-weight: 700; }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 600px) {
+  .events-empty { padding: 20px; font-size: 14.5px; }
+}
+
+/* One column on a phone, so the four-way stagger would make the last cell of
+   every group wait for no reason. Flatten it. */
+@media (max-width: 600px) {
+  .tab-pane.active .gallery-cell { animation-delay: 0s !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-pane.active .gallery-cell,
+  .tab-pane.active .dept-tab-heading,
+  .tab-pane.active .dept-tab-intro {
+    animation: none;
+    opacity: 1;
+  }
+}

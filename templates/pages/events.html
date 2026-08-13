@@ -1,0 +1,509 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+EVENTS  —  served at /page/events/
+---------------------------------------------------------------------------
+Header and footer come from core/base.html. Do not add them here.
+
+Reached from EVENTS in the black utility bar. That link is the plain-string
+form in TOP_NAV_LINKS, so the label is slugified to "events" and lands here —
+renaming the label there moves the link and this page stops being reachable.
+Switch it to the dict form ({"label": …, "slug": "events"}) if the wording
+ever needs to change.
+
+WHAT THIS PAGE IS
+  Four tabs, each holding the same photograph grid used on library.html and
+  the other Life at SVU pages. Nothing here is new machinery: the tab pills
+  and the mobile dropdown come from department.css and main.js, the grid and
+  the click-to-enlarge viewer from gallery.css, base.css and main.js. Only
+  events.css is specific to this page, and it exists for one reason — see the
+  note on AOS below.
+
+TO ADD A TAB
+  Two things that reference the same id:
+    1. a list item + button in .dept-tab-nav   data-bs-target="#eventpane-X"
+    2. a .tab-pane below                       id="eventpane-X"
+  Exactly one button carries "active" and one pane carries "show active", and
+  they must be the same tab. The mobile dropdown builds itself from that same
+  list, so there is nothing extra to keep in step.
+
+HOW THE VIEWER IS WIRED
+  data-viewer on a grid makes it one gallery; data-viewer-item on each cell
+  makes it a frame. Each grid is its own gallery, so the arrows and the counter
+  stay inside the tab you opened rather than walking the visitor into a hidden
+  pane. main.js groups by the container ELEMENT, not by the name, so the name
+  is a label for whoever reads the markup next — keep it matching the tab
+  anyway, because two grids both called "seminars" read as a bug even when
+  they behave correctly.
+
+  The caption under an enlarged photograph is that image's own alt text, so
+  writing a good alt does double duty. Clicks work from a hidden pane too —
+  the handlers are bound to elements, not to what is currently visible.
+
+WHY events.css EXISTS INSTEAD OF data-aos
+  AOS measures every element once at page load. Anything inside a display:none
+  tab pane measures zero, so AOS treats it as already scrolled past and fires
+  it while still hidden; open the tab later and the cells simply appear with
+  no animation at all. events.css does the reveal from CSS keyed off
+  .tab-pane.active, which also means it replays each time a tab is opened.
+  Do not put data-aos on anything inside a pane.
+
+TO ADD A PHOTOGRAPH
+  1. Put the file in static/img/Events/
+  2. Copy one "gallery cell" block into the right tab and change the src and
+     the alt
+  3. Run:  python manage.py collectstatic --noinput
+     Not optional — a static path with no manifest entry raises ValueError on
+     every request, so the page goes down rather than showing a broken image.
+
+  Cells are a fixed height and the photograph is cropped to fill, so portrait,
+  landscape and square originals all come out identical in the grid. The
+  enlarged view shows the whole uncropped photograph. Rows are four across, so
+  a count that is a multiple of four never leaves an orphan tile.
+
+  WRITE THE ALT FROM THE PHOTOGRAPH IN FRONT OF YOU. Copying the line above it
+  and leaving the words alone is the one mistake that actually reaches
+  visitors: the alt is also the caption under the enlarged image, so a wrong
+  one is not a silent accessibility slip, it is visibly incorrect text on the
+  page. Every caption on this page is unique; keep it that way.
+
+!! WHAT IS ACTUALLY IN THE INDUCTION TAB
+  Thirteen of its fourteen items are "welcome" posters for the Centre for
+  Performing Arts LECTURE SERIES (July–September 2024), not induction. Only
+  1.jpeg is captioned Induction Programme 2024. Either rename the tab to
+  something like "Lecture Series", or move those thirteen out and put real
+  induction photographs here — right now the label and the contents disagree.
+
+  They are also posters rather than photographs, so their captions are taken
+  from the text printed on them: name, event, date. That text is the only
+  thing making them distinguishable, which is why the captions read the way
+  they do.
+
+NOTE ON THE CULTURAL TAB
+  It is a selection, not the whole set — the full run of festival and fest
+  photographs lives on /page/gallery/, which the tab links to. Keep it that
+  way round rather than duplicating fifty images here.
+
+NOTE ON COMMENTS: the hash-style Django comment covers a SINGLE line only.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Events | Swami Vivekananda University{% endblock %}
+{% block meta_description %}Conferences, seminars, workshops, cultural programmes and induction at Swami Vivekananda University — a look at what happens on campus through the year.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+<link rel="stylesheet" href="{% static 'css/events.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Events</h1>
+  </div>
+</section>
+
+
+{# =========================================================  TABS  ======= #}
+<section class="section dept-info">
+  <div class="container">
+
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">Our <span>Events</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <p class="gallery-lead" data-aos="fade-up" data-aos-delay="80">
+      At Swami Vivekananda University, there is always something happening around the corner. Our
+      students enjoy a vibrant campus life with extracurricular activities, sports events,
+      excursions, academic workshops and seminars. We make sure our students learn from every
+      corner and enrich themselves by interacting with the best experts and educators. Take a peek
+      at some of our recent events below.
+    </p>
+
+    <button class="dept-tab-toggle" type="button" data-dept-tab-toggle
+            aria-expanded="false" aria-controls="eventTabNav">
+      <span data-dept-tab-current>Conferences</span>
+      <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+    </button>
+
+    <ul class="dept-tab-nav" id="eventTabNav" role="tablist" aria-label="Events at the university"
+        data-aos="fade-up" data-aos-delay="120">
+      <li class="dept-tab-item" role="presentation">
+        <button class="dept-tab active" type="button" role="tab" id="eventtab-conferences"
+                data-bs-toggle="tab" data-bs-target="#eventpane-conferences"
+                aria-controls="eventpane-conferences" aria-selected="true">Conferences</button>
+      </li>
+      <li class="dept-tab-item" role="presentation">
+        <button class="dept-tab" type="button" role="tab" id="eventtab-seminars"
+                data-bs-toggle="tab" data-bs-target="#eventpane-seminars"
+                aria-controls="eventpane-seminars" aria-selected="false">Seminar &amp; Workshops</button>
+      </li>
+      <li class="dept-tab-item" role="presentation">
+        <button class="dept-tab" type="button" role="tab" id="eventtab-cultural"
+                data-bs-toggle="tab" data-bs-target="#eventpane-cultural"
+                aria-controls="eventpane-cultural" aria-selected="false">Cultural</button>
+      </li>
+      <li class="dept-tab-item" role="presentation">
+        <button class="dept-tab" type="button" role="tab" id="eventtab-induction"
+                data-bs-toggle="tab" data-bs-target="#eventpane-induction"
+                aria-controls="eventpane-induction" aria-selected="false">Induction Program</button>
+      </li>
+    </ul>
+
+    <div class="tab-content dept-tab-content">
+
+      {# ------------------------------------------------  CONFERENCES  --- #}
+      <div class="tab-pane fade show active" id="eventpane-conferences" role="tabpanel"
+           aria-labelledby="eventtab-conferences" tabindex="0">
+        <h3 class="dept-tab-heading">Conferences</h3>
+        <p class="dept-tab-intro">
+          We host conferences across every discipline so students stay current with modern
+          innovations and developments, and gain real experience from talking to industry experts
+          and specialists.
+        </p>
+
+        {% comment %}
+        No conference photographs in the repository yet — see the note at the
+        top of this file for how to fill this tab. Do not borrow pictures from
+        another event to cover the gap.
+        {% endcomment %}
+
+       <div class="gallery-grid-lg" data-viewer="conferences">
+        
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf35.jfif' %}"
+              alt="A speaker addressing the hall from the lectern during a conference session">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf1.jpg' %}"
+              alt="A guest speaker receiving the university's Honorable Guest memento at the close of his session">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf2.jpg' %}"
+              alt="An Honorable Guest memento presented during a hybrid session, remote participants visible on the screen behind">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf3.jpg' %}"
+              alt="A visiting academic accepting the Honorable Guest memento after her talk">
+          </button>
+          
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf4.jpg' %}"
+              alt="Two guests on the dais, one wrapped in the ceremonial shawl, as the session opens for questions">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf5.jfif' %}"
+              alt="Lighting the lamp to open the International Conference on Multidisciplinary Research and Innovation, organised by the School of Management">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf7.jfif' %}"
+              alt="The organising team lighting the lamp together, the guest memento waiting on the table">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf8.jfif' %}"
+              alt="The chief guest lighting the ceremonial lamp with the organising team gathered around">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf9.jfif' %}"
+              alt="Students and faculty gathered for a group photograph after the session">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf20.jfif' %}"
+              alt="An Honor'ble Guest memento presented at ICALF 2023, the conference on Technological Innovations in Agriculture, Life Sciences and Food & Nutrition">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf21.jfif' %}"
+              alt="A guest in the ceremonial shawl receiving the university memento after his lecture">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf22.jfif' %}"
+              alt="The valedictory session of ICALF 2023, the panel seated behind the speaker at the microphone">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf33.jfif' %}"
+              alt="Delegates and organisers photographed outside the main building beneath the university sign">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf47.jfif' %}"
+              alt="A speaker presenting her paper beside the display screen">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf59.jfif' %}"
+              alt="A bouquet presented to a guest wearing the ceremonial shawl">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/conf64.jpg' %}"
+              alt="A guest speaker addressing the room from the lectern in the ceremonial shawl">
+          </button>
+        </div>
+
+
+        <!-- <p class="events-empty">
+          <i class="fa-regular fa-images" aria-hidden="true"></i>
+          <span>Photographs from our recent conferences are being added. In the meantime, the
+          <a href="{% url 'placeholder_page' 'gallery' %}">gallery</a> has pictures from across the
+          campus and the academic year.</span>
+        </p> -->
+      </div>
+
+      {# --------------------------------------  SEMINAR &amp; WORKSHOPS  --- #}
+      <div class="tab-pane fade" id="eventpane-seminars" role="tabpanel"
+           aria-labelledby="eventtab-seminars" tabindex="0">
+        <h3 class="dept-tab-heading">Seminar &amp; Workshops</h3>
+        <p class="dept-tab-intro">
+          Workshops where students build and defend something of their own, and the SWAYAM-NPTEL
+          programme the university runs as a local chapter — including the certificates and
+          citations that came out of it.
+        </p>
+
+        <div class="gallery-grid-lg" data-viewer="seminars">
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/6S7A6686.jfif' %}"
+                 alt="Visitors examining a student's working prototype — a soil sensor wired to a breadboard and laptop">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/s8.jfif' %}"
+                 alt="The panel seated at the launch of the IBM Software Lab on Emerging Technologies, run with the university's Career Education Program">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/s2.jpg' %}"
+                 alt="A memento presented to the guest speaker at Technovate 1.0">
+          </button>
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/6S7A0778e.jfif' %}"
+                 alt="A guest delivering the “Growing to Greatness” motivational session to a full classroom">
+          </button>
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/news1.jpg' %}"
+                 alt="Students in uniform presenting their project board to visiting judges at the startup fair">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/news2.jpg' %}"
+                 alt="A team standing behind their Smart Dustbin model and street diorama at Nirman Mela 2025"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/news3.jpg' %}"
+                 alt="A larger project team behind three laptops and a hand-drawn poster of their design"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/news4.jpg' %}"
+                 alt="The whole cohort holding up their certificates at the close of Nirman Mela 2025"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/540903586_1105990141637757_7221139477378257898_n.jpg.jpeg' %}"
+                 alt="Faculty on stage at the SWAYAM-NPTEL SPOC Workshop 2025 East Zone, receiving the local chapter citation"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/536270821_1105990098304428_367322835841659546_n.jpg.jpeg' %}"
+                 alt="Two members of faculty holding NPTEL certificates of appreciation for the university's local chapter"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/MPTEL_2.jpeg' %}"
+                 alt="An NPTEL STAR Award being handed over on stage, the rest of the panel standing alongside"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/MPTEL_4.jpeg' %}"
+                 alt="Another NPTEL STAR Award presented at the same felicitation, the recipient flanked by the organisers"
+                 loading="lazy">
+          </button>
+
+        </div>
+      </div>
+
+      {# ---------------------------------------------------  CULTURAL  --- #}
+      <div class="tab-pane fade" id="eventpane-cultural" role="tabpanel"
+           aria-labelledby="eventtab-cultural" tabindex="0">
+        <h3 class="dept-tab-heading">Cultural</h3>
+        <p class="dept-tab-intro">
+          We encourage students to stay in touch with their cultural heritage and traditions
+          through events and shows across the year — Sharadiya and Basanta Utsav, Freshers' Day,
+          and the fest that closes it. A selection is below; the
+          <a href="{% url 'placeholder_page' 'gallery' %}">full gallery</a> has the rest.
+        </p>
+
+        <div class="gallery-grid-lg" data-viewer="cultural">
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Gallery/6S7A3351.jfif' %}"
+                 alt="A troupe of dhaakis playing around the circular dais in the courtyard while students watch from the balconies above">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Gallery/6S7A3638.jfif' %}"
+                 alt="Six dancers in red-bordered white saris performing before the Prak Sharadiya backdrop"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Gallery/c16.jpeg' %}"
+                 alt="A potted sapling presented to a guest being felicitated at Basanta Utsav 2023"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Gallery/CU5.jpg' %}"
+                 alt="A singer on the courtyard dais with students crowded around him, phones up, cheering"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Gallery/CU1.jpg' %}"
+                 alt="Two vocalists sharing the mic stand in front of the Freshers' Day Celebration backdrop"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Gallery/CU7.jpg' %}"
+                 alt="A singer with both arms flung out to a crowd of students, every hand in the air"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Gallery/c2.jpg' %}"
+                 alt="The frontman singing at the mic with a red semi-hollow guitar, the band's name filling the screen behind"
+                 loading="lazy">
+          </button>
+
+          <!-- ---- gallery cell ---- -->
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Gallery/CU9.jpg' %}"
+                 alt="The view out from the stage over the whole crowd, phones up, the campus lit behind them"
+                 loading="lazy">
+          </button>
+
+        </div>
+      </div>
+
+      {# -------------------------------------------  INDUCTION PROGRAM  -- #}
+      <div class="tab-pane fade" id="eventpane-induction" role="tabpanel"
+           aria-labelledby="eventtab-induction" tabindex="0">
+        <h3 class="dept-tab-heading">Induction Program</h3>
+        <p class="dept-tab-intro">
+          Every incoming batch starts with an induction: an introduction to the departments, the
+          faculty and the facilities, so the first week is spent settling in rather than working
+          out where anything is.
+        </p>
+
+
+        <div class="gallery-grid-lg" data-viewer="induction">
+        
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/0.jpeg' %}"
+              alt="Welcome poster for Upal Sengupta, Lecture Series, 28 August 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/1.jpeg' %}"
+              alt="Welcome poster for actor Sohini Sengupta at the Induction Programme 2024, 17 July 2024">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/2.jpeg' %}"
+              alt="Welcome poster for Goutam Halder, Lecture Series, 16 July 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/3.jpeg' %}"
+              alt="Welcome poster for Pradip Bhattacharya, Lecture Series, 18 July 2024, Centre for Performing Arts">
+          </button>
+        
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/4.jpeg' %}"
+              alt="Welcome poster for Kartick Das Baul, Lecture Series, 15 July 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/5.jpeg' %}"
+              alt="Second welcome poster for Pradip Bhattacharya's Lecture Series talk on 18 July 2024">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/6.jpeg' %}"
+              alt="Welcome poster for Durnibar Saha, Lecture Series, 19 September 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/8.jpeg' %}"
+              alt="Welcome poster for Chandan Sen, Lecture Series, 22 July 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/20.jpeg' %}"
+              alt="Welcome poster for Biplab Bandyopadhyay, Lecture Series, 8 August 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/21.jpeg' %}"
+              alt="Welcome poster for Shantilal Mukherjee, Lecture Series, 9 August 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/26.jpeg' %}"
+              alt="Welcome poster for Subhadeep Guha, Lecture Series, 20 August 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/34.jpeg' %}"
+              alt="Welcome poster for Debshankar Haldar, Lecture Series, 27 August 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/43.jpeg' %}"
+              alt="Welcome poster for Mamata Shankar, Lecture Series, 24 September 2024, Centre for Performing Arts">
+          </button>
+          <button class="gallery-cell" type="button" data-viewer-item>
+            <img src="{% static 'img/Events/35.jpeg' %}"
+              alt="Welcome poster for Sujan Neel Mukherjee, Lecture Series, 30 August 2024, Centre for Performing Arts">
+          </button>
+         
+        </div>
+
+
+
+
+        {% comment %}
+        No induction photographs in the repository yet — see the note at the
+        top of this file for how to fill this tab.
+        {% endcomment %}
+        <!-- <p class="events-empty">
+          <i class="fa-regular fa-images" aria-hidden="true"></i>
+          <span>Photographs from the latest induction programme are being added. In the meantime,
+          the <a href="{% url 'placeholder_page' 'gallery' %}">gallery</a> has pictures from across
+          the campus and the academic year.</span>
+        </p> -->
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

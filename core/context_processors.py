@@ -479,8 +479,8 @@ TOPBAR_ANNOUNCEMENTS = [
 #
 # "url" wins if both are given. Same convention as RESEARCH_MEDIA in views.py.
 TOP_NAV_LINKS = [
-    "CAMPUSES",
-    "INTERNATIONAL",
+    "EVENTS",
+    "GALLERY",
     {"label": "LIBRARY", "url": "https://www.swamivivekanandauniversity.ac.in/"},
     "STUDENT SERVICES",
     "CAREER",
