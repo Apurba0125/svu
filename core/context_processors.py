@@ -335,9 +335,8 @@ ENQUIRY_COURSES = {
 
 ABOUT_MENU = {
     "who_we_are": [
-        "Know Us", "Our team","Our Mentors", "Vision & Mission", "Leadership", "Core Values",
-        "Recognition & Approvals", "Awards & Rankings", "Institutional Social Responsibility",
-        "SVU Edge",
+        "Know Us", "Our team","Our Mentors", 
+        "Recognition & Approvals", "Awards & Rankings", 
     ],
     "related_links": [
         "Institutes & Departments", "Admissions", "Scholarships", "Governance",

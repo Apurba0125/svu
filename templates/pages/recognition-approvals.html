@@ -1,0 +1,111 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+RECOGNITION & APPROVALS  —  served at /page/recognition-approvals/
+---------------------------------------------------------------------------
+Header and footer come from core/base.html. Do not add them here.
+
+Reached from ABOUT -> Who We Are -> "Recognition & Approvals". That menu
+derives its URL by running the label through |slugify, so the label and this
+filename have to stay in step: rename the entry in ABOUT_MENU and the link
+moves to a slug this file no longer answers to.
+
+Styling: department.css gives the banner and the heading with its red rule;
+recognition.css is only the cards.
+
+EACH CARD OPENS A PDF
+  The documents live in  static/img/document/  and each card points at one by
+  filename. To publish a real certificate, overwrite the placeholder PDF of
+  the same name and run:
+
+      python manage.py collectstatic --noinput
+
+  That step is not optional. Static files are served from a manifest, and a
+  path with no manifest entry raises ValueError on every request — the page
+  goes down rather than showing a broken link. It is also why placeholders
+  exist at all: an href pointing at a file that is not there yet would take
+  the page with it.
+
+TO ADD A BODY
+  Copy one "recognition card", change the filename and the label, and drop the
+  matching PDF into static/img/document/. The row absorbs it — four across on
+  desktop, two on tablet, one on a phone.
+
+  To point a card at an external site instead, swap the href for the full URL
+  and keep target/rel. rel=noopener matters either way: without it the opened
+  tab can reach back through window.opener and navigate this one.
+
+NOTE ON COMMENTS: the hash-style Django comment covers a SINGLE line only.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Recognition &amp; Approvals | Swami Vivekananda University{% endblock %}
+{% block meta_description %}The statutory approvals and recognitions held by Swami Vivekananda University, including the Department of Higher Education, West Bengal and the University Grants Commission.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+<link rel="stylesheet" href="{% static 'css/recognition.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Recognition &amp; Approvals</h1>
+  </div>
+</section>
+
+
+{# ==================================================  AFFILIATIONS  ====== #}
+<section class="section recog-section">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">Affiliation And <span>Recognitions</span></h2>
+      <span class="dept-heading-rule recog-rule"></span>
+    </div>
+
+    <div class="recog-grid">
+
+      <!-- ---- recognition card ---- -->
+      <a class="recog-card" href="{% static 'img/document/department-of-higher-education.pdf' %}"
+         target="_blank" rel="noopener" type="application/pdf"
+         data-aos="fade-up">
+        <span class="recog-name">Department Of Higher Education</span>
+        <span class="recog-more">View More <i class="fa-solid fa-chevron-right" aria-hidden="true"></i><span class="visually-hidden"> (PDF, opens in a new tab)</span></span>
+      </a>
+
+      <!-- ---- recognition card ---- -->
+      <a class="recog-card" href="{% static 'img/document/government-of-west-bengal.pdf' %}"
+         target="_blank" rel="noopener" type="application/pdf"
+         data-aos="fade-up" data-aos-delay="80">
+        <span class="recog-name">Government Of West Bengal</span>
+        <span class="recog-more">View More <i class="fa-solid fa-chevron-right" aria-hidden="true"></i><span class="visually-hidden"> (PDF, opens in a new tab)</span></span>
+      </a>
+
+      <!-- ---- recognition card ---- -->
+      <a class="recog-card" href="{% static 'img/document/university-grants-commission.pdf' %}"
+         target="_blank" rel="noopener" type="application/pdf"
+         data-aos="fade-up" data-aos-delay="160">
+        <span class="recog-name">University Grants Commission</span>
+        <span class="recog-more">View More <i class="fa-solid fa-chevron-right" aria-hidden="true"></i><span class="visually-hidden"> (PDF, opens in a new tab)</span></span>
+      </a>
+
+      <!-- ---- recognition card ---- -->
+      <a class="recog-card" href="{% static 'img/document/bar-council-of-india.pdf' %}"
+         target="_blank" rel="noopener" type="application/pdf"
+         data-aos="fade-up" data-aos-delay="240">
+        <span class="recog-name">Bar Council of India</span>
+        <span class="recog-more">View More <i class="fa-solid fa-chevron-right" aria-hidden="true"></i><span class="visually-hidden"> (PDF, opens in a new tab)</span></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

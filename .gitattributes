@@ -1,0 +1,16 @@
+# Git decides text-vs-binary by sniffing content, and it gets PDFs wrong: a
+# PDF built from plain ASCII looks like text, so end-of-line conversion kicks
+# in on checkout. That shifts every byte offset recorded in the file's xref
+# table and the document stops opening. Mark the binary assets explicitly.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.jfif  binary
+*.webp  binary
+*.gif   binary
+*.ico   binary
+*.mp4   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary

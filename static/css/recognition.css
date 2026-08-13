@@ -1,0 +1,77 @@
+/* ==========================================================================
+   Recognition & Approvals (/page/recognition-approvals/)
+   Loaded ALONGSIDE department.css — the banner and the heading with its red
+   rule come from there. This file is only the affiliation cards.
+   ========================================================================== */
+.recog-section { background: #f2f2f2; }
+/* Wider than the 62px department.css default: under a two-word heading like
+   "Affiliation And Recognitions" the short rule reads as a stray dash. */
+.recog-rule { width: 125px; }
+
+.recog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 26px;
+}
+
+.recog-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  /* Equal height across the row whatever the name wraps to. */
+  min-height: 96px;
+  padding: 22px 20px;
+  background: #dde7fa;
+  text-align: center;
+  /* The clipped bottom-right corner. clip-path rather than a rotated
+     pseudo-element so the notch shows the section background through it
+     instead of a coloured patch that would break on any other backdrop. */
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+  transition: background var(--transition), transform var(--transition);
+}
+.recog-card:hover { background: #cfdef8; transform: translateY(-3px); }
+/* clip-path crops an outline, so the focus ring is drawn as an inset shadow
+   instead — otherwise the corner of it is sliced off with the card. */
+.recog-card:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 3px var(--cu-red);
+}
+
+.recog-name {
+  color: #16202c;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.recog-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cu-red);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.recog-more i { font-size: 11px; transition: transform var(--transition); }
+.recog-card:hover .recog-more i { transform: translateX(3px); }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 1000px) {
+  .recog-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+}
+
+@media (max-width: 600px) {
+  .recog-grid { grid-template-columns: 1fr; gap: 16px; }
+  .recog-card { min-height: 0; padding: 20px 18px; }
+  .recog-rule { width: 90px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recog-card,
+  .recog-more i { transition: none; }
+  .recog-card:hover { transform: none; }
+  .recog-card:hover .recog-more i { transform: none; }
+}
