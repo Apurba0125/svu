@@ -1,0 +1,113 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+GROUP STUDY  —  served at /page/group-study/
+---------------------------------------------------------------------------
+Header and footer come from core/base.html. Do not add them here.
+
+Built exactly like library.html, laboratory.html, classroom.html and
+campus-building.html — same grid, same viewer, same two stylesheets. Copy any
+of them for the Life at SVU tiles still outstanding: gardening.html,
+sports.html, practical-laboratory.html.
+
+HOW THE VIEWER IS WIRED
+  data-viewer on the grid makes it one gallery; data-viewer-item on each cell
+  makes it a frame. That is the whole contract — no onclick attributes and no
+  index numbers to keep in step, so inserting a photograph in the middle does
+  not renumber anything after it. The viewer (counter, fullscreen, close,
+  arrows, caption, keyboard, swipe) is built by main.js and styled in
+  base.css, shared by every gallery page.
+
+  The caption under an enlarged photograph is that image's own alt text, so
+  writing a good alt does double duty. With one photograph the viewer hides
+  its arrows and counter on its own; they come back as soon as there are two.
+
+!! CAPTIONS STILL TO WRITE
+  The three AVIF files could not be opened to describe them. They had inherited
+  the first cell's caption word for word, which described a scene they almost
+  certainly do not show, so they now carry a neutral one instead. Replace each
+  with what is actually in the frame.
+
+TO ADD A PHOTOGRAPH
+  1. Put the file in static/img/group_study/  (create the folder)
+  2. Copy the "gallery cell" block and change the src and the alt
+  3. Run:  python manage.py collectstatic --noinput
+     Not optional — a static path with no manifest entry raises ValueError on
+     every request, so the page goes down rather than showing a broken image.
+
+  Cells are a fixed height and the photograph is cropped to fill, so portrait,
+  landscape and square originals all come out identical in the grid. The
+  enlarged view shows the whole uncropped photograph.
+
+  The repository has only one group-study photograph so far — the one the
+  homepage tile already uses — so it stays in static/img/ for now.
+
+NOTE ON COMMENTS: the hash-style Django comment covers a SINGLE line only.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Group Study | Swami Vivekananda University{% endblock %}
+{% block meta_description %}Group study at Swami Vivekananda University — shared reading rooms, discussion tables and peer learning across the campus.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Group Study</h1>
+  </div>
+</section>
+
+
+{# ======================================================  GALLERY  ======= #}
+<section class="section">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">Learning <span>Together</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <p class="gallery-lead" data-aos="fade-up" data-aos-delay="80">
+      A good deal of the teaching here happens between students. Shared reading rooms, discussion
+      tables in the library and open study areas across the campus are there so a difficult topic
+      can be worked through out loud rather than alone.
+    </p>
+
+    <div class="gallery-grid-lg" data-viewer="group-study" data-aos="fade-up" data-aos-delay="140">
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/groupstudy.png' %}"
+             alt="Four students gathered around a desk, working through an open textbook together">
+      </button>
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Group Study/2.avif' %}"
+             alt="Students studying together at Swami Vivekananda University">
+      </button>
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Group Study/7.avif' %}"
+             alt="Students studying together at Swami Vivekananda University">
+      </button>
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Group Study/8.avif' %}"
+             alt="Students studying together at Swami Vivekananda University">
+      </button>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+SPORTS  —  served at /page/sports/
+---------------------------------------------------------------------------
+Header and footer come from core/base.html. Do not add them here.
+
+Built exactly like library.html, laboratory.html, classroom.html,
+campus-building.html and group-study.html — same grid, same viewer, same two
+stylesheets. Two Life at SVU tiles are still outstanding: gardening.html and
+practical-laboratory.html.
+
+HOW THE VIEWER IS WIRED
+  data-viewer on the grid makes it one gallery; data-viewer-item on each cell
+  makes it a frame. That is the whole contract — no onclick attributes and no
+  index numbers to keep in step, so inserting a photograph in the middle does
+  not renumber anything after it. The viewer (counter, fullscreen, close,
+  arrows, caption, keyboard, swipe) is built by main.js and styled in
+  base.css, shared by every gallery page.
+
+  The caption under an enlarged photograph is that image's own alt text, so
+  writing a good alt does double duty.
+
+!! THREE OF THESE ARE STOCK IMAGES, NOT THIS CAMPUS
+  sports.png    a generated volleyball scene — Western players, tropical
+                mountains, palm trees, and the usual giveaways in the hands
+                and the ball
+  highjump.webp a generic athletics track, no SVU marking anywhere
+  yoga.webp     a stock outdoor fitness group
+
+  None of them is Swami Vivekananda University. Their alt text below therefore
+  describes what is in the frame without claiming it happened here, because a
+  page reached from "Life at SVU" implies every photograph on it is of this
+  campus. Replace them with the university's own courts, teams and events —
+  and note the homepage Sports tile in CAMPUS_GALLERY_ITEMS uses sports.png
+  too, so that needs changing at the same time.
+
+  The two webp files are also only about 500px wide. They will look soft in
+  the grid and clearly blurred in the enlarged viewer, which goes up to
+  1200px.
+
+!! CAPTIONS STILL TO WRITE
+  The AVIF files could not be opened to describe them, so they carry a generic
+  alt. Replace each with what is actually in the frame — that fixes the
+  viewer's caption and the screen-reader description in one edit.
+
+TO ADD A PHOTOGRAPH
+  1. Put the file in "static/img/Sports/"
+  2. Copy one "gallery cell" block and change the src and the alt
+  3. Run:  python manage.py collectstatic --noinput
+     Not optional — a static path with no manifest entry raises ValueError on
+     every request, so the page goes down rather than showing a broken image.
+
+  Cells are a fixed height and the photograph is cropped to fill, so portrait,
+  landscape and square originals all come out identical in the grid. The
+  enlarged view shows the whole uncropped photograph.
+
+NOTE ON COMMENTS: the hash-style Django comment covers a SINGLE line only.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Sports | Swami Vivekananda University{% endblock %}
+{% block meta_description %}Sport at Swami Vivekananda University — courts, grounds and inter-departmental competition alongside the academic calendar.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Sports</h1>
+  </div>
+</section>
+
+
+{# ======================================================  GALLERY  ======= #}
+<section class="section">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">Sport at <span>SVU</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <p class="gallery-lead" data-aos="fade-up" data-aos-delay="80">
+      Courts and grounds sit alongside the academic blocks rather than at the edge of the campus,
+      and inter-departmental fixtures run through the year. Sport here is part of the timetable,
+      not something squeezed in around it.
+    </p>
+
+    <div class="gallery-grid-lg" data-viewer="sports" data-aos="fade-up" data-aos-delay="140">
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Sports/3.avif' %}"
+             alt="Sport at Swami Vivekananda University">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Sports/6.avif' %}"
+             alt="Sport at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/sports.png' %}"
+             alt="A volleyball match in progress, a player jumping to spike over the net"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Sports/highjump.webp' %}"
+             alt="An athlete mid-flight over the sand pit at an athletics track"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Sports/yoga.webp' %}"
+             alt="A row of people stretching together on grass during an outdoor fitness session"
+             loading="lazy">
+      </button>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+LABORATORY  —  served at /page/laboratory/
+---------------------------------------------------------------------------
+Header and footer come from core/base.html. Do not add them here.
+
+Built exactly like templates/pages/library.html — same grid, same viewer, and
+the same two stylesheets. Copy either one to build the remaining Life at SVU
+tiles: classroom.html, campus-building.html, gardening.html, sports.html,
+group-study.html, practical-laboratory.html. Swap the title, the copy and the
+photographs; nothing else needs wiring.
+
+HOW THE VIEWER IS WIRED
+  data-viewer on the grid makes it one gallery; data-viewer-item on each cell
+  makes it a frame. That is the whole contract — no onclick attributes and no
+  index numbers to keep in step, so inserting a photograph in the middle does
+  not renumber anything after it. The viewer (counter, fullscreen, close,
+  arrows, caption, keyboard, swipe) is built by main.js and styled in
+  base.css, shared by every gallery page.
+
+  The caption under the enlarged photograph is the image's own alt text, so
+  writing a good alt does double duty and there is no second list of titles
+  to fall out of sync with the images.
+
+TO ADD A PHOTOGRAPH
+  1. Put the file in static/img/laboratory/
+  2. Copy one "gallery cell" block and change the src and the alt
+  3. Run:  python manage.py collectstatic --noinput
+     Not optional — a static path with no manifest entry raises ValueError on
+     every request, so the page goes down rather than showing a broken image.
+
+  Cells are a fixed height and the photograph is cropped to fill, so portrait,
+  landscape and square originals all come out identical in the grid. The
+  enlarged view shows the whole uncropped photograph.
+
+  The repository only has the two laboratory photographs the homepage already
+  uses, so the grid is seeded with those and they still live in static/img/.
+  Put new ones in static/img/laboratory/ and move these two across when you
+  have a moment — the homepage tile in CAMPUS_GALLERY_ITEMS points at them.
+
+NOTE ON COMMENTS: the hash-style Django comment covers a SINGLE line only.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Laboratory | Swami Vivekananda University{% endblock %}
+{% block meta_description %}Laboratories at Swami Vivekananda University — equipment, instrumentation and supervised practical work across the engineering and science departments.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Laboratory</h1>
+  </div>
+</section>
+
+
+{# ======================================================  GALLERY  ======= #}
+<section class="section">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">The <span>Laboratories</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <p class="gallery-lead" data-aos="fade-up" data-aos-delay="80">
+      Our laboratories are equipped with modern instrumentation across the engineering and science
+      departments, so students spend their time running experiments rather than queuing for
+      apparatus. Every practical session is supervised by faculty who work in the field.
+    </p>
+
+    <div class="gallery-grid-lg" data-viewer="laboratory" data-aos="fade-up" data-aos-delay="140">
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/lab-2.jpg' %}"
+             alt="A faculty member demonstrating a bench-mounted experimental rig to two students in a laboratory">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/lab.png' %}"
+             alt="Laboratory at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/lab/1.avif' %}"
+             alt="Laboratory at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/lab/2.avif' %}"
+             alt="Laboratory at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/lab/3.avif' %}"
+             alt="Laboratory at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/lab/8.avif' %}"
+             alt="Laboratory at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/lab/13.avif' %}"
+             alt="Laboratory at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/lab/18.avif' %}"
+             alt="Laboratory at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+      <!-- ---- gallery cell ---- -->
+    
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

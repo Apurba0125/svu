@@ -1,0 +1,126 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+PRACTICAL LABORATORY  —  served at /page/practical-laboratory/
+---------------------------------------------------------------------------
+Header and footer come from core/base.html. Do not add them here.
+
+Built exactly like library.html, laboratory.html, classroom.html,
+campus-building.html, group-study.html and sports.html — same grid, same
+viewer, same two stylesheets. One Life at SVU tile is still outstanding:
+gardening.html.
+
+HOW THE VIEWER IS WIRED
+  data-viewer on the grid makes it one gallery; data-viewer-item on each cell
+  makes it a frame. That is the whole contract — no onclick attributes and no
+  index numbers to keep in step, so inserting a photograph in the middle does
+  not renumber anything after it. The viewer (counter, fullscreen, close,
+  arrows, caption, keyboard, swipe) is built by main.js and styled in
+  base.css, shared by every gallery page.
+
+  The caption under an enlarged photograph is that image's own alt text, so
+  writing a good alt does double duty.
+
+!! CHECK WHERE THE TWO WEBP FILES CAME FROM
+  "Computer-Science-Lab-2-600x400.webp" is a WordPress-generated thumbnail
+  name — the trailing 600x400 is the size suffix WordPress appends when it
+  resizes an upload. Together with "programming-lab.webp", the low resolution
+  and the fact that the two rooms and uniforms do not match each other, that
+  points to both having been downloaded from another institution's website
+  rather than photographed here.
+
+  If so they should not be published: it is someone else's copyright, and a
+  page reached from "Life at SVU" tells visitors these are this university's
+  own laboratories. Their alt text below describes what is in the frame
+  without claiming it is SVU, but that is mitigation, not a fix. Replace them
+  with photographs of the university's own computer labs.
+
+  They are also only 600px and 700px wide, so they will look soft in the grid
+  and clearly blurred in the enlarged viewer, which scales up to 1200px.
+
+  lab-2.jpg is the genuine one — the homepage Practical Laboratory tile in
+  CAMPUS_GALLERY_ITEMS already uses it.
+
+TO ADD A PHOTOGRAPH
+  1. Put the file in "static/img/practical lab/"
+  2. Copy one "gallery cell" block and change the src and the alt
+  3. Run:  python manage.py collectstatic --noinput
+     Not optional — a static path with no manifest entry raises ValueError on
+     every request, so the page goes down rather than showing a broken image.
+
+  Cells are a fixed height and the photograph is cropped to fill, so portrait,
+  landscape and square originals all come out identical in the grid. The
+  enlarged view shows the whole uncropped photograph.
+
+NOTE ON COMMENTS: the hash-style Django comment covers a SINGLE line only.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Practical Laboratory | Swami Vivekananda University{% endblock %}
+{% block meta_description %}Practical laboratory sessions at Swami Vivekananda University — supervised bench work and computing labs across the engineering departments.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Practical Laboratory</h1>
+  </div>
+</section>
+
+
+{# ======================================================  GALLERY  ======= #}
+<section class="section">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">Practical <span>Sessions</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <p class="gallery-lead" data-aos="fade-up" data-aos-delay="80">
+      Practical work is timetabled alongside the lectures rather than bolted on at the end of a
+      semester. Bench sessions, instrumentation and computing labs all run under supervision, with
+      enough stations that nobody spends the hour watching someone else work.
+    </p>
+
+    <div class="gallery-grid-lg" data-viewer="practical-laboratory" data-aos="fade-up" data-aos-delay="140">
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/lab-2.jpg' %}"
+             alt="A faculty member demonstrating a bench-mounted experimental rig to two students">
+      </button>
+
+      {% comment %}
+      Provenance unverified — see the note at the top of this file. Both alts
+      describe the room without saying it is this university's.
+      {% endcomment %}
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/practical lab/Computer-Science-Lab-2-600x400.webp' %}"
+             alt="Students at desktop workstations during a computer laboratory session"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/practical lab/programming-lab.webp' %}"
+             alt="A computing lab with students at terminals along both walls and an instructor walking the aisle"
+             loading="lazy">
+      </button>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

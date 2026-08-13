@@ -1,0 +1,158 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+CAMPUS BUILDING  —  served at /page/campus-building/
+---------------------------------------------------------------------------
+Header and footer come from core/base.html. Do not add them here.
+
+Built exactly like library.html, laboratory.html and classroom.html — same
+grid, same viewer, same two stylesheets. Copy any of them for the Life at SVU
+tiles still outstanding: gardening.html, sports.html, group-study.html,
+practical-laboratory.html.
+
+HOW THE VIEWER IS WIRED
+  data-viewer on the grid makes it one gallery; data-viewer-item on each cell
+  makes it a frame. That is the whole contract — no onclick attributes and no
+  index numbers to keep in step, so inserting a photograph in the middle does
+  not renumber anything after it. The viewer (counter, fullscreen, close,
+  arrows, caption, keyboard, swipe) is built by main.js and styled in
+  base.css, shared by every gallery page.
+
+  The caption under an enlarged photograph is that image's own alt text, so
+  writing a good alt does double duty.
+
+!! ONE CAPTION STILL TO WRITE
+  6.avif could not be opened to describe it, so it carries a generic alt.
+  Replace it with what is actually in the frame.
+
+!! CHECK 6.avif AGAINST 6.jpg
+  Both are in the grid. Same number, so they are probably the same photograph
+  twice — which shows as a duplicate tile and inflates the viewer's "n / total"
+  count. 6.jpg is the captioned one; delete the 6.avif cell unless they really
+  are different pictures.
+
+!! 4.avif IS NOT USED
+  The folder holds both 4.jpg and 4.avif. Same number, so almost certainly the
+  same photograph twice — including both would show a duplicate in the grid
+  and in the viewer's frame count. 4.jpg is the one wired up because it could
+  be opened and captioned properly. If they are in fact different pictures,
+  add a cell for 4.avif.
+
+TO ADD A PHOTOGRAPH
+  1. Put the file in "static/img/Campus Building/"
+  2. Copy one "gallery cell" block and change the src and the alt
+  3. Run:  python manage.py collectstatic --noinput
+     Not optional — a static path with no manifest entry raises ValueError on
+     every request, so the page goes down rather than showing a broken image.
+
+  Cells are a fixed height and the photograph is cropped to fill, so portrait,
+  landscape and square originals all come out identical in the grid. The
+  enlarged view shows the whole uncropped photograph.
+
+NOTE ON COMMENTS: the hash-style Django comment covers a SINGLE line only.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Campus Building | Swami Vivekananda University{% endblock %}
+{% block meta_description %}The Swami Vivekananda University campus at Barrackpore — academic blocks, reception, muralled corridors and the open food court.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Campus Building</h1>
+  </div>
+</section>
+
+
+{# ======================================================  GALLERY  ======= #}
+<section class="section">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">The <span>Campus</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <p class="gallery-lead" data-aos="fade-up" data-aos-delay="80">
+      The campus is built around greenery and open space — academic blocks set behind lawns and
+      water bodies, corridors painted end to end, and a food court where most of the day's
+      conversations actually happen.
+    </p>
+
+    <div class="gallery-grid-lg" data-viewer="campus-building" data-aos="fade-up" data-aos-delay="140">
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Campus Building/7.jpg' %}" alt="The national flag flying over the campus grounds against a monsoon sky" loading="lazy">
+      </button>
+
+      
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/campus.png' %}"
+             alt="The academic blocks seen across the lawn, with the WE LOVE SVU installation on the terraced grass">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Campus Building/1.jpg' %}"
+             alt="The main reception, with the backlit university crest and name above a wood-panelled desk"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Campus Building/2.jpg' %}"
+             alt="An open corridor lined with potted plants, its full-height wall painted in a geometric colour-block mural"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Campus Building/3.jpg' %}"
+             alt="The open-air food court, with the bakery and Wow! Momo kiosks on terrazzo paving and academic blocks behind"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Campus Building/4.jpg' %}"
+             alt="The double-height atrium, its muralled wall carrying a screen and a balcony running above"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Campus Building/6.avif' %}"
+             alt="The Swami Vivekananda University campus"
+             loading="lazy">
+      </button>
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Campus Building/6.jpg' %}"
+             alt="The open plaza outside the academic blocks, with the coffee kiosk and frangipani planting"
+             loading="lazy">
+      </button>
+    
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/Campus Building/8.jpg' %}"
+             alt="A first-floor corridor looking down over the muralled atrium courtyard"
+             loading="lazy">
+      </button>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

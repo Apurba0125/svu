@@ -1,0 +1,130 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% comment %}
+===========================================================================
+CLASSROOM  —  served at /page/classroom/
+---------------------------------------------------------------------------
+Header and footer come from core/base.html. Do not add them here.
+
+Built exactly like templates/pages/library.html and laboratory.html — same
+grid, same viewer, same two stylesheets. Copy any of the three to build the
+Life at SVU tiles still outstanding: campus-building.html, gardening.html,
+sports.html, group-study.html, practical-laboratory.html. Swap the title, the
+copy and the photographs; nothing else needs wiring.
+
+HOW THE VIEWER IS WIRED
+  data-viewer on the grid makes it one gallery; data-viewer-item on each cell
+  makes it a frame. That is the whole contract — no onclick attributes and no
+  index numbers to keep in step, so inserting a photograph in the middle does
+  not renumber anything after it. The viewer (counter, fullscreen, close,
+  arrows, caption, keyboard, swipe) is built by main.js and styled in
+  base.css, shared by every gallery page.
+
+!! CAPTIONS NEED WRITING
+  The caption under an enlarged photograph is that image's own alt text. The
+  AVIF files below could not be opened to describe them, so every one carries
+  the same placeholder — which means the viewer currently shows identical
+  text under five different photographs. Replace each alt with what is
+  actually in the frame: "Students at work in a smart classroom", "Lecture
+  theatre with tiered seating", and so on. That fixes the caption and the
+  screen-reader description in one edit.
+
+TO ADD A PHOTOGRAPH
+  1. Put the file in static/img/class/
+  2. Copy one "gallery cell" block and change the src and the alt
+  3. Run:  python manage.py collectstatic --noinput
+     Not optional — a static path with no manifest entry raises ValueError on
+     every request, so the page goes down rather than showing a broken image.
+
+  Cells are a fixed height and the photograph is cropped to fill, so portrait,
+  landscape and square originals all come out identical in the grid. The
+  enlarged view shows the whole uncropped photograph.
+
+NOTE ON COMMENTS: the hash-style Django comment covers a SINGLE line only.
+For a multi-line note use a comment/endcomment tag pair like this one, or the
+text leaks onto the page and any tag inside it actually runs. Do not write
+those two tag names literally inside a comment either — the parser stops at
+the first endcomment it sees and the real one is then orphaned.
+===========================================================================
+{% endcomment %}
+
+{% block title %}Classroom | Swami Vivekananda University{% endblock %}
+{% block meta_description %}Classrooms at Swami Vivekananda University — air conditioned smart classrooms with ICT based teaching and a hybrid mode of delivery.{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/department.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{# =======================================================  BANNER  ======= #}
+<section class="dept-banner" style="background-image: linear-gradient(0deg, rgba(10,10,10,.72), rgba(10,10,10,.55)), url('{% static 'img/team.png' %}');">
+  <div class="container">
+    <h1 class="dept-banner-title">Classroom</h1>
+  </div>
+</section>
+
+
+{# ======================================================  GALLERY  ======= #}
+<section class="section">
+  <div class="container">
+    <div class="dept-section-head" data-aos="fade-up">
+      <h2 class="dept-heading">The <span>Classrooms</span></h2>
+      <span class="dept-heading-rule"></span>
+    </div>
+
+    <p class="gallery-lead" data-aos="fade-up" data-aos-delay="80">
+      Every classroom is fully air conditioned and built around ICT based teaching, with smart
+      boards and a hybrid mode of delivery so a session works as well for a student joining
+      remotely as for one in the room.
+    </p>
+
+    <div class="gallery-grid-lg" data-viewer="classroom" data-aos="fade-up" data-aos-delay="140">
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/classroom.jpg' %}"
+             alt="A classroom at Swami Vivekananda University">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/class/1 (1).avif' %}"
+             alt="A classroom at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/class/2.avif' %}"
+             alt="A classroom at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/class/3.avif' %}"
+             alt="A classroom at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/class/5.avif' %}"
+             alt="A classroom at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+
+      <!-- ---- gallery cell ---- -->
+      <button class="gallery-cell" type="button" data-viewer-item>
+        <img src="{% static 'img/class/6.avif' %}"
+             alt="A classroom at Swami Vivekananda University"
+             loading="lazy">
+      </button>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
