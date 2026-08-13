@@ -5,8 +5,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %}Swami Vivekananda University | Excellence. Innovation. Entrepreneurship{% endblock %}</title>
-<meta name="description" content="{% block meta_description %}A Django-built frontend clone of the Swami Vivekananda University website, for educational/portfolio purposes.{% endblock %}">
+<meta name="description" content="{% block meta_description %}Swami Vivekananda University is among the best career-oriented universities in Eastern India, offering 60+ diploma, graduate, postgraduate and doctoral programmes.{% endblock %}">
 <link rel="icon" href="{% static 'img/logo.jpeg' %}">
+
+{% comment %}
+What WhatsApp, Facebook, LinkedIn and X show when a link to the site is
+shared. There are deliberately no og:title or og:description tags here:
+scrapers fall back to the title and description above when those are absent,
+so every page gets the right share text from the two blocks it already fills,
+and there is no second copy of the wording to keep in step.
+
+og:url and og:image must be ABSOLUTE. A scraper has no page to resolve a
+relative path against, so a bare /static/... yields no preview image at all.
+Note that build_absolute_uri() includes the current path, which makes it right
+for og:url and wrong for og:image — the image is built from scheme and host
+instead.
+{% endcomment %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Swami Vivekananda University">
+<meta property="og:locale" content="en_IN">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/campus.png' %}">
+<meta property="og:image:alt" content="The Swami Vivekananda University campus at Barrackpore, West Bengal">
+<meta name="twitter:card" content="summary_large_image">
 
 <!-- Bootstrap 5 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
