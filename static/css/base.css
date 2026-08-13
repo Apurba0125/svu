@@ -368,19 +368,34 @@ button { font: inherit; cursor: pointer; }
   height: var(--header-h-nav);
   padding: 0 18px;
   color: #e0e0e0;
-  font-size: 13px;
-  font-weight: 700;
   letter-spacing: 0.03em;
   white-space: nowrap;
+  /* This is a <button> — a mega-menu trigger, not a link. Bootstrap's reboot
+     only neutralises buttons carrying .btn, so the UA styling is reset here.
+     `border: 0` first, then the accent border, or the shorthand wipes it. */
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
   border-bottom: 3px solid transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  /* It opens a panel rather than going anywhere, so no pointer finger. */
+  cursor: default;
 }
 .nav-link .chev { font-size: 10px; transition: transform var(--transition); }
+/* :focus-within alongside :hover — the trigger no longer navigates, so without
+   this a keyboard user could tab onto it and never reach the panel at all. */
 .nav-item:hover .nav-link,
+.nav-item:focus-within .nav-link,
 .nav-item.active .nav-link {
   color: var(--cu-white);
   border-bottom-color: var(--cu-red);
 }
-.nav-item:hover .nav-link .chev { transform: rotate(180deg); }
+.nav-item:hover .nav-link .chev,
+.nav-item:focus-within .nav-link .chev { transform: rotate(180deg); }
+.nav-link:focus-visible { outline: 2px solid var(--cu-white); outline-offset: -4px; }
 
 .mega-panel {
   position: absolute;
@@ -394,7 +409,8 @@ button { font: inherit; cursor: pointer; }
   transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
   z-index: 100;
 }
-.nav-item:hover .mega-panel { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav-item:hover .mega-panel,
+.nav-item:focus-within .mega-panel { opacity: 1; visibility: visible; transform: translateY(0); }
 
 /* The last nav item sits at the right edge of the viewport — its wide
    left-anchored panel would run off the right side of the screen. Hang it
@@ -472,7 +488,8 @@ button { font: inherit; cursor: pointer; }
   max-height: calc(100vh - var(--header-h-top) - var(--header-h-main) - var(--header-h-nav) - 12px);
   overflow-y: auto;
 }
-.nav-item:hover .mega-panel.mega-programs { transform: translate(-50%, 0); }
+.nav-item:hover .mega-panel.mega-programs,
+.nav-item:focus-within .mega-panel.mega-programs { transform: translate(-50%, 0); }
 .programs-main { display: flex; align-items: stretch; }
 .programs-sidebar {
   width: 140px;
@@ -1116,4 +1133,16 @@ html.pv-open { overflow-y: hidden; }
   .pv-img.is-swapping { animation: none; }
   .pv-btn { transition: none; }
   .pv-nav:hover { transform: translateY(-50%); }
+}
+
+/* Links that leave the site. The arrow is a plain character rather than an
+   icon font, so it renders even if Font Awesome fails to load — and it is
+   marked aria-hidden by being generated content, which screen readers skip.
+   The "(opens in a new tab)" note in the markup is what announces it there. */
+.header-top-links a.is-external::after,
+.mobile-nav-more-list a.is-external::after {
+  content: "\2197";
+  margin-left: 4px;
+  font-size: 0.9em;
+  opacity: 0.75;
 }

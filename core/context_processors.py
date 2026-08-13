@@ -1,3 +1,6 @@
+from django.utils.text import slugify
+
+
 # Departments grouped by school, rendered as the columns of the PROGRAMS mega
 # panel and, on small screens, as collapsible sections in the drawer.
 # Slugs are explicit rather than derived with |slugify so a department resolves
@@ -43,17 +46,16 @@ SCHOOL_ENGINEERING = {
                 "Diploma In Electrical Engineering",
                 "B.Tech In Electrical Engineering",
                 "M.Tech In Electrical Engineering",
-                "Ph.D. In Electrical Engineering",
             ],
         },
         {
             "label": "Department Of Electronics & Communication",
             "slug": "department-of-electronics-communication-engineering",
             "courses": [
-                "Diploma In Electronics and Communication Engineering",
+               
                 "B.Tech In Electronics and Communication Engineering",
                 "M.Tech In Electronics and Communication Engineering",
-                "Ph.D. In Electronics and Communication Engineering",
+               
             ],
         },
         {
@@ -76,7 +78,7 @@ SCHOOL_HUMANITY = {
             "label": "Department Of Language, Literature And Cultural Studies",
             "slug": "department-of-language-literature-cultural-studies",
             "courses": [
-                "B.A. (Hons.) In English",
+                "B.A. In English",
                 "M.A. In English",
                 "Ph.D. In English",
             ],
@@ -87,16 +89,15 @@ SCHOOL_HUMANITY = {
             "courses": [
                 "B.A. In Journalism and Mass Communication",
                 "M.A. In Journalism and Mass Communication",
-                "Ph.D. In Journalism and Mass Communication",
             ],
         },
         {
             "label": "Department Of Education",
             "slug": "department-of-education",
             "courses": [
-                "B.Ed.",
-                "M.Ed.",
-                "Ph.D. In Education",
+                "B.A (Hons.) in Education",
+                "M.A in Education",
+               
             ],
         },
     ],
@@ -111,7 +112,7 @@ SCHOOL_AGRICULTURE = {
             "courses": [
                 "B.Sc. (Hons.) In Agriculture",
                 "M.Sc. In Agriculture",
-                "Ph.D. In Agriculture",
+                
             ],
         },
     ],
@@ -125,7 +126,12 @@ SCHOOL_MANAGEMENT = {
             "slug": "school-of-management",
             "courses": [
                 "BBA (Bachelor Of Business Administration)",
+                "BBA HM (Bachelor Of Business Administration In Hospital Management)",
+                "BBA HHM (Bachelor Of Business Administration In Hotel & Hospital Management)",
+                "BBA DM (Bachelor Of Business Administration In Digital Marketing)",
                 "MBA (Master Of Business Administration)",
+                "MBA FINANCE (Master Of Business Administration In Finance)",
+                "MBA ABM (Master Of Business Administration In Agri Business Management)",
                 "Ph.D. In Management Studies",
             ],
         },
@@ -141,7 +147,7 @@ SCHOOL_ALLIED_HEALTH = {
             "courses": [
                 "BPT (Bachelor Of Physiotherapy)",
                 "MPT (Master Of Physiotherapy)",
-                "Ph.D. In Physiotherapy",
+               
             ],
         },
         {
@@ -149,44 +155,42 @@ SCHOOL_ALLIED_HEALTH = {
             "slug": "department-of-optometry",
             "courses": [
                 "B.Sc. In Optometry",
-                "M.Sc. In Optometry",
-                "Ph.D. In Optometry",
+                
+              
             ],
         },
         {
             "label": "Department Of Food & Nutrition",
             "slug": "department-of-food-nutrition",
             "courses": [
-                "B.Sc. In Food and Nutrition",
-                "M.Sc. In Food and Nutrition",
-                "Ph.D. In Food and Nutrition",
+                "B.Sc (H) in Clinical Nutrition & Dietetics",
+                "M.Sc in Food & Nutrition",
+                
             ],
         },
         {
             "label": "Department Of Psychology",
             "slug": "department-of-psychology",
             "courses": [
-                "B.Sc. In Psychology",
-                "M.Sc. In Psychology",
-                "Ph.D. In Psychology",
+                "M.Sc. / M.A in Applied Psychology (Specialization in Clinical Psychology)",
+                
+               
             ],
         },
         {
             "label": "Department Of Medical Laboratory Technology",
             "slug": "department-of-medical-laboratory-technology",
             "courses": [
-                "B.Sc. In Medical Laboratory Technology",
-                "M.Sc. In Medical Laboratory Technology",
-                "Ph.D. In Medical Laboratory Technology",
+                "Bachelor of Science (Hons.) in Medical Laboratory Technology",
+              
             ],
         },
         {
             "label": "Department Of Medical Radiology & Imaging Technology",
             "slug": "department-of-medical-radiology-imaging-technology",
             "courses": [
-                "B.Sc. In Medical Radiology and Imaging Technology",
-                "M.Sc. In Medical Radiology and Imaging Technology",
-                "Ph.D. In Medical Radiology and Imaging Technology",
+                "B.Sc. in Medical Radiology & Imaging Technology",
+                
             ],
         },
     ],
@@ -199,10 +203,10 @@ SCHOOL_LEGAL_STUDIES = {
             "label": "Department Of Legal Studies",
             "slug": "department-of-legal-studies",
             "courses": [
+                "BBA LL.B. (Hons.)",
+                "LL.B.(Hons.)",
                 "B.A. LL.B. (Hons.)",
-                "LL.B.",
-                "LL.M.",
-                "Ph.D. In Law",
+               
             ],
         },
     ],
@@ -217,34 +221,34 @@ SCHOOL_COMPUTER_SCIENCE = {
             "courses": [
                 "BCA (Bachelor Of Computer Application)",
                 "MCA (Master Of Computer Application)",
-                "Ph.D. In Computer Application",
+               
             ],
         },
         {
             "label": "Department Of Data Science",
             "slug": "department-of-data-science",
             "courses": [
-                "B.Sc. In Data Science",
-                "M.Sc. In Data Science",
-                "Ph.D. In Data Science",
+                "B.Tech in Data Science",
+                "Master of Science in Data Science",
+                
             ],
         },
         {
             "label": "Department Of Advanced Networking & Cyber Security",
             "slug": "department-of-cyber-security-and-advanced-networking",
             "courses": [
-                "B.Sc. In Advanced Networking and Cyber Security",
-                "M.Sc. In Advanced Networking and Cyber Security",
-                "Ph.D. In Advanced Networking and Cyber Security",
+                "B.SC(H) In Advanced Networking And Cyber Security",
+                "M.SC(H) In Advanced Networking And Cyber Security",
+               
             ],
         },
         {
             "label": "Department Of Multimedia & Animation",
             "slug": "department-of-animation",
             "courses": [
-                "B.Sc. In Multimedia and Animation",
-                "M.Sc. In Multimedia and Animation",
-                "Ph.D. In Multimedia and Animation",
+                "Bachelor of Science (Hons.) in Multimedia & Animation",
+                "MSc in Multimedia and Animation",
+               
             ],
         },
     ],
@@ -257,18 +261,18 @@ SCHOOL_LIFE_SCIENCE = {
             "label": "Department Of Biotechnology",
             "slug": "department-of-biotechnology",
             "courses": [
-                "B.Sc. In Biotechnology",
-                "M.Sc. In Biotechnology",
-                "Ph.D. In Biotechnology",
+                "Bachelor of Science (Hons.) in Biotechnology",
+                "Master of Science in Biotechnology",
+               
             ],
         },
         {
             "label": "Department Of Microbiology",
             "slug": "department-of-microbiology",
             "courses": [
-                "B.Sc. In Microbiology",
-                "M.Sc. In Microbiology",
-                "Ph.D. In Microbiology",
+                "Bachelor of Science (Hons.) in Microbiology",
+                "Master of Science in Microbiology",
+               
             ],
         },
     ],
@@ -281,27 +285,23 @@ SCHOOL_BASIC_SCIENCE = {
             "label": "Department Of Mathematics",
             "slug": "department-of-mathematics",
             "courses": [
-                "B.Sc. (Hons.) In Mathematics",
-                "M.Sc. In Mathematics",
-                "Ph.D. In Mathematics",
+                "Master of Science in Mathematics",
+               
             ],
         },
         {
             "label": "Department Of Chemistry",
             "slug": "department-of-chemistry",
             "courses": [
-                "B.Sc. (Hons.) In Chemistry",
-                "M.Sc. In Chemistry",
-                "Ph.D. In Chemistry",
+               
             ],
         },
         {
             "label": "Department Of Physics",
             "slug": "department-of-physics",
             "courses": [
-                "B.Sc. (Hons.) In Physics",
-                "M.Sc. In Physics",
-                "Ph.D. In Physics",
+                "Master of Science in Physics",
+                
             ],
         },
     ],
@@ -464,10 +464,56 @@ TOPBAR_ANNOUNCEMENTS = [
     "Swami Vivekananda University Ranked Among India's Most Awarded Institutions",
 ]
 
+# Utility links in the black bar above the logo. Three ways to write one:
+#
+#   "CAMPUSES"
+#       plain string — the label doubles as the slug, so this opens
+#       /page/campuses/. Renaming the label moves the link, which is why
+#       anything that must stay put should use the dict form below.
+#
+#   {"label": "LIBRARY", "slug": "central-library"}
+#       internal page whose URL differs from its label: /page/central-library/
+#
+#   {"label": "LIBRARY", "url": "https://opac.example.edu/"}
+#       an external site. Opens in a new tab, gets rel="noopener", and is
+#       marked with a small arrow so visitors know they are leaving the site.
+#
+# "url" wins if both are given. Same convention as RESEARCH_MEDIA in views.py.
 TOP_NAV_LINKS = [
-    "CAMPUSES", "INTERNATIONAL", "LIBRARY", "STUDENT SERVICES", "CAREER", "BLOGS",
-    "SVU PODCAST", "CONTACT US",
+    "CAMPUSES",
+    "INTERNATIONAL",
+    {"label": "LIBRARY", "url": "https://www.swamivivekanandauniversity.ac.in/"},
+    "STUDENT SERVICES",
+    "CAREER",
+    "BLOGS",
+    "SVU PODCAST",
+    "CONTACT US",
 ]
+
+
+def _resolve_nav_link(entry):
+    """Normalise one TOP_NAV_LINKS entry into a dict the template can render.
+
+    Doing this here rather than in the template keeps the markup to a single
+    if/else, and means the three authoring forms above cost nothing at the
+    point of use. slugify() at import time is safe — unlike reverse(), it does
+    not need the URLConf to be loaded.
+    """
+    if isinstance(entry, str):
+        return {"label": entry, "slug": slugify(entry), "external": False}
+
+    label = entry["label"]
+    url = entry.get("url")
+    if url:
+        return {"label": label, "url": url, "external": True}
+    return {
+        "label": label,
+        "slug": entry.get("slug") or slugify(label),
+        "external": False,
+    }
+
+
+TOP_NAV_LINKS_RESOLVED = [_resolve_nav_link(e) for e in TOP_NAV_LINKS]
 
 MAIN_NAV = [
     {"label": "ABOUT", "slug": "about", "mega": "about"},
@@ -524,7 +570,7 @@ def nav_context(request):
         "campus_life_menu": CAMPUS_LIFE_MENU,
         "research_menu": RESEARCH_MENU,
         "simple_menus": SIMPLE_MENUS,
-        "top_nav_links": TOP_NAV_LINKS,
+        "top_nav_links": TOP_NAV_LINKS_RESOLVED,
         "main_nav": MAIN_NAV,
         "social_links": SOCIAL_LINKS,
         "footer_columns": FOOTER_COLUMNS,

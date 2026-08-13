@@ -40,8 +40,18 @@
       </a>
 
       <nav class="header-top-links">
+        {% comment %}
+        Entries are normalised in core/context_processors.py, so each one is
+        already either external (has .url) or internal (has .slug). rel=noopener
+        on the external ones: without it the opened tab can reach back through
+        window.opener and navigate this one.
+        {% endcomment %}
         {% for link in top_nav_links %}
-        <a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a>
+          {% if link.external %}
+          <a href="{{ link.url }}" class="is-external" target="_blank" rel="noopener">{{ link.label }}<span class="visually-hidden"> (opens in a new tab)</span></a>
+          {% else %}
+          <a href="{% url 'placeholder_page' link.slug %}">{{ link.label }}</a>
+          {% endif %}
         {% endfor %}
       </nav>
 
@@ -68,9 +78,17 @@
       <ul class="nav-list">
         {% for item in main_nav %}
         <li class="nav-item">
-          <a href="{% url 'placeholder_page' item.slug %}" class="nav-link">
-            {{ item.label }} <i class="fa-solid fa-chevron-down chev"></i>
-          </a>
+          {% comment %}
+          A button, not a link. These top-level items only open the mega panel
+          below them — there is no "About" page behind ABOUT, and making it an
+          anchor sent anyone who clicked to the under-construction stub. A
+          button navigates nowhere, stays keyboard focusable, and lets the
+          :focus-within rules in base.css open the panel on Tab.
+          The real destinations are the links inside each panel.
+          {% endcomment %}
+          <button type="button" class="nav-link" aria-haspopup="true">
+            {{ item.label }} <i class="fa-solid fa-chevron-down chev" aria-hidden="true"></i>
+          </button>
 
           {% if item.mega == 'about' %}
           <div class="mega-panel mega-about">
@@ -354,7 +372,13 @@
     <div class="mobile-nav-subhead mobile-nav-more-label">More</div>
     <ul class="list-unstyled mobile-nav-more-list">
       {% for link in top_nav_links %}
-      <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+      <li>
+        {% if link.external %}
+        <a href="{{ link.url }}" class="is-external" target="_blank" rel="noopener">{{ link.label }}<span class="visually-hidden"> (opens in a new tab)</span></a>
+        {% else %}
+        <a href="{% url 'placeholder_page' link.slug %}">{{ link.label }}</a>
+        {% endif %}
+      </li>
       {% endfor %}
     </ul>
   </div>
