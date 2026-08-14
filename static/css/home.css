@@ -486,8 +486,52 @@
   transition: opacity var(--transition), transform var(--transition);
 }
 .company-logo:hover { opacity: 1; transform: translateY(-2px); }
+
+/* Logo version of the same slide.
+   ONE FIXED BOX, WHATEVER THE FILE IS. Both width and height are pinned, so a
+   605x413 square-ish mark, a 1000x150 wordmark and a tiny 80x80 icon all take
+   exactly the same slot in the marquee. Nothing has to be cropped or resized
+   before it is dropped in.
+
+   object-fit: contain is what does the work — the image is scaled down until
+   it fits inside the box and then centred, keeping its aspect ratio, with the
+   leftover space transparent. "cover" would fill the box instead by cropping,
+   and a cropped logo is a damaged logo.
+
+   Sizing the element rather than letting the image size itself is the point:
+   with height alone and width:auto, a wide wordmark renders four times the
+   width of a square mark and the strip's rhythm falls apart. */
+.company-logo-img {
+  /* Sized to sit level with the text slides next to it, which are 22px/800.
+     26px of box gives a wordmark about the same visual weight as that text
+     without it looming over the names it shares the strip with.
+
+     The box is wider than it is tall on purpose: most company logos are
+     wordmarks, and contain fits by the tighter axis, so a narrow box would
+     scale a wide logo down until its lettering was unreadable. 110x26 lets a
+     wordmark use the width and still keeps a square mark at 26x26. */
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  object-position: center;
+  padding: 0 34px;          /* same gutter as .company-logo, so a row of mixed
+                               logo and text slides spaces evenly */
+  box-sizing: content-box;  /* the padding is gutter, not part of the 110x26 */
+  opacity: 0.9;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.company-logo-img:hover { opacity: 1; transform: translateY(-2px); }
+
 @media (max-width: 700px) {
   .placement-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .company-logo-img { width: 84px; height: 20px; padding: 0 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .company-logo,
+  .company-logo-img { transition: none; }
+  .company-logo:hover,
+  .company-logo-img:hover { transform: none; }
 }
 
 /* ==========================================================================

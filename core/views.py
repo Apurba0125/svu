@@ -116,61 +116,100 @@ NEWS_INTEREST = {
     "body": "Welcome to Swami Vivekananda University. We are an institution in West Bengal dedicated to the pursuit of knowledge and excellence and providing quality education to our students. Since our inception, we have been striving to provide our students with an exceptional learning experience.",
 }
 
+# Notice board on the homepage. "Read Details" opens the notice's own PDF in a
+# new tab.
+#
+#   pdf   path to the document under static/, RELATIVE to static/ and WITHOUT a
+#         leading slash — the template runs it through {% static %}, which adds
+#         the hash and the prefix. Documents live in static/img/notice/.
+#
+#         Deliberately a bare string rather than static("…") the way
+#         CAMPUS_GALLERY_ITEMS does it. static() here would run at import time,
+#         and with the manifest storage a filename that has not been collected
+#         raises ValueError during import — meaning gunicorn never starts and
+#         the whole site is down, not just this panel. Resolved in the template
+#         instead, the same mistake costs one page.
+#
+#         Drop "pdf" (or leave it "") and that notice falls back to the old
+#         behaviour: /page/<title-slugified>/, which is the placeholder stub
+#         until someone writes the page. So a notice without a document still
+#         links somewhere sensible.
+#
+# AFTER ADDING OR REPLACING A PDF:  python manage.py collectstatic --noinput
+# Not optional. A {% static %} path with no manifest entry raises ValueError on
+# every request and takes the homepage down.
+#
+# The three files below are placeholders — real one page PDFs that open and
+# say so. Overwrite them with the official notices, keeping the filenames.
 NOTICE_ITEMS = [
-    {"month": "Aug'25", "day": "14", "title": "Independence Day Celebration"},
-    {"month": "Aug'25", "day": "13", "title": "Special Supplementary Examination"},
-    {"month": "Aug'25", "day": "12", "title": "Eligible Candidates to Appear in RET"},
+    {
+        "month": "Aug'26", "day": "14",
+        "title": "Independence Day Celebration",
+        "pdf": "img/notice/independence-day-celebration.pdf",
+    },
+    {
+        "month": "Aug'26", "day": "13",
+        "title": "Academic Calendar 2026-27",
+        "pdf": "img/notice/Academic Calendar 2026-27.pdf",
+    },
+    {
+        "month": "Aug'26", "day": "13",
+        "title": "FDP_IKS_SVU_2026",
+        "pdf": "img/notice/FDP_IKS_SVU-1.pdf",
+    },
 ]
 
 PLACEMENT_DRIVES = [
     {
-        "name": "Schneider Electric",
+        "name": "Netfotech Solutions",
         "color": "#3dae2b",
-        "desc": "Schneider Electric India Pvt. Ltd. for B.Tech / M.Tech (Mechanical / Power Systems / EE / EEE) students of 2026 passing out batch.",
+        "desc": "Netfotech Solutions for B.Tech / Bca  students of 2026 passing out batch.",
         "note": "Shortlisted Students",
     },
     {
-        "name": "Sify",
+        "name": "METCONNECT INFOTECH",
         "color": "#8dc63f",
-        "desc": "Sify Technologies Limited for B.E / B.Tech (EEE, Mechanical) of 2026 passing out batch.",
+        "desc": "METCONNECT INFOTECH PVT. LTD. for  B.Tech / BCA / MCA  of 2026 passing out batch.",
         "note": "",
     },
+   
     {
-        "name": "JBM Group",
-        "color": "#173f8a",
-        "desc": "JBM Group for B.E / B.Tech (Mechanical, Electrical) students of 2026 passing out batch.",
-        "note": "",
-    },
-    {
-        "name": "Amazon",
+        "name": "ICE MEDIA LAB",
         "color": "#141414",
-        "desc": "Amazon India for B.E / B.Tech (Computer Science, Electronics) students of 2026 passing out batch.",
+        "desc": " ICE MEDIA LAB India for  / B.Tech (Computer Science) students of 2026 passing out batch.",
         "note": "Shortlisted Students",
     },
     {
-        "name": "TCS",
+        "name": "ZigZag AI",
         "color": "#0070c0",
-        "desc": "Tata Consultancy Services for B.E / B.Tech (All Branches) students of 2026 passing out batch.",
+        "desc": "ZigZag AI for  B.Tech (All Branches) students of 2026 passing out batch.",
         "note": "",
     },
+
+     {
+            "name": "Saasaro Technova Pvt Ltd",
+            "color": "#173f8a",
+            "desc": "Saasaro Technova Pvt Ltd for B.E / B.Tech  students of 2026 passing out batch.",
+            "note": "",
+        },
 ]
 
 PLACED_STUDENTS = [
     {
-        "first": "Jaspreet", "last": "Singh", "company": "Amazon",
-        "package": "25", "image": "https://placehold.co/460x620/1a2233/1a2233",
+        "first": "Bikash", "last": "Mondal", "company": "ShipBob",
+        "package": "14.6", "image": static("img/logos/student1_com.png"),
     },
     {
-        "first": "Vandana", "last": "Chauhan", "company": "TCS",
-        "package": "17", "image": "https://placehold.co/460x620/2a3324/2a3324",
+        "first": "Anup", "last": "kumar Dey", "company": "GRSE",
+        "package": "8.16", "image": static("img/logos/student2_com.png"),
     },
     {
-        "first": "Rohan", "last": "Mehta", "company": "IBM",
-        "package": "10", "image": "https://placehold.co/460x620/241a1a/241a1a",
+        "first": "Anup", "last": "Maji", "company": "sinume Automation",
+        "package": "8", "image": static("img/logos/student3_com.png"),
     },
     {
-        "first": "Ananya", "last": "Roy", "company": "Rich Panel",
-        "package": "5", "image": "https://placehold.co/460x620/1a2422/1a2422",
+        "first": "Mounik", "last": "Ghosh", "company": "Varun Baverages",
+        "package": "5", "image": static("img/logos/student4_com.png"),
     },
 ]
 
@@ -189,19 +228,53 @@ PACKAGE_TIERS = [
     # {"value": "1.80", "companies": "25+"},
 ]
 
+# The recruiter marquee under the placement drives. Each entry is one slide.
+#
+#   logo    the company's logo, RELATIVE to static/ and WITHOUT a leading slash
+#           — the template runs it through {% static %}. Files go in
+#           static/img/logos/.
+#
+#           Leave it "" and the slide falls back to the company name set in
+#           "color", exactly as this strip looked before. That is why every
+#           entry below still carries name and color: the two are not
+#           alternatives to be cleaned up later, they are the fallback, and a
+#           logo that is ever removed lands back on readable text instead of a
+#           gap in the marquee.
+#
+#           A bare string, not static("…"). static() runs at import time and
+#           with the manifest storage an uncollected filename raises ValueError
+#           during import, so gunicorn never starts and the whole site is down
+#           rather than one strip. Resolved in the template, a typo costs one
+#           page. Same rule as NOTICE_ITEMS.
+#
+#   name    always required. It is the alt text on the logo, so it is what a
+#           screen reader and a failed image request both fall back to.
+#
+#   color   the text colour for the fallback. Ignored once a logo is set.
+#
+# AFTER ADDING A LOGO:  python manage.py collectstatic --noinput
+#
+# Use the company's own official logo file — a wordmark on transparent PNG or
+# SVG reads best in the strip. They are trademarks, so take them from the
+# company's press or brand page rather than redrawing or recolouring them.
+# Aim for about 120px tall; the strip renders them at 44px and the extra gives
+# a clean result on high-DPI screens.
 HIRING_COMPANIES = [
-    {"name": "Amazon", "color": "#141414"},
-    {"name": "TATA AIA", "color": "#1e4b9c"},
-    {"name": "Tech Mahindra", "color": "#00539f"},
-    {"name": "GoComet", "color": "#002d72"},
-    {"name": "Focalyt", "color": "#e31837"},
-    {"name": "EXPOSYS DATA LABS", "color": "#f37021"},
-    {"name": "Skytel Tele Services", "color": "#ed1c24"},
-    {"name": "METCONNECT INFOTECH", "color": "#00a651"},
-    {"name": "ZigZag AI", "color": "#5b2c91"},
-    {"name": " ICE MEDIA LAB", "color": "#141414"},
-    {"name": "Saasaro Technova", "color": "#007cc3"},
-    
+    {"name": "John Deere", "color": "#141414", "logo": "img/logos/johndeere.png"},
+    {"name": "TCS", "color": "#f37021", "logo": "img/logos/tcs.png"},
+    {"name": "shipbob", "color": "#f37021", "logo": "img/logos/shipbob.png"},
+    {"name": "UltraTech", "color": "#1e4b9c", "logo": "img/logos/Ultratech.png"},
+    {"name": "Deloitte", "color": "#002d72", "logo": "img/logos/deloitte.png"},
+    {"name": "Tech Mahindra", "color": "#00539f", "logo": "img/logos/techmahindra.png"},
+    {"name": "Ecart", "color": "#e31837", "logo": "img/logos/ekart.png"},
+    {"name": "Adani", "color": "#00a651", "logo": "img/logos/adani.png"},
+    {"name": "Accenture", "color": "#5b2c91", "logo": "img/logos/accenture.png"},
+    {"name": "GRSE", "color": "#5b2c91", "logo": "img/logos/grse.png"},
+    {"name": "cognizant", "color": "#007cc3", "logo": "img/logos/cognizant.png"},
+    {"name": "kyb", "color": "#ed1c24", "logo": "img/logos/kyb.png"},
+    {"name": "TATA", "color": "#ed1c24", "logo": "img/logos/tata.png"},
+    {"name": "wipro", "color": "#141414", "logo": "img/logos/wipro.png"},
+    {"name": "Aditya Birla Capital", "color": "#141414", "logo": "img/logos/adityabirlacapital.png"},
 ]
 
 GLOBAL_EXPERIENCE_ITEMS = [
@@ -213,13 +286,11 @@ GLOBAL_EXPERIENCE_ITEMS = [
 ]
 
 GLOBAL_ACCORDION_PANELS = [
-    {"label": "Central Campus", "image": static("img/campaus.png"),"active": True},
-    {"label": "Global Collaborations", "image": static("img/campaus.png")},
-    {"label": "Degree Opportunities", "image": static("img/campaus.png")},
-    {"label": "Language and Culture", "image": static("img/campaus.png"), },
-    {"label": "International Research Projects", "image": static("img/campaus.png")},
-    {"label": "International Faculty", "image": static("img/campaus.png")},
-    {"label": "Career Pathways", "image": static("img/campaus.png")},
+    {"label": "Central Campus", "image": static("img/globaledu/cc.png"),"active": True},
+    {"label": "Global Collaborations", "image": static("img/globaledu/globalcollab.png")},
+    {"label": "Degree Opportunities", "image": static("img/globaledu/degreeopportunities.png")},
+    {"label": "Language and Culture", "image": static("img/globaledu/language.png"), },
+    {"label": "Career Pathways", "image": static("img/globaledu/cp.png")},
 ]
 
 WHY_CHOOSE_CU = [

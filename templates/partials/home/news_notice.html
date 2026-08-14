@@ -31,7 +31,34 @@
             </div>
             <div class="notice-body">
               <span class="notice-title">{{ item.title }}</span>
-              <a href="{% url 'placeholder_page' item.title|slugify %}" class="nn-readmore">Read Details <i class="fa-solid fa-chevron-right"></i></a>
+              {% comment %}
+              "Read Details" opens the notice's own PDF when NOTICE_ITEMS gives
+              it one, and otherwise falls back to the slugified-title page as
+              before — so a notice with no document still goes somewhere rather
+              than rendering a dead link.
+
+              target=_blank because a PDF replacing the homepage in the same
+              tab strands the visitor with only the back button; rel=noopener
+              with it, as on every other outbound link on the site. The
+              visually-hidden note is inside the link so a screen reader
+              announces the file type and the new tab before it is followed —
+              "Read Details" alone gives no warning that a download is coming.
+
+              Repeating the title in that hidden text also makes the three
+              links distinguishable: a screen reader listing links on this page
+              would otherwise read "Read Details" three times with nothing to
+              tell them apart.
+              {% endcomment %}
+              {% if item.pdf %}
+              <a href="{% static item.pdf %}" class="nn-readmore"
+                 target="_blank" rel="noopener" type="application/pdf">Read Details
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                <span class="visually-hidden">about {{ item.title }} (PDF, opens in a new tab)</span></a>
+              {% else %}
+              <a href="{% url 'placeholder_page' item.title|slugify %}" class="nn-readmore">Read Details
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                <span class="visually-hidden">about {{ item.title }}</span></a>
+              {% endif %}
             </div>
           </div>
           {% endfor %}

@@ -45,9 +45,28 @@
     <p class="companies-strip-title">The World&rsquo;s Leading Companies Hire Our Talent</p>
     <div class="swiper companies-swiper">
       <div class="swiper-wrapper">
+        {% comment %}
+        A logo when HIRING_COMPANIES gives the company one, otherwise its name
+        in the brand colour — the way this strip looked before logos existed.
+        The fallback is not temporary scaffolding: a marquee is a fixed-height
+        row, so a missing file would leave a visible hole in it, and readable
+        text is better than a gap.
+
+        alt is the company name, so the strip still reads correctly to a screen
+        reader and to anyone whose images failed to load.
+
+        No loading="lazy" here. Swiper measures each slide to lay the marquee
+        out, and a lazy image has no dimensions at that moment, so the track is
+        built from zero-width slides and the animation comes out wrong. These
+        are small files; the fix is to keep them small, not to defer them.
+        {% endcomment %}
         {% for company in hiring_companies %}
         <div class="swiper-slide company-logo-slide">
+          {% if company.logo %}
+          <img class="company-logo-img" src="{% static company.logo %}" alt="{{ company.name }}">
+          {% else %}
           <span class="company-logo" style="color: {{ company.color }};">{{ company.name }}</span>
+          {% endif %}
         </div>
         {% endfor %}
       </div>
