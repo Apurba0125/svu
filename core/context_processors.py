@@ -339,7 +339,7 @@ ABOUT_MENU = {
         "Recognition & Approvals", "Awards & Rankings", 
     ],
     "related_links": [
-        "Institutes & Departments", "Admissions", "Scholarships", "Governance",
+        "News", "IIC", "Faculty Lecture Series", "Governance",
         "Hostel Facility", "Student Services", "How to Reach Us?", "GATI Charter Institution",
         "ABET Engineering Accreditation",
     ],
