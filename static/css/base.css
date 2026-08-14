@@ -867,11 +867,52 @@ button { font: inherit; cursor: pointer; }
 }
 .footer-brand .brand-name { color: var(--cu-white); font-size: 20px; font-weight: 800; }
 .footer-brand .brand-tagline { color: #8f8f8f; font-size: 12px; margin: 6px 0 18px; }
-.footer-brand p { font-size: 13px; line-height: 1.7; color: #9c9c9c; margin-bottom: 18px; }
+/* Justified, so both edges of the blurb line up with the column beside it.
+   text-wrap: pretty keeps the last line from ending on a single orphan word,
+   which justification makes far more obvious than ragged-right does. */
+.footer-brand p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #9c9c9c;
+  margin-bottom: 18px;
+  text-align: justify;
+  text-wrap: pretty;
+}
 .footer-col-title { color: var(--cu-white); font-size: 13.5px; font-weight: 800; letter-spacing: 0.03em; margin-bottom: 18px; }
 .footer-col ul li { margin-bottom: 11px; }
 .footer-col ul li a { font-size: 13px; color: #b0b0b0; }
 .footer-col ul li a:hover { color: var(--cu-red); }
+
+/* ==========================================================================
+   Footer contact rows
+   An icon and its label. flex with align-items:flex-start rather than an
+   inline icon, so the postal address — the one entry that wraps onto three
+   lines — hangs its text in a block beside the pin instead of running back
+   underneath it.
+   ========================================================================== */
+.footer-col ul li a,
+.footer-col ul li .footer-plain {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+.footer-plain { font-size: 13px; color: #b0b0b0; line-height: 1.6; }
+
+/* Fixed width so the labels form a straight column whatever glyph sits to
+   their left; the small top offset drops the icon onto the text's baseline
+   rather than the top of its line box. */
+.footer-link-icon {
+  flex-shrink: 0;
+  width: 14px;
+  margin-top: 3px;
+  color: var(--cu-red);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* The email address is one long unbroken token and will push the column wider
+   than its share of the grid unless it is allowed to break mid-word. */
+.footer-col ul li a span { min-width: 0; overflow-wrap: anywhere; }
 .footer-social { display: flex; gap: 10px; }
 .footer-social a {
   width: 34px; height: 34px; border-radius: 50%;

@@ -9,7 +9,8 @@
             <span class="brand-name">SWAMI VIVEKANANDA UNIVERSITY</span>
           </span>
           <span class="brand-tagline d-block">Excellence. Innovation. Entrepreneurship</span>
-          <p>Barrackpore - Barasat Road, Bara Kanthalia, West Bengal, India. A NAAC accredited, multi-disciplinary university ranked among India's most promising institutions.</p>
+          <p>Swami Vivekananda University was established in the year 2019 by Swami Vivekananda Group of Institutions (RERF) and over
+          the last couple of years has grown in rapid strides to transform it into a reputed University.</p>
           <div class="footer-social">
             {% for s in social_links %}
             <a href="#" aria-label="{{ s.label }}"><i class="fa-brands fa-{{ s.icon }} icon"></i></a>
@@ -20,9 +21,41 @@
         {% for col in footer_columns %}
         <div class="footer-col">
           <div class="footer-col-title">{{ col.title }}</div>
+          {% comment %}
+          Each entry arrives from _resolve_footer_link already reduced to a
+          "kind", so this switches once rather than growing a branch per
+          column. The three kinds:
+
+            link  an href that is already complete — mailto:, tel: or an
+                  external site. Only the external ones get target=_blank;
+                  opening a dialer or a mail client in a new tab would leave
+                  the visitor staring at a blank one.
+            text  no href at all. The postal address used to be slugified into
+                  a link to a page that could never exist.
+            page  an internal slug, resolved through the URLconf as before.
+
+          The icon is decorative — the label beside it already says "email" or
+          reads as a phone number — so it is aria-hidden and the screen reader
+          hears the address or the number, not "envelope".
+          {% endcomment %}
           <ul>
             {% for link in col.links %}
-            <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
+            <li>
+              {% if link.kind == 'link' %}
+              <a href="{{ link.href }}"
+                 {% if link.external %}class="is-external" target="_blank" rel="noopener"{% endif %}>
+                {% if link.icon %}<i class="{{ link.icon }} footer-link-icon" aria-hidden="true"></i>{% endif %}<span>{{ link.label }}</span>{% if link.external %}<span class="visually-hidden"> (opens in a new tab)</span>{% endif %}
+              </a>
+              {% elif link.kind == 'text' %}
+              <span class="footer-plain">
+                {% if link.icon %}<i class="{{ link.icon }} footer-link-icon" aria-hidden="true"></i>{% endif %}<span>{{ link.label }}</span>
+              </span>
+              {% else %}
+              <a href="{% url 'placeholder_page' link.target %}">
+                {% if link.icon %}<i class="{{ link.icon }} footer-link-icon" aria-hidden="true"></i>{% endif %}<span>{{ link.label }}</span>
+              </a>
+              {% endif %}
+            </li>
             {% endfor %}
           </ul>
         </div>
@@ -33,7 +66,7 @@
 
   <div class="footer-bottom">
     <div class="container">
-      <span>&copy; {% now "Y" %} Swami Vivekananda University Clone. Built for educational purposes only.</span>
+      <span>&copy; {% now "Y" %} Copyright All Rights Reserved, Swami Vivekananda University.</span>
       <div class="footer-bottom-links">
         <a href="{% url 'placeholder_page' 'privacy-policy' %}">Privacy Policy</a>
         <a href="{% url 'placeholder_page' 'terms-of-use' %}">Terms of Use</a>

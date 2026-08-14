@@ -527,34 +527,140 @@ MAIN_NAV = [
 
 SOCIAL_LINKS = [
     {"label": "Facebook", "icon": "facebook"},
-    {"label": "X", "icon": "x"},
     {"label": "LinkedIn", "icon": "linkedin"},
     {"label": "Instagram", "icon": "instagram"},
     {"label": "YouTube", "icon": "youtube"},
-    {"label": "Threads", "icon": "threads"},
+    # {"label": "X", "icon": "x"},
+    # {"label": "Threads", "icon": "threads"},
 ]
 
 FOOTER_COLUMNS = [
+    # {
+    #     "title": "School",
+    #     "links": ["Engineering", "Agriculture", "Management", "Alied Health Services", "Computer Science", "Humanities", "Life Sciences", "Basic Sciences", "Legal Studies"],
+    # },
     {
-        "title": "Programs",
-        "links": ["Engineering", "Management", "Computing", "Commerce", "Law", "Design", "Pharmacy", "Architecture"],
-    },
-    {
-        "title": "About",
-        "links": ["Overview", "Leadership", "Vision & Mission", "Awards & Rankings", "SVU Edge", "Careers at SVU"],
+        "title": "Contact Us",
+        "links": [
+            {"label": "info@swamivivekanandauniversity.ac.in",
+             "email": "info@swamivivekanandauniversity.ac.in"},
+            # "tel" is the number the phone actually dials, so it is stripped of
+            # the spaces and dashes the label wears for readability. Browsers
+            # are forgiving about this, dialers on older handsets are not.
+            {"label": "+91-7044086270", "tel": "+917044086270"},
+            {"label": "+91-7980333922", "tel": "+917980333922"},
+            {"label": "+91-9830278216", "tel": "+919830278216"},
+            {"label": "+91-8961334184", "tel": "+918961334184"},
+            {"label": "Telinipara, Barasat - Barrackpore Rd Bara Kanthalia, "
+                      "West Bengal - 700121.",
+             "text": True, "icon": "fa-solid fa-location-dot"},
+        ],
     },
     {
         "title": "Admissions",
-        "links": ["Admission Process", "Scholarships", "International Admissions", "Fee Structure", "FAQs"],
+        "links": ["Admission Process", "Scholarships",  "Fee Structure", "FAQs"],
+    },
+    # Every URL below was checked and returns 200. Two worth noting:
+    # cec.nic.in redirects to /cec/, and the NCC portal is indiancc.mygov.in —
+    # nccindia.nic.in, the address usually given for it, no longer resolves.
+    {
+        "title": "Our Links",
+        "links": [
+            {"label": "NPTEL Courses", "url": "https://nptel.ac.in/"},
+            {"label": "SWAYAM", "url": "https://swayam.gov.in/"},
+            {"label": "NATS", "url": "https://nats.education.gov.in/"},
+            {"label": "NDLI", "url": "https://ndl.iitkgp.ac.in/"},
+            {"label": "e Sodh Ganga", "url": "https://shodhganga.inflibnet.ac.in/"},
+            {"label": "e-PGPathshala", "url": "https://epgp.inflibnet.ac.in/"},
+            {"label": "e-Education @ CEC", "url": "https://cec.nic.in/"},
+        ],
     },
     {
-        "title": "Campus Life",
-        "links": ["Hostel Facility", "Sports", "Clubs & Societies", "Events & Fests", "Campus Tour"],
+        "title": "Our Links",
+        "links": [
+            {"label": "Digilocker", "url": "https://www.digilocker.gov.in/"},
+            {"label": "NSS", "url": "https://nss.gov.in/"},
+            {"label": "NCC", "url": "https://indiancc.mygov.in/"},
+            # IQAC is one of the university's own bodies and BLOG is a section
+            # of this site, so both stay internal. They land on the stub until
+            # templates/pages/iqac.html and blogs.html are written.
+            "IQAC",
+            {"label": "BLOG", "slug": "blogs"},
+        ],
     },
     {
         "title": "Quick Links",
         "links": ["Library", "Student Services", "Placements", "Research & Innovation", "Blogs", "Contact Us"],
     },
+]
+
+
+def _resolve_footer_link(entry):
+    """Normalise one FOOTER_COLUMNS link into a dict the template can render.
+
+    Five authoring forms, resolved to a "kind" the template switches on once,
+    so the markup stays a single if/elif rather than sprouting a branch per
+    column:
+
+        "Scholarships"
+            plain string — internal page at /page/scholarships/.
+
+        {"label": "BLOG", "slug": "blogs"}
+            internal page whose URL differs from its label.
+
+        {"label": "SWAYAM", "url": "https://swayam.gov.in/"}
+            external site. New tab, rel=noopener, marked with an arrow.
+
+        {"label": "+91-7044086270", "tel": "+917044086270"}
+            tel: link. Tapping it opens the dialer on a phone; on a desktop it
+            hands off to whatever handles calls, or does nothing, which is the
+            correct outcome rather than a 404.
+
+        {"label": "info@…", "email": "info@…"}
+            mailto: link, opening the visitor's own mail client already
+            addressed. Deliberately NOT a Gmail compose URL: that would break
+            for anyone on Outlook, Apple Mail or a work client, whereas mailto
+            opens the Gmail app for a Gmail user anyway.
+
+        {"label": "Telinipara, …", "text": True, "icon": "…"}
+            not a link at all. Before this existed the postal address was run
+            through slugify and turned into a link to
+            /page/telinipara-barasat-barrackpore-rd-…/, a stub page that could
+            never exist.
+
+    "icon" is resolved here too so the template does not carry a mapping from
+    kind to Font Awesome class.
+    """
+    if isinstance(entry, str):
+        return {"label": entry, "kind": "page", "target": slugify(entry)}
+
+    label = entry["label"]
+
+    if entry.get("email"):
+        return {"label": label, "kind": "link",
+                "href": "mailto:%s" % entry["email"],
+                "icon": "fa-regular fa-envelope"}
+
+    if entry.get("tel"):
+        return {"label": label, "kind": "link",
+                "href": "tel:%s" % entry["tel"],
+                "icon": "fa-solid fa-phone"}
+
+    if entry.get("url"):
+        return {"label": label, "kind": "link", "href": entry["url"],
+                "icon": entry.get("icon", ""), "external": True}
+
+    if entry.get("text"):
+        return {"label": label, "kind": "text", "icon": entry.get("icon", "")}
+
+    return {"label": label, "kind": "page",
+            "target": entry.get("slug") or slugify(label),
+            "icon": entry.get("icon", "")}
+
+
+FOOTER_COLUMNS_RESOLVED = [
+    {"title": col["title"], "links": [_resolve_footer_link(l) for l in col["links"]]}
+    for col in FOOTER_COLUMNS
 ]
 
 
@@ -573,5 +679,5 @@ def nav_context(request):
         "top_nav_links": TOP_NAV_LINKS_RESOLVED,
         "main_nav": MAIN_NAV,
         "social_links": SOCIAL_LINKS,
-        "footer_columns": FOOTER_COLUMNS,
+        "footer_columns": FOOTER_COLUMNS_RESOLVED,
     }

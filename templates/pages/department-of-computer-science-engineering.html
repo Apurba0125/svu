@@ -158,6 +158,27 @@ templates/pages/THAT-SLUG.html to build that course page.
             </article>
           </div>
 
+
+           <!-- ---- course card ---- -->
+            <div class="swiper-slide">
+              <article class="dept-course-card">
+                <div class="dept-course-media">
+                  <img src="{% static 'img/ba-data.jpg' %}" alt="Phd in Computer Science and Engineering" loading="lazy">
+                  <span class="dept-course-level">P.hd</span>
+                </div>
+                <div class="dept-course-body">
+                  <h3 class="dept-course-title">Phd in Computer Science and Engineering</h3>
+                  <p class="dept-course-text">
+                    A research-oriented postgraduate programme with specialisations spanning data
+                    science, cyber security and intelligent systems.
+                  </p>
+                  <a href="{% url 'placeholder_page' 'phd-in-computer-science-and-engineering' %}" class="dept-readmore">
+                    Read More <i class="fa-solid fa-chevron-right"></i>
+                  </a>
+                </div>
+              </article>
+            </div>
+
         </div>
       </div>
 
