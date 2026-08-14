@@ -6,6 +6,16 @@
       <h2 class="section-title">Life at <span>SVU</span></h2>
     </div>
 
+    {% comment %}
+    Every tile is lazy. This grid sits a long way down the homepage — a visitor
+    who never scrolls past the rankings never needs any of these eight
+    photographs, and they are the largest images on the page after the hero.
+    Safe to defer here because it is a plain CSS grid: nothing measures the
+    images to lay it out. Do NOT copy loading="lazy" into the Swiper carousels
+    further up. Swiper measures each slide when it initialises, a lazy image
+    has no dimensions at that moment, and the track ends up built from
+    zero-width slides.
+    {% endcomment %}
     <div class="gallery-grid">
       {% for item in campus_gallery_items %}
       {% comment %}
@@ -19,12 +29,14 @@
       <a href="{% url 'placeholder_page' item.slug %}"
          class="gallery-tile gallery-tile-link"
          data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1|stringformat:'d' }}00">
-        <img src="{{ item.image }}" alt="{{ item.caption|default:'Swami Vivekananda University campus life' }}">
+        <img src="{{ item.image }}" alt="{{ item.caption|default:'Swami Vivekananda University campus life' }}"
+             loading="lazy" decoding="async">
         {% if item.caption %}<span class="gallery-tile-caption">{{ item.caption }}</span>{% endif %}
       </a>
       {% else %}
       <div class="gallery-tile" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1|stringformat:'d' }}00">
-        <img src="{{ item.image }}" alt="{{ item.caption|default:'Swami Vivekananda University campus life' }}">
+        <img src="{{ item.image }}" alt="{{ item.caption|default:'Swami Vivekananda University campus life' }}"
+             loading="lazy" decoding="async">
         {% if item.caption %}<span class="gallery-tile-caption">{{ item.caption }}</span>{% endif %}
       </div>
       {% endif %}

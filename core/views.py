@@ -33,10 +33,10 @@ CAMPUS_GALLERY_ITEMS = [
     {"image": static("img/library.jpg"), "caption": "Library", "slug": "library"},
     {"image": static("img/lab.png"), "caption": "Laboratory", "slug": "laboratory"},
     {"image": static("img/classroom.jpg"), "caption": "Classroom", "slug": "classroom"},
-    {"image": static("img/campus.png"), "caption": "Campus Building", "slug": "campus-building"},
-    {"image": static("img/garden.png"), "caption": "Gardening", "slug": "gardening"},
-    {"image": static("img/sports.png"), "caption": "Sports", "slug": "sports"},
-    {"image": static("img/groupstudy.png"), "caption": "Group Study", "slug": "group-study"},
+    {"image": static("img/campus.jpg"), "caption": "Campus Building", "slug": "campus-building"},
+    {"image": static("img/garden.jpg"), "caption": "Gardening", "slug": "gardening"},
+    {"image": static("img/sports.jpg"), "caption": "Sports", "slug": "sports"},
+    {"image": static("img/groupstudy.jpg"), "caption": "Group Study", "slug": "group-study"},
     {"image": static("img/lab-2.jpg"), "caption": "Practical Laboratory", "slug": "practical-laboratory"},
 ]
 
@@ -286,11 +286,11 @@ GLOBAL_EXPERIENCE_ITEMS = [
 ]
 
 GLOBAL_ACCORDION_PANELS = [
-    {"label": "Central Campus", "image": static("img/globaledu/cc.png"),"active": True},
-    {"label": "Global Collaborations", "image": static("img/globaledu/globalcollab.png")},
-    {"label": "Degree Opportunities", "image": static("img/globaledu/degreeopportunities.png")},
-    {"label": "Language and Culture", "image": static("img/globaledu/language.png"), },
-    {"label": "Career Pathways", "image": static("img/globaledu/cp.png")},
+    {"label": "Central Campus", "image": static("img/globaledu/cc.jpg"),"active": True},
+    {"label": "Global Collaborations", "image": static("img/globaledu/globalcollab.jpg")},
+    {"label": "Degree Opportunities", "image": static("img/globaledu/degreeopportunities.jpg")},
+    {"label": "Language and Culture", "image": static("img/globaledu/language.jpg"), },
+    {"label": "Career Pathways", "image": static("img/globaledu/cp.jpg")},
 ]
 
 WHY_CHOOSE_CU = [
@@ -476,7 +476,7 @@ SPOTLIGHT_SLIDES = [
     # },
     {
         "type": "video",
-        "image": static("img/Shorts/Key To Success.png"),
+        "image": static("img/Shorts/key-to-success.jpg"),
         "eyebrow": "Explore",
         "title": "Key To Success",
         "url": "https://www.youtube.com/shorts/XjUHOBU1tTc",
@@ -485,7 +485,7 @@ SPOTLIGHT_SLIDES = [
     },
     {
         "type": "video",
-        "image": static("img/Shorts/1.png"),
+        "image": static("img/Shorts/1.jpg"),
         "eyebrow": "Explore",
         "title": "Virtual Lab",
         "url": "https://www.youtube.com/shorts/QI4D_vYJdRg",
@@ -494,7 +494,7 @@ SPOTLIGHT_SLIDES = [
     },
     {
         "type": "video",
-        "image": static("img/Shorts/mootcourt.png"),
+        "image": static("img/Shorts/mootcourt.jpg"),
         "eyebrow": "Explore",
         "title": "Law Moot Court ",
         "body": " Learn. Argue. Advocate. Succeed. …",
@@ -504,7 +504,7 @@ SPOTLIGHT_SLIDES = [
     },
     {
         "type": "video",
-        "image": static("img/Shorts/neshamukhti.png"),
+        "image": static("img/Shorts/neshamukhti.jpg"),
         "eyebrow": "Explore",
         "title": "Nasha Mukt Yuva for Viksit Bharat",
         "body": " Nasha Mukt Yuva: Building India’s Future",
@@ -514,7 +514,7 @@ SPOTLIGHT_SLIDES = [
     },
     {
         "type": "video",
-        "image": static("img/Shorts/ot.png"),
+        "image": static("img/Shorts/ot.jpg"),
         "eyebrow": "Explore",
         "title": "OT Zones",
         "body": " Operating Theatre Zones Explained",

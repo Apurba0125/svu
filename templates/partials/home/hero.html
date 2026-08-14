@@ -1,6 +1,25 @@
 {% load static %}
 <section class="hero">
-  <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
+  {% comment %}
+  !! THIS VIDEO IS 36 MB AND IS THE HEAVIEST THING ON THE SITE BY FAR.
+  Everything else on the homepage put together is under 3 MB. A background
+  loop of this length should encode to 1-2 MB; it needs re-encoding with
+  ffmpeg (H.264, ~1280px wide, CRF 30, no audio track since it plays muted).
+  Until that happens the two attributes below are damage limitation, not a fix.
+
+  preload="metadata" instead of "auto": "auto" asks the browser to pull the
+  whole file down before anything else competes for the connection. A browser
+  that honours the hint now fetches only the header. One that autoplays
+  regardless still downloads it — which is exactly why the file itself has to
+  get smaller.
+
+  poster gives the section something to show on the first paint rather than a
+  black rectangle, and on any browser that declines to autoplay — several
+  mobile ones, and anyone with data saver or reduce-motion on — the poster is
+  all they ever load.
+  {% endcomment %}
+  <video class="hero-bg-video" autoplay muted loop playsinline
+         preload="metadata" poster="{% static 'img/campus.jpg' %}">
     <source src="{% static 'img/swamibannervideonew.mp4' %}" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
