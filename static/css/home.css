@@ -524,7 +524,13 @@
 
 @media (max-width: 700px) {
   .placement-stats-row { grid-template-columns: repeat(2, 1fr); }
-  .company-logo-img { width: 84px; height: 20px; padding: 0 20px; }
+  /* BIGGER on a phone, not smaller — shrinking with the viewport was the wrong
+     instinct. The strip is one row that scrolls sideways for ever, so a narrow
+     screen never has to fit more logos in; it just shows fewer at a time. The
+     old 84x20 also left the logos smaller than the 22px text they sit beside,
+     which is backwards: a logo is line art and mixed colour, so it needs more
+     room than solid type to stay legible, not less. */
+  .company-logo-img { width: 150px; height: 46px; padding: 0 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

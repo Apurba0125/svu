@@ -335,14 +335,13 @@ ENQUIRY_COURSES = {
 
 ABOUT_MENU = {
     "who_we_are": [
-        "Know Us", "Our team","Our Mentors", 
-        "Recognition & Approvals", "Awards & Rankings", 
+        "Know Us", "Our team","Our Mentors", "Recognition & Approvals",
     ],
-    "related_links": [
-        "News", "IIC", "Faculty Lecture Series", "Governance",
-        "Hostel Facility", "Student Services", "How to Reach Us?", "GATI Charter Institution",
-        "ABET Engineering Accreditation",
-    ],
+    # "related_links": [
+    #     "Institutes & Departments", "Admissions", "Scholarships", "Governance",
+    #     "Hostel Facility", "Student Services", "How to Reach Us?", "GATI Charter Institution",
+    #     "ABET Engineering Accreditation",
+    # ],
 }
 
 SIMPLE_MENUS = {
@@ -369,28 +368,31 @@ ACADEMICS_MENU = {
     ],
 }
 
-ADMISSIONS_MENU = {
+AT_A_GLANCE_MENU = {
     "columns": [
         {
-            "title": "JOB ORIENTED PROGRAMS",
+           
             "links": [
-                "After 12th", "After Graduation", "Leet Programs", "Specialized Programs",
-                "Integrated Programs", "After Post Graduation", "SVU Advantages",
-                "ABET Engineering Accreditation",
+                "Academic Patent & IPR", "Academic Activities", "Appreciations", "Annual Report", "Book",
+                "Brochure", "Building Plan", "Centre For Excellence",
+                "Centre For Faculty Development Programme",
             ],
         },
         {
-            "title": "ADMISSION",
+            # Set in caps to sit level with "JOB ORIENTED PROGRAMS" beside it.
+            # .admissions-col-title has no text-transform, so whatever case is
+            # written here is the case that renders.
+            
             "links": [
-                "Overview", "Course Fee", "How to Apply?", "Admission Criteria",
-                "SVU Scholarship", "Education Loan", "Hostel Fee", "Orientation Schedule 2026",
+                "Disclosure","Centre For Skill Enhancement", "Collaboration", "Consultancy", "E-Resource",
+                "IIC","Journals", "Incubation Centre", " Newsletter", 
             ],
         },
         {
-            "title": "",
+            # "title": "",
             "links": [
-                "National Admissions", "International Admissions", "Admission Offices",
-                "Visit the Campus", "Migration Policy", "Refund Policy",
+                "Publication","Project", "Regulations", "Student Handbook",
+                "Social Outreach Activities", "Testing Facilities", "University Press", "Vivek Jyoti Samman",
             ],
         },
     ],
@@ -483,9 +485,11 @@ TOP_NAV_LINKS = [
     "GALLERY",
     {"label": "LIBRARY", "url": "https://www.swamivivekanandauniversity.ac.in/"},
     "STUDENT SERVICES",
+    "NOTICE",
     "CAREER",
     "BLOGS",
     "SVU PODCAST",
+    "UGC-2f",
     {"label": "PAYMENT", "url": "https://www.swamivivekanandauniversity.ac.in/Pay-online/"},
     "CONTACT US",
 ]
@@ -519,7 +523,10 @@ MAIN_NAV = [
     {"label": "ABOUT", "slug": "about", "mega": "about"},
     {"label": "PROGRAMS", "slug": "programs", "mega": "programs"},
     {"label": "ACADEMICS", "slug": "academics", "mega": "academics"},
-    {"label": "ADMISSIONS", "slug": "admissions", "mega": "admissions"},
+    # Label only. The slug stays "admissions" so the URL, the mega-panel key
+    # and every existing link to it keep working — renaming the label is not
+    # meant to move the page.
+    {"label": "AT A GLANCE", "slug": "admissions", "mega": "admissions"},
     {"label": "CAMPUS LIFE", "slug": "campus-life", "mega": "campus-life"},
     {"label": "PLACEMENTS", "slug": "placements", "mega": "simple"},
     {"label": "RESEARCH & INNOVATION", "slug": "research-innovation", "mega": "research"},
@@ -672,7 +679,7 @@ def nav_context(request):
         "enquiry_courses": ENQUIRY_COURSES,
         "about_menu": ABOUT_MENU,
         "academics_menu": ACADEMICS_MENU,
-        "admissions_menu": ADMISSIONS_MENU,
+        "at_a_glance_menu": AT_A_GLANCE_MENU,
         "campus_life_menu": CAMPUS_LIFE_MENU,
         "research_menu": RESEARCH_MENU,
         "simple_menus": SIMPLE_MENUS,

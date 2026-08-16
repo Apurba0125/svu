@@ -101,7 +101,7 @@
               </ul>
             </div>
             <div class="mega-col">
-              <div class="mega-col-title">RELATED LINKS</div>
+              <!-- <div class="mega-col-title">RELATED LINKS</div> -->
               <ul>
                 {% for link in about_menu.related_links %}
                 <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
@@ -116,7 +116,7 @@
                 <div class="mega-tile">Humility</div>
                 <div class="mega-tile">Giving</div>
               </div>
-              <a href="{% url 'placeholder_page' 'apply-now' %}" class="btn btn-outline w-100">Apply Now</a>
+              <!-- <a href="{% url 'placeholder_page' 'apply-now' %}" class="btn btn-outline w-100">Apply Now</a> -->
             </div>
           </div>
 
@@ -189,7 +189,7 @@
           {% elif item.mega == 'admissions' %}
           <div class="mega-panel mega-admissions">
             <div class="admissions-cols">
-              {% for col in admissions_menu.columns %}
+              {% for col in at_a_glance_menu.columns %}
               <div class="admissions-col">
                 {% if col.title %}<div class="admissions-col-title">{{ col.title }}</div>{% endif %}
                 <ul>
@@ -201,9 +201,9 @@
               {% endfor %}
             </div>
             <div class="admissions-banner icon-tile-banner">
-              <div class="icon-tile-banner-title">{{ admissions_menu.banner_title }}</div>
+              <div class="icon-tile-banner-title">{{ at_a_glance_menu.banner_title }}</div>
               <div class="icon-tile-row">
-                {% for tile in admissions_menu.tiles %}
+                {% for tile in at_a_glance_menu.tiles %}
                 <div class="icon-tile"><i class="fa-solid {{ tile.icon }}"></i><span>{{ tile.label }}</span></div>
                 {% endfor %}
               </div>
@@ -300,7 +300,7 @@
             {% for link in about_menu.who_we_are %}
             <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
             {% endfor %}
-            <li class="mobile-nav-subhead">Related Links</li>
+            <!-- <li class="mobile-nav-subhead">Related Links</li> -->
             {% for link in about_menu.related_links %}
             <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
             {% endfor %}
@@ -335,7 +335,7 @@
             {% endfor %}
 
             {% elif item.mega == 'admissions' %}
-            {% for col in admissions_menu.columns %}
+            {% for col in at_a_glance_menu.columns %}
             {% if col.title %}<li class="mobile-nav-subhead">{{ col.title }}</li>{% endif %}
             {% for link in col.links %}
             <li><a href="{% url 'placeholder_page' link|slugify %}">{{ link }}</a></li>
